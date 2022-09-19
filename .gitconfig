@@ -1,0 +1,7 @@
+[user]
+	name = Magnus Hirth
+[credential]
+	helper = store
+[core]
+	pager = cat
+	editor = nvim
