@@ -1,10 +1,53 @@
 # vim: filetype=zsh:
 
+autoload -U colors && colors
+
+function __info { echo "$fg_bold[default][*] $*$reset_color" }
+function __good { echo "$fg_bold[green][✓] $*$reset_color" }
+function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
+function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
+
+
+export EDITOR='nvim'
+
+export GOTO_PATH=(
+	$HOME/Documents
+	$HOME/Documents/*(/)
+	$HOME/Downloads
+)
+
+
 ################################################################################
-#                                                                              #
+# PATH
+#
+#{{{
+
+export PATH="$HOME/bin:$PATH"
+
+# Homebrew
+if [[ -d /opt/homebrew ]]; then
+	export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
+elif [[ -d $HOME/homebrew ]]; then
+	export PATH="$PATH:$HOME/homebrew/bin:$HOME/homebrew/sbin"
+else
+	__bad "Homebrew root folder not found."
+fi
+
+# Rust
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# Dart & Flutter
+export PATH="$PATH:/usr/lib/dart/bin:$HOME/flutter/bin:$HOME/.pub-cache/bin"
+
+# PostgreSQL
+export PATH="$PATH:/usr/lib/postgresql/13/bin"
+#}}}
+
+
+################################################################################
 # Oh my zsh
-#                                                                              #
-################################################################################
+#
+#{{{
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -19,8 +62,8 @@ ZSH_THEME="robbyrussell"
 plugins=(
 	brew
 	chucknorris
+	gh
 	git
-	lol
 	pip
 	pylint
 	python
@@ -29,106 +72,20 @@ plugins=(
 	thefuck
 	tmux
 	vscode
-	zsh-autosuggestions
 )
 
-source $ZSH/oh-my-zsh.sh
-
-export EDITOR='vim'
-
-
-################################################################################
-#                                                                              #
-# Personal
-#                                                                              #
-################################################################################
-
-export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/lib/dart/bin:$HOME/flutter/bin:$HOME/Documents/scripts"
-
-#
-# Cargo bin
-#
-export PATH="$PATH:$HOME/.cargo/bin"
-
-#
-# Nim bin
-#
-export PATH="$PATH:$HOME/.nimble/bin"
-
-#
-# Dart & flutter bin
-#
-export PATH="$PATH:/usr/lib/dart/bin:$HOME/flutter/bin:$HOME/.pub-cache/bin"
-
-#
-# Go bin & GOPATH
-#
-export GOROOT="/usr/local/go"
-export GOPATH="$HOME/go"
-export GOBIN="$GOPATH/bin"
-export PATH="$PATH:$GOROOT/bin:$GOBIN"
-
-function goinstall() {
-	test -n "$GOROOT" || { echo "Missing GOROOT" ; return 1 }
-	test -n "$1" || { echo "Missing go tar file." ; return 1 }
-	local SRC=$1
-	sudo rm -rf $GOROOT
-	sudo tar -C ${GOROOT/\/go/} -xzf $SRC
-}
-
-#
-# PostgreSQL bin
-#
-export PATH="$PATH:/usr/lib/postgresql/13/bin"
-
-#
-# Homebrew setup - differs between MacOS and Linux
-#
-if [[ ! "$OSTYPE" =~ darwin ]]; then
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-	
-	PYTHON_VERSION='3.10'
-	export PATH="/home/linuxbrew/.linuxbrew/opt/python@${PYTHON_VERSION}/bin:$PATH"
-	export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/python@${PYTHON_VERSION}/lib"
-	export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/python@${PYTHON_VERSION}/include"
-	export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/python@${PYTHON_VERSION}/lib/pkgconfig"
+if [[ -d $ZSH ]]; then
+	source $ZSH/oh-my-zsh.sh
 else
-	export PATH="/usr/local/opt/python@3.10/bin:$PATH"
-	export LDFLAGS="-L/usr/local/opt/python@3.10/lib"
-	export PKG_CONFIG_PATH="/usr/local/opt/python@3.10/lib/pkgconfig"
+	__bad "Oh my zsh is not installed!"
 fi
-
-
-eval "$(starship init zsh)"
-# export SPACESHIP_PROMPT_ADD_NEWLINE=false
-# export SPACESHIP_PROMPT_SEPARATE_LINE=false
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/m/google-cloud-sdk/path.zsh.inc' ]; then . '/home/m/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/m/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/m/google-cloud-sdk/completion.zsh.inc'; fi
-
-
-if type nvim &>/dev/null
-then 
-	export EDITOR='nvim'
-elif type vim &>/dev/null
-then
-	export EDITOR='vim'
-else
-	export EDITOR='vi'
-fi
-
-eval $(thefuck --alias)
+#}}}
 
 
 ################################################################################
-#                                                                              #
 # Aliases
-#                                                                              #
-################################################################################
+#
+#{{{
 
 alias ll="ls -l"
 alias l1="ls -1"
@@ -136,44 +93,34 @@ alias lsd="ls -d *(/)"
 alias lld="ls -lhd *(/)"
 alias less="less -r"
 
-if type nvim &>/dev/null
-then
-	alias n="nvim"
-	alias ns="nvim -S"
-fi
+alias n="nvim"
+alias ns="nvim -S"
 
 alias lg='lazygit'
-
-alias co='commode'
-alias cod='commode download'
-alias cou='commode upload'
-alias cols='commode ls'
-alias cobs='commode boilerplates'
-alias cob='commode boilerplate'
-alias cobd='commode boilerplate download'
-alias cobi='commode boilerplate install'
-alias cobu='commode boilerplate upload'
-
-alias lolaliases='$EDITOR $HOME/.oh-my-zsh/plugins/lol/README.md'
 
 alias pyvenv='python3 -m venv --upgrade-deps venv'
 alias ipython='ipython3 --autocall=1 --pprint'
 
+alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
+alias aliases='alias | sort | less'
+
+alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+#}}}
+
 
 ################################################################################
-#                                                                              #
 # Functions
-#                                                                              #
-################################################################################
+#
+#{{{
 
 function cdl {
-	cd $1
+	cd $1 || return
 	ll
 }
 
 
 function cdls {
-	cd $1
+	cd $1 || return
 	ls
 }
 
@@ -182,45 +129,6 @@ function home {
 	cd $HOME
 	ll
 }
-
-# Generate ls and cd functions for all the project directories.
-if [[ -d $HOME/projects ]]
-then
-	for mydir in $(ls $HOME/projects)
-	do
-		eval "function cd$mydir () {
-			local DIR=$HOME/projects/$mydir/\$1
-			echo \$DIR
-			cd \$DIR
-			ll
-		}"
-
-		eval "function ls$mydir () {
-			local DIR=$HOME/projects/$mydir/\$1
-			echo \$DIR
-			ll \$DIR
-		}"
-	done
-fi
-
-if type selector &>/dev/null
-then
-	function goto {
-		mypaths=(
-			$HOME/{Documents{,scripts},Downloads,projects,lib}
-			$HOME/Documents/*(/)
-			$HOME/projects/*(/)
-			/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/mhmorgan/homebrew-tap
-		)
-		local SEL=$(selector ${=mypaths} -af "$*")
-		[[ -n "$SEL" ]] || return
-		local DIR=$SEL
-		echo $DIR
-		# -P use the physical directory structure instead of following symbolic links
-		cd -P $DIR
-		ll
-	}
-fi
 
 function backup {
 	local src=$1
@@ -253,14 +161,26 @@ function gitaliases {
 }
 
 
-################################################################################
-#                                                                              #
-# Dotfiles
-#                                                                              #
-################################################################################
+function goto {
+	type selector &>/dev/null || {
+		__bad "'selector' not installed."
+		return 1
+	}
+	local SEL=$(selector ${=GOTO_PATH} -af "$*")
+	[[ -n "$SEL" ]] || return
+	local DIR=$SEL
+	echo $DIR
+	# -P use the physical directory structure instead of following symbolic links
+	cd -P $DIR
+	ll
+}
+#}}}
 
-# Git base command
-alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+################################################################################
+# Dotfiles
+#
+#{{{
 
 # Add
 alias doa='git --git-dir=$HOME/.dotfiles --work-tree=$HOME add --force'
@@ -306,41 +226,46 @@ function dls {
 	local branch=$(dot branch | grep '^\*' | tr -d '*[:space:]')
 	dot ls-tree -r --name-only $branch
 }
-
-################################################################################
-# New at BidBax
-#{{{
-
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
-
-function hjelp {
-        # List scripts
-        # TODO: One-line summary of each script?
-        echo "$fg_bold[default]Scripts in ~/Documents/scripts$reset_color"
-        ls  ~/Documents/scripts
-
-        # List installed brew applications
-        echo "\n$fg_bold[default]Homebrew info:$reset_color"
-        brew info
-
-        # List my repositories
-        echo "\n$fg_bold[default]Git repos:$reset_color"
-        for REPO in $HOME/*/*/.git; do
-                echo ${REPO/.git/}
-        done
-}
-
-alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
-alias aliases='alias | sort | less'
 #}}}
 
-################################################################################
-#                                                                              #
-# Fun stuff
-#                                                                              #
-################################################################################
 
+################################################################################
+# Misc
+#{{{
+
+# EDITOR validation
+if ! type $EDITOR &>/dev/null
+then
+	__warn "Editor $EDITOR not found!"
+	export EDITOR='vi'
+fi
+
+
+# Check essential applications
+for APP in brew git gh starship thefuck; do
+	type $APP &>/dev/null || __bad "Not installed: $APP"
+done
+
+
+# Check nice-to-have applications
+for APP in neofetch fortune cowsay rg pandoc; do
+	type $APP &>/dev/null || __warn "Not installed: $APP"
+done
+
+
+eval "$(thefuck --alias)"
+eval "$(starship init zsh)"
+
+
+if [[ -f $HOME/.myzshrc ]]; then
+	source $HOME/.myzshrc
+else
+	__info "Local RC file (~/.myzshrc) not found."
+fi
+
+
+echo
 neofetch
 fortune | cowsay -n
+#}}}
 
