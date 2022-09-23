@@ -97,6 +97,7 @@ alias n="nvim"
 alias ns="nvim -S"
 
 alias lg='lazygit'
+alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
 
 alias pyvenv='python3 -m venv --upgrade-deps venv'
 alias ipython='ipython3 --autocall=1 --pprint'
