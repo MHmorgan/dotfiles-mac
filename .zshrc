@@ -249,7 +249,7 @@ done
 
 
 # Check nice-to-have applications
-for APP in neofetch fortune cowsay rg pandoc; do
+for APP in neofetch fortune cowsay rg pandoc tag; do
 	type $APP &>/dev/null || __warn "Not installed: $APP"
 done
 
@@ -269,4 +269,3 @@ echo
 neofetch
 fortune | cowsay -n
 #}}}
-
