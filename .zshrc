@@ -9,6 +9,7 @@ function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
 
 export EDITOR='nvim'
+export PAGER='less'
 
 export GOTO_PATH=(
 	$HOME/Documents
