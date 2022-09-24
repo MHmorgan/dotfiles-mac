@@ -106,6 +106,7 @@ alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
 alias aliases='alias | sort | less'
 
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 #}}}
 
 
@@ -179,62 +180,12 @@ function goto {
 
 
 ################################################################################
-# Dotfiles
-#
-#{{{
-
-# Add
-alias doa='git --git-dir=$HOME/.dotfiles --work-tree=$HOME add --force'
-
-# Lazygit
-alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-
-# Checkout
-alias dco='git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout'
-
-# Status
-function dst {
-	autoload -U colors && colors
-	[[ $PWD == $HOME ]] || echo "$fg_no_bold[yellow]This command should be run from your home folder$reset_color"
-
-	echo "$fg_bold[default]Dotfiles status$reset_color"
-	dot status
-}
-
-# Synchronizing
-function dos {
-	autoload -U colors && colors
-	[[ $PWD == $HOME ]] || echo "$fg_no_bold[yellow]This command should be run from your home folder$reset_color"
-
-	if [[ -n "$(dot status --short)" ]]
-	then
-		echo "$fg_bold[default]Committing dotfiles updates$reset_color"
-		dot commit -va || return 1
-	fi
-
-	echo "$fg_bold[default]Pulling in remote updates$reset_color" &&
-	dot pull &&
-	echo "$fg_bold[default]Pushing our updates to remote$reset_color" &&
-	dot push
-}
-
-# Files
-function dls {
-	autoload -U colors && colors
-	[[ $PWD == $HOME ]] || echo "$fg_no_bold[yellow]This command should be run from your home folder$reset_color"
-
-	echo "$fg_bold[default]Tracked dotfiles$reset_color"
-	local branch=$(dot branch | grep '^\*' | tr -d '*[:space:]')
-	dot ls-tree -r --name-only $branch
-}
-#}}}
-
-
-################################################################################
 # Misc
 #{{{
 
-# EDITOR validation
+#
+# EDITOR validation w/fallback
+#
 if ! type $EDITOR &>/dev/null
 then
 	__warn "Editor $EDITOR not found!"
