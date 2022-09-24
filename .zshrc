@@ -12,7 +12,6 @@ export EDITOR='nvim'
 
 export GOTO_PATH=(
 	$HOME/Documents
-	$HOME/Documents/*(/)
 	$HOME/Downloads
 )
 
@@ -141,7 +140,7 @@ function backup {
 		return 1
 	fi
 
-	cp -uvpr $src $src~
+	cp -vpr $src $src~
 }
 
 function gitaliases {
@@ -193,13 +192,12 @@ then
 fi
 
 
-# Check essential applications
+#
+# Check essential and non-essential applications, respectively
+#
 for APP in brew git gh starship thefuck; do
 	type $APP &>/dev/null || __bad "Not installed: $APP"
 done
-
-
-# Check nice-to-have applications
 for APP in neofetch fortune cowsay rg pandoc tag; do
 	type $APP &>/dev/null || __warn "Not installed: $APP"
 done
@@ -207,6 +205,17 @@ done
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
+
+#
+# Remaining homebrew setup
+#
+if type brew &>/dev/null
+then
+	# brew command completion
+	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+	autoload -Uz compinit
+	compinit
+fi
 
 
 if [[ -f $HOME/.myzshrc ]]; then
