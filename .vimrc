@@ -7,7 +7,7 @@
 " ------------------------------------------------------------------------------
 " General
 
-colorscheme pablo
+colorscheme default
 
 set nocompatible
 
@@ -17,6 +17,7 @@ set relativenumber
 set nowrap " Do not wrap lines wider than screen
 
 syntax enable " syntax highlighting
+hi clear TODO " Disable TODO highlighting
 
 set shiftwidth=4
 set tabstop=4
@@ -30,6 +31,7 @@ set modeline
 set foldmethod=marker
 
 autocmd Filetype c setlocal ts=4 sw=4 expandtab
+autocmd Filetype perl setlocal ts=4 sw=4 expandtab
 autocmd Filetype dart setlocal ts=2 sw=2 expandtab
 autocmd Filetype m4 setlocal ts=4 sw=4 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 expandtab
@@ -74,14 +76,13 @@ Plugin 'arcticicestudio/nord-vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" Must be set after plugins are loaded
-colorscheme nord
-"colorscheme dracula
-
-" ------------------------------------------------------------------------------
-" Cheatsheet
+""""""""""""""""""""""""""""""""" Cheatsheet """""""""""""""""""""""""""""""""
 "
 " For details always check out :help <cmd>
+"
+"
+" Plugins
+" =======
 "
 " Mapping keys:
 "   map,     nmap,     vmap,     imap
@@ -98,3 +99,16 @@ colorscheme nord
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 "
+"
+" Digraphs
+" ========
+"
+" See all digraphs with:
+"
+" 	:digraphs
+"
+" Insert (in insert mode) with:
+" 
+" 	Ctrl-k + <key-sequence>
+"
+

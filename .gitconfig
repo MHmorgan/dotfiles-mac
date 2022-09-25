@@ -5,3 +5,5 @@
 [core]
 	pager = cat
 	editor = nvim
+[pull]
+	rebase = true
