@@ -7,6 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
+__info "Zshrc v1.0.0"
 
 export EDITOR='nvim'
 export PAGER='less'
