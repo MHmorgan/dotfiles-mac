@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.0.0"
+__info "Zshrc v1.0.1"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -197,7 +197,7 @@ fi
 #
 # Check essential and non-essential applications, respectively
 #
-for APP in brew git gh starship thefuck; do
+for APP in rogu brew git gh starship thefuck; do
 	type $APP &>/dev/null || __bad "Not installed: $APP"
 done
 for APP in neofetch fortune cowsay rg pandoc tag; do
