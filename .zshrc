@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.0.1"
+__info "Zshrc v1.0.2"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -217,6 +217,13 @@ then
 	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 	autoload -Uz compinit
 	compinit
+fi
+
+
+if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
+	source ~/.iterm2_shell_integration.zsh
+else
+	__info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
 fi
 
 
