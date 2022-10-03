@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.0.2"
+__info "Zshrc v1.0.3"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -217,6 +217,17 @@ then
 	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 	autoload -Uz compinit
 	compinit
+fi
+
+
+#
+# Library paths
+#
+if [[ -d ~/lib ]]; then
+	export PERL5LIB="$HOME/lib:$PERL5LIB"
+	export PYTHONPATH="$HOME/lib:$PYTHONPATH"
+else
+	__warn "Custom libraries directory not found (~/lib)"
 fi
 
 
