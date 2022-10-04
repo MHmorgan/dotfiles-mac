@@ -309,11 +309,6 @@ else
 	__info "Local RC file (~/.myzshrc) not found."
 fi
 
-if [[ $(date +%Y-%m-%d) -ne $(cat ~/.cache/rogu/updated) ]]; then
-	date +%Y-%m-%d > ~/.cache/rogu/updated
-	rogu update --quiet
-fi
-
 #
 # Daily Rogu update
 #
