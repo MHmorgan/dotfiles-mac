@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.0.4"
+__info "Zshrc v1.0.5"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -245,11 +245,14 @@ else
 fi
 
 
+#
+# Daily Rogu update
+#
 if [[ (! -f ~/.cache/rogu/updated) || $(date +%Y-%m-%d) -ne $(cat ~/.cache/rogu/updated) ]]; then
 	mkdir -p ~/.cache/rogu
 	date +%Y-%m-%d > ~/.cache/rogu/updated
 	__info "Running daily Rogu update"
-	rogu update --quiet
+	rogu update
 fi
 
 echo
