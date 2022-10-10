@@ -250,9 +250,9 @@ fi
 #
 if [[ (! -f ~/.cache/rogu/updated) || $(date +%Y-%m-%d) -ne $(cat ~/.cache/rogu/updated) ]]; then
 	mkdir -p ~/.cache/rogu
-	date +%Y-%m-%d > ~/.cache/rogu/updated
 	__info "Running daily Rogu update"
-	rogu update
+	rogu update &&
+	date +%Y-%m-%d > ~/.cache/rogu/updated
 fi
 
 echo
