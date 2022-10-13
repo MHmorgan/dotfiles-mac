@@ -40,21 +40,6 @@ autocmd Filetype xml setlocal ts=2 sw=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 
 " ------------------------------------------------------------------------------
-" Small helpers
-
-" Insert date at cursor, in normal mode. (see :help "=)
-nnoremap <leader>d "=strftime('%a %d. %b %Y')<CR>P
-
-
-" ------------------------------------------------------------------------------
-" Set filetype for certain extensions
-
-augroup twig_ft
-	au!
-	autocmd BufNewFile,BufRead *.lib	set syntax=text
-augroup END
-
-" ------------------------------------------------------------------------------
 " Vundle plugin
 "
 " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
