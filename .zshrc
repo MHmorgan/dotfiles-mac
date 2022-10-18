@@ -183,7 +183,10 @@ function goto {
 ################################################################################
 # Completion
 #
-# https://thevaluable.dev/zsh-completion-guide-examples/
+# See:
+#   manpage zshcompsys
+#	https://thevaluable.dev/zsh-completion-guide-examples/
+#   https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
 #
 #{{{
 
