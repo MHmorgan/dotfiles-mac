@@ -234,11 +234,6 @@ for APP in neofetch fortune cowsay rg pandoc tag; do
 done
 
 
-eval "$(thefuck --alias)"
-eval "$(starship init zsh)"
-eval "$(rogu --completion)"
-
-
 #
 # Remaining homebrew setup
 #
@@ -285,6 +280,13 @@ if [[ (! -f ~/.cache/rogu/updated) || $(date +%Y-%m-%d) -ne $(cat ~/.cache/rogu/
 	rogu update &&
 	date +%Y-%m-%d > ~/.cache/rogu/updated
 fi
+
+
+eval "$(thefuck --alias)"
+eval "$(starship init zsh)"
+eval "$(rogu --completion)"
+eval "$(kladd --completion)"
+
 
 echo
 neofetch
