@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.0.5"
+__info "Zshrc v1.1.0"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -181,7 +181,36 @@ function goto {
 
 
 ################################################################################
+# Completion
+#
+# https://thevaluable.dev/zsh-completion-guide-examples/
+#
+#{{{
+
+# Set completers
+#   _extensions  : Complete the glob *. with possible file extensions
+#   _complete    : The main completer needed for completion.
+#   _approximate : Try to correct what you've already typed if no match is found.
+zstyle ':completion:*' completer _extensions _complete _approximate
+
+# Completion caching
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$HOME/.zcompcache"
+
+# Print description headers for completions
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+# Print completion messages and warnings
+zstyle ':completion:*:*:*:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches --%f'
+
+# Group matches under their description header
+zstyle ':completion:*' group-name ''
+#}}}
+
+
+################################################################################
 # Misc
+#
 #{{{
   
 #
@@ -207,6 +236,8 @@ done
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
+eval "$(rogu --completion)"
+
 
 #
 # Remaining homebrew setup
