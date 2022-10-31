@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.1.0"
+__info "Zshrc v1.1.1"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -108,6 +108,8 @@ alias aliases='alias | sort | less'
 
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+alias tmp='cd /tmp'
 #}}}
 
 
