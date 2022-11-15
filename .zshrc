@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.2.0"
+__info "Zshrc v1.2.1"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -109,6 +109,7 @@ for N in $(seq 4 20); do
 		alias py${N}="python3.$N"
 		alias py${N}m="python3.$N -m"
 		alias pip${N}="python3.$N -m pip"
+		alias venv${N}="python3.$N -m venv"
 	fi
 done
 
