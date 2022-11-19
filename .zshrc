@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.2.2"
+__info "Zshrc v1.2.3"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -88,9 +88,9 @@ fi
 #
 #{{{
 
-alias ll="ls -l"
-alias l1="ls -1"
-alias lsd="ls -d *(/)"
+alias ll="ls -lh"
+alias l1="ls -1h"
+alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
 alias less="less -r"
 
