@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.2.3"
+__info "Zshrc v1.2.4"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -65,6 +65,7 @@ plugins=(
 	chucknorris
 	gh
 	git
+	golang
 	pip
 	pylint
 	python
