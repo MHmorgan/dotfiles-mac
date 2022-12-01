@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.2.4"
+__info "Zshrc v1.2.5"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -177,6 +177,9 @@ function gitaliases {
 	fi
 }
 
+
+# Defined it golang oh-my-zsh plugin
+unalias goto
 
 function goto {
 	type selector &>/dev/null || {
