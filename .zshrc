@@ -7,7 +7,7 @@ function __good { echo "$fg_bold[green][✓] $*$reset_color" }
 function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
 
-__info "Zshrc v1.2.5"
+__info "Zshrc v1.2.6"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -102,7 +102,7 @@ alias lg='lazygit'
 alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
 
 alias pyvenv='python3 -m venv --upgrade-deps venv'
-alias ipython='ipython3 --autocall=1 --pprint'
+alias ipy='ipython3 --autocall=1 --pprint'
 alias activate-venv='source venv/bin/activate'
 
 for N in $(seq 4 20); do
