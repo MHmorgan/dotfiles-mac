@@ -8,7 +8,7 @@ function __warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __trace { echo "\e[${color[faint]};${color[default]}m[*] $*$reset_color" }
 
-__info "Zshrc v1.3.0"
+__info "Zshrc v1.3.1"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -320,6 +320,16 @@ eval "$(starship init zsh)"
 eval "$(rogu --completion)"
 eval "$(kladd --completion)"
 
+local D=$(date +%H)
+if (( $D < 6 )); then
+	__warn "Why are you awake at this hour? 🤔"
+elif (( $D < 12 )); then
+	__good "Good morning! ☀️"
+elif (( $D < 18 )); then
+	__good "Good evening! 🐉"
+else
+	__good "Good night! 🌙"
+fi
 
 echo
 neofetch
