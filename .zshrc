@@ -2,12 +2,13 @@
 
 autoload -U colors && colors
 
-function __info { echo "$fg_bold[default][*] $*$reset_color" }
-function __good { echo "$fg_bold[green][✓] $*$reset_color" }
-function __warn { echo "$fg_bold[yellow][!] $*$reset_color" }
-function __bad  { echo "$fg_bold[red][✗] $*$reset_color" }
+function __info  { echo "$fg_bold[default][*] $*$reset_color" }
+function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
+function __warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
+function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
+function __trace { echo "\e[${color[faint]};${color[default]}m[*] $*$reset_color" }
 
-__info "Zshrc v1.2.6"
+__info "Zshrc v1.3.0"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -22,6 +23,8 @@ export GOTO_PATH=(
 # PATH
 #
 #{{{
+
+__trace "PATHs"
 
 export PATH="$HOME/bin:$PATH"
 
@@ -49,6 +52,8 @@ export PATH="$PATH:/usr/lib/postgresql/13/bin"
 # Oh my zsh
 #
 #{{{
+
+__trace "Oh-my-zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -88,6 +93,8 @@ fi
 # Aliases
 #
 #{{{
+
+__trace "Aliases"
 
 alias ll="ls -lh"
 alias l1="ls -1h"
@@ -129,6 +136,8 @@ alias tmp='cd /tmp'
 # Functions
 #
 #{{{
+
+__trace "Functions"
 
 function cdl {
 	cd $1 || return
@@ -207,6 +216,8 @@ function goto {
 #
 #{{{
 
+__trace "Completion"
+
 # Set completers
 #   _extensions  : Complete the glob *. with possible file extensions
 #   _complete    : The main completer needed for completion.
@@ -232,6 +243,8 @@ zstyle ':completion:*' group-name ''
 # Misc
 #
 #{{{
+
+__trace "Misc"
   
 #
 # EDITOR validation w/fallback
