@@ -8,7 +8,7 @@ function __warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __trace { echo "\e[${color[faint]};${color[default]}m[*] $*$reset_color" }
 
-__info "Zshrc v1.3.1"
+__info "Zshrc v1.3.2"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -36,6 +36,9 @@ elif [[ -d $HOME/homebrew ]]; then
 else
 	__bad "Homebrew root folder not found."
 fi
+
+# Go
+export PATH="$PATH:$HOME/go/bin"
 
 # Rust
 export PATH="$PATH:$HOME/.cargo/bin"
