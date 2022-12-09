@@ -198,7 +198,7 @@ function goto {
 		__bad "'selector' not installed."
 		return 1
 	}
-	local SEL=$(selector ${=GOTO_PATH} -af "$*")
+	local SEL=$(selector -filter "$*" ${=GOTO_PATH})
 	[[ -n "$SEL" ]] || return
 	local DIR=$SEL
 	echo $DIR
