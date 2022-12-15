@@ -8,7 +8,7 @@ function __warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __trace { echo "\e[${color[faint]};${color[default]}m[*] $*$reset_color" }
 
-__info "Zshrc v1.3.2"
+__info "Zshrc v1.3.3"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -99,8 +99,9 @@ fi
 
 __trace "Aliases"
 
+alias l="ls -F"
 alias ll="ls -lh"
-alias l1="ls -1h"
+alias l1="ls -1hF"
 alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
 alias less="less -r"
