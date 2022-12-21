@@ -2,13 +2,15 @@
 
 autoload -U colors && colors
 
-function __info  { echo "$fg_bold[default][*] $*$reset_color" }
-function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
+function __info  { echo "\e[${color[faint]};${color[default]}m[·] $*$reset_color" }
+function __emph  { echo "$fg_bold[default][*] $*$reset_color" }
 function __warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
+function __err   { echo "$fg_bold[red][!!] $*$reset_color" }
+function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
-function __trace { echo "\e[${color[faint]};${color[default]}m[*] $*$reset_color" }
+function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__info "Zshrc v1.3.3"
+__emph "Zshrc v1.4.0"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -24,7 +26,7 @@ export GOTO_PATH=(
 #
 #{{{
 
-__trace "PATHs"
+__info "PATHs"
 
 export PATH="$HOME/bin:$PATH"
 
@@ -56,7 +58,7 @@ export PATH="$PATH:/usr/lib/postgresql/13/bin"
 #
 #{{{
 
-__trace "Oh-my-zsh"
+__info "Oh-my-zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -97,7 +99,7 @@ fi
 #
 #{{{
 
-__trace "Aliases"
+__info "Aliases"
 
 alias l="ls -F"
 alias ll="ls -lh"
@@ -141,7 +143,7 @@ alias tmp='cd /tmp'
 #
 #{{{
 
-__trace "Functions"
+__info "Functions"
 
 function cdl {
 	cd $1 || return
@@ -220,7 +222,7 @@ function goto {
 #
 #{{{
 
-__trace "Completion"
+__info "Completion"
 
 # Set completers
 #   _extensions  : Complete the glob *. with possible file extensions
@@ -248,7 +250,7 @@ zstyle ':completion:*' group-name ''
 #
 #{{{
 
-__trace "Misc"
+__info "Misc"
   
 #
 # EDITOR validation w/fallback
@@ -313,7 +315,7 @@ fi
 #
 if [[ (! -f ~/.cache/rogu/updated) || $(date +%Y-%m-%d) -ne $(cat ~/.cache/rogu/updated) ]]; then
 	mkdir -p ~/.cache/rogu
-	__info "Running daily Rogu update"
+	__emph "Running daily Rogu update"
 	rogu update &&
 	date +%Y-%m-%d > ~/.cache/rogu/updated
 fi
