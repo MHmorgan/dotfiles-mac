@@ -173,7 +173,7 @@ function dot-edit {
 		rogu list
 	else
 		$EDITOR ~/$1
-		rogu sync
+		rogu sync dotfiles
 	fi
 }
 
@@ -226,11 +226,11 @@ function help {
 
 	# Aliases
 	__bold "\nMy Aliases"
-	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_]\w*)/' | sort | column -c$W
+	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_]\S*)/' | sort | column -c$W
 
 	# Functions
 	__bold "\nMy Functions"
-	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\w*)/' | sort | column -c$W
+	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
 }
 
 function home {
