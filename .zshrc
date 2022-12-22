@@ -171,10 +171,12 @@ function cdls {
 function dot-edit {
 	if [[ -z "$1" ]]; then
 		rogu list
-	else
-		$EDITOR ~/$1
-		rogu sync dotfiles
+		return
 	fi
+
+	local path=~/$1
+	$EDITOR $path
+	rogu sync dotfiles
 }
 
 function gitaliases {
