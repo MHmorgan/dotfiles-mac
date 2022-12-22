@@ -226,7 +226,7 @@ function help {
 
 	# Aliases
 	__bold "\nMy Aliases"
-	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_]\S*)/' | sort | column -c$W
+	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_][^=]*)/' | sort | column -c$W
 
 	# Functions
 	__bold "\nMy Functions"
