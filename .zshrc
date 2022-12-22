@@ -176,15 +176,19 @@ function dot-edit {
 
 	local fpath=~/$1
 	local ftmp=/tmp/dotfiles/$1
+	test -d /tmp/dotfiles || mkdir /tmp/dotfiles
 
 	$EDITOR $fpath
 
-	cat $fpath | perl -pE '
-		next unless /"Zshrc v(\d+)"$/;
-		my $num = $1 + 1;
-		$_ =~ s/$1/$num/;
-	' > $ftmp
-	mv $ftmp $fpath
+	# Increase version number for .zshrc
+	if [[ $fpath == "~/.zshrc" ]]; then
+		cat $fpath | perl -pE '
+			next unless /"Zshrc v(\d+)"$/;
+			my $num = $1 + 1;
+			$_ =~ s/$1/$num/;
+		' > $tmpdir/$fpath
+		#mv $ftmp/$fpath $fpath
+	fi
 
 	rogu sync dotfiles
 }
