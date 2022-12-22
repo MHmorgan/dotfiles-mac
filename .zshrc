@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v48"
+__emph "Zshrc v49"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -181,7 +181,7 @@ function dot-edit {
 	$EDITOR $fpath
 
 	# Return if there were no changes
-	if [[ -z "$(git status --short)" ]]; then
+	if [[ -z "$(dot status --short)" ]]; then
 		return
 	fi
 
