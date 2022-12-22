@@ -309,16 +309,6 @@ else
 	__info "Local RC file (~/.myzshrc) not found."
 fi
 
-#
-# Daily Rogu update
-#
-if [[ (! -f ~/.cache/rogu/updated) || $(date +%Y-%m-%d) -ne $(cat ~/.cache/rogu/updated) ]]; then
-	mkdir -p ~/.cache/rogu
-	__emph "Running daily Rogu update"
-	rogu update &&
-	date +%Y-%m-%d > ~/.cache/rogu/updated
-fi
-
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
