@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v44"
+__emph "Zshrc v45"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -236,18 +236,22 @@ function help {
 
 	# Applications
 	__bold "Applications (~/bin)"
+	echo "--------------------"
 	COLUMNS=$W ls ~/bin
 
 	# Libraries
 	__bold "\nLibraries (~/lib)"
+	echo "-----------------"
 	COLUMNS=$W ls ~/lib
 
 	# Aliases
 	__bold "\nMy Aliases"
+	echo "----------"
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_][^=]*)/' | sort | column -c$W
 
 	# Functions
 	__bold "\nMy Functions"
+	echo "------------"
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
 }
 
