@@ -174,18 +174,17 @@ function dot-edit {
 		return
 	fi
 
-	local path=~/$1
+	local fpath=~/$1
 	local ftmp=/tmp/dotfiles/$1
-	[[ -d /tmp/dotfiles ]] || mkdir /tmp/dotfiles
 
-	$EDITOR $path
+	$EDITOR $fpath
 
-	cat $path | perl -pE '
+	cat $fpath | perl -pE '
 		next unless /"Zshrc v(\d+)"$/;
 		my $num = $1 + 1;
 		$_ =~ s/$1/$num/;
 	' > $ftmp
-	mv $ftmp $path
+	mv $ftmp $fpath
 
 	rogu sync dotfiles
 }
