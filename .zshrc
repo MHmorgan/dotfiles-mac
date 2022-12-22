@@ -209,6 +209,22 @@ function goto {
 	cd -P $DIR
 	ll
 }
+
+function todo {
+	if [[ -n "$(git_repo_name)" ]]; then
+		git grep TODO
+	else
+		grep -r TODO .
+	fi
+}
+
+function update {
+	__bold "## Rogu update ##"
+	rogu sync
+
+	__bold "\n## Homebrew update ##"
+	brew update && brew upgrade
+}
 #}}}
 
 
@@ -312,8 +328,13 @@ fi
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
-eval "$(rogu --completion)"
 eval "$(kladd --completion)"
+
+echo
+neofetch
+fortune | cowsay -n
+echo
+__info "Remember to update"
 
 local D=$(date +%H)
 if (( $D < 6 )); then
@@ -325,8 +346,4 @@ elif (( $D < 18 )); then
 else
 	__good "Good night! 🌙"
 fi
-
-echo
-neofetch
-fortune | cowsay -n
 #}}}
