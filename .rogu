@@ -1,0 +1,81 @@
+rogu:
+  # URL to the parent directory of the Rogu binaries.
+  #
+  # This is used by Rogu to update himself. The actual binary
+  # is automatically added by Rogu to match the correct platform.
+  url_dir: https://github.com/MHmorgan/rogu/releases/latest/download
+  path: ~/bin/rogu
+
+dotfiles:
+  repo: https://github.com/MHmorgan/dotfiles-mac.git
+  branch: main
+
+# Install items are custom shell items which install
+# something, and Rogu are responsible for running them.
+#
+# The `install` script is used to install it.
+# The optional `uninstall` script is used to uninstall it.
+#
+# The `check` script is used to check if it's installed,
+# and must return 0 if it is.
+#
+# If an `update` script is provided, it will be run during
+# `rogu sync` if the `check` script returns 0.
+scripts:
+
+  Oh-my-zsh:
+    priority: 1
+    install: |
+      set -x
+      sh -c "RUNZSH=no $(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+      test -f ~/.zshrc.pre-oh-my-zsh && mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
+    check: |
+      test -d ~/.oh-my-zsh
+    uninstall: |
+      rm -rf ~/.oh-my-zsh
+
+  Shell Integration:
+    priority: 10
+    install: |
+      set -x
+      curl -sSL https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
+    check: |
+      test -f ~/.iterm2_shell_integration.zsh
+    uninstall: |
+      rm ~/.iterm2_shell_integration.zsh
+    update: |
+      set -x
+      curl -sSL https://iterm2.com/shell_integration/zsh -o ~/.cache/iterm2_shell_integration.zsh &&
+      mv ~/.cache/iterm2_shell_integration.zsh ~/.iterm2_shell_integration.zsh
+
+# Files are files which rogu downloads and keeps in sync.
+#
+# They must be publicly available on the internet.
+#
+# The `priority` is used to determine the installation order
+# and is mixed with the `priority` of the `items` above.
+files:
+
+  skap.py:
+    priority: 10
+    source: https://mhmorgan.github.io/boilerplates/skap.py
+    destination: ~/bin/skap
+    mode: 0o755
+
+  kladd.pl:
+    priority: 10
+    source: https://mhmorgan.github.io/boilerplates/kladd.pl
+    destination: ~/bin/kladd
+    mode: 0o755
+
+  common.py:
+    priority: 10
+    source: https://mhmorgan.github.io/boilerplates/common.py
+    destination: ~/lib/common.py
+    mode: 0o755
+
+  selector:
+    priority: 10
+    source: https://github.com/MHmorgan/selector/releases/latest/download/selector_darwin_arm64
+    destination: ~/bin/selector
+    mode: 0o755
