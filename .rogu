@@ -12,6 +12,10 @@ dotfiles:
   repo: https://github.com/MHmorgan/dotfiles-mac.git
   branch: main
 
+# URL to the parent directory of the boilerplates.
+boilerplates:
+  url_dir: https://raw.githubusercontent.com/MHmorgan/boilerplates/main
+
 # Install items are custom shell items which install
 # something, and Rogu are responsible for running them.
 #
@@ -28,7 +32,6 @@ scripts:
   Oh-my-zsh:
     priority: 1
     install: |
-      set -x
       sh -c "RUNZSH=no $(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
       test -f ~/.zshrc.pre-oh-my-zsh && mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
     check: |
@@ -39,14 +42,12 @@ scripts:
   Shell Integration:
     priority: 10
     install: |
-      set -x
       curl -sSL https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
     check: |
       test -f ~/.iterm2_shell_integration.zsh
     uninstall: |
       rm ~/.iterm2_shell_integration.zsh
     update: |
-      set -x
       curl -sSL https://iterm2.com/shell_integration/zsh -o ~/.cache/iterm2_shell_integration.zsh &&
       mv ~/.cache/iterm2_shell_integration.zsh ~/.iterm2_shell_integration.zsh
 
