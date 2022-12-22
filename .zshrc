@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v42"
+__emph "Zshrc v43"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -187,8 +187,8 @@ function dot-edit {
 			next unless /"Zshrc v(\d+)"$/;
 			my $num = $1 + 1;
 			$_ =~ s/$1/$num/;
-		' > $ftmp
-		#mv $ftmp $fpath
+		' > $ftmp &&
+		mv $ftmp $fpath
 	fi
 
 	rogu sync dotfiles
