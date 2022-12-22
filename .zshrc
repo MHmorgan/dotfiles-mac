@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v50"
+__emph "Zshrc v51"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -405,3 +405,4 @@ else
 	__good "Good night! 🌙"
 fi
 #}}}
+
