@@ -168,6 +168,15 @@ function cdls {
 	ls
 }
 
+function dot-edit {
+	if [[ -z "$1" ]]; then
+		rogu list
+	else
+		$EDITOR ~/$1
+		rogu sync
+	fi
+}
+
 function gitaliases {
 	local file=$HOME/.oh-my-zsh/plugins/git/README.md
 	local command='
