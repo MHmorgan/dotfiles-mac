@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v47"
+__emph "Zshrc v48"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -179,6 +179,11 @@ function dot-edit {
 	mkdir -p /tmp/dotfiles
 
 	$EDITOR $fpath
+
+	# Return if there were no changes
+	if [[ -z "$(git status --short)" ]]; then
+		return
+	fi
 
 	# Increase version number for .zshrc
 	if [[ $fpath =~ ".zshrc$" ]]; then
