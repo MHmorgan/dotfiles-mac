@@ -186,8 +186,8 @@ function dot-edit {
 			next unless /"Zshrc v(\d+)"$/;
 			my $num = $1 + 1;
 			$_ =~ s/$1/$num/;
-		' > $tmpdir/$fpath
-		#mv $ftmp/$fpath $fpath
+		' > $ftmp
+		#mv $ftmp $fpath
 	fi
 
 	rogu sync dotfiles
