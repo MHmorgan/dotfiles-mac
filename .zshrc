@@ -145,23 +145,6 @@ alias tmp='cd /tmp'
 
 __info "Functions"
 
-function cdl {
-	cd $1 || return
-	ll
-}
-
-
-function cdls {
-	cd $1 || return
-	ls
-}
-
-function home {
-	echo $HOME
-	cd $HOME
-	ll
-}
-
 function backup {
 	local src=$1
 
@@ -172,6 +155,17 @@ function backup {
 	fi
 
 	cp -vpr $src $src~
+}
+
+function cdl {
+	cd $1 || return
+	ll
+}
+
+
+function cdls {
+	cd $1 || return
+	ls
 }
 
 function gitaliases {
@@ -210,11 +204,38 @@ function goto {
 	ll
 }
 
+function help {
+	local W=80
+
+	# Applications
+	__bold "Applications (~/bin)"
+	COLUMNS=$W ls ~/bin
+
+	# Libraries
+	__bold "\nLibraries (~/lib)"
+	COLUMNS=$W ls ~/lib
+
+	# Aliases
+	__bold "\nMy Aliases"
+	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_]\w*)/' | sort | column -c$W
+
+	# Functions
+	__bold "\nMy Functions"
+	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\w*)/' | sort | column -c$W
+}
+
+function home {
+	echo $HOME
+	cd $HOME
+	ll
+}
+
 function todo {
+	local re='(TODO|FIXME|BUG)'
 	if [[ -n "$(git_repo_name)" ]]; then
-		git grep TODO
+		git grep -E $re
 	else
-		grep -r TODO .
+		grep -rE $re .
 	fi
 }
 
