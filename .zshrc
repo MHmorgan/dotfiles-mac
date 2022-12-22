@@ -182,6 +182,7 @@ function dot-edit {
 
 	# Increase version number for .zshrc
 	if [[ $fpath == "~/.zshrc" ]]; then
+		__info "Incrementing .zshrc version number"
 		cat $fpath | perl -pE '
 			next unless /"Zshrc v(\d+)"$/;
 			my $num = $1 + 1;
