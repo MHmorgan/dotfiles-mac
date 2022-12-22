@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v1.5.0"
+__emph "Zshrc v42"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -175,7 +175,18 @@ function dot-edit {
 	fi
 
 	local path=~/$1
+	local ftmp=/tmp/dotfiles/$1
+	[[ -d /tmp/dotfiles ]] || mkdir /tmp/dotfiles
+
 	$EDITOR $path
+
+	cat $path | perl -pE '
+		next unless /"Zshrc v(\d+)"$/;
+		my $num = $1 + 1;
+		$_ =~ s/$1/$num/;
+	' > $ftmp
+	mv $ftmp $path
+
 	rogu sync dotfiles
 }
 
