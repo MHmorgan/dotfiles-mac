@@ -219,10 +219,12 @@ function todo {
 }
 
 function update {
-	__bold "## Rogu update ##"
+	__bold "Rogu update"
+	echo "-----------"
 	rogu sync
 
-	__bold "\n## Homebrew update ##"
+	__bold "\nHomebrew update"
+	echo "---------------"
 	brew update && brew upgrade
 }
 #}}}
