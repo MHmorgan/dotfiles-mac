@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v58"
+__emph "Zshrc v59"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -183,7 +183,9 @@ function dot-edit {
 	local ftmp=/tmp/dotfiles/$1
 	mkdir -p /tmp/dotfiles
 
-	$EDITOR $fpath
+	local edit=$EDITOR
+	[[ -n "$edit" ]] || edit=vi
+	$edit $fpath
 
 	# Return if there were no changes
 	if [[ -z "$(dot status --short)" ]]; then
