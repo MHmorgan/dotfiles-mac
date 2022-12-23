@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v51"
+__emph "Zshrc v52"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -388,10 +388,15 @@ eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 eval "$(kladd --completion)"
 
+
+__info "Rogu doctor"
+rogu doctor
 echo
+
 neofetch
 fortune | cowsay -n
 echo
+
 __info "Remember to update"
 
 local D=$(date +%H)
@@ -405,4 +410,3 @@ else
 	__good "Good night! 🌙"
 fi
 #}}}
-
