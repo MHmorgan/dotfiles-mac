@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v53"
+__emph "Zshrc v54"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -394,8 +394,11 @@ neofetch
 fortune | cowsay -n
 echo
 
-__info "Rogu doctor"
-rogu doctor
+if which rogu &>/dev/null
+then
+	rogu doctor
+fi
+
 __info "Remember to update"
 
 local D=$(date +%H)
