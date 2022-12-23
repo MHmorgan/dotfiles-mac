@@ -10,6 +10,9 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
+function __exists { which $* &>/dev/null }
+function __ifexists { which $1 &>/dev/null && $* }
+
 __emph "Zshrc v57"
 
 export EDITOR='nvim'
@@ -119,7 +122,7 @@ alias ipy='ipython3 --autocall=1 --pprint'
 alias activate-venv='source venv/bin/activate'
 
 for N in $(seq 4 20); do
-	if which python3.$N &>/dev/null
+	if __exists python3.$N
 	then
 		alias py${N}="python3.$N"
 		alias py${N}m="python3.$N -m"
@@ -169,6 +172,8 @@ function cdls {
 }
 
 function dot-edit {
+	__exists rogu || { __err "rogu not installed!"; return 1 }
+
 	if [[ -z "$1" ]]; then
 		rogu list
 		return
@@ -277,6 +282,8 @@ function todo {
 }
 
 function update {
+	__ifexists neofetch
+
 	__bold "Rogu update"
 	echo "-----------"
 	rogu sync
@@ -391,15 +398,7 @@ eval "$(starship init zsh)"
 eval "$(kladd --completion)"
 
 
-echo
-neofetch
-fortune | cowsay -n
-echo
-
-if which rogu &>/dev/null
-then
-	rogu doctor
-fi
+__ifexists rogu doctor
 
 __info "Remember to update"
 
@@ -413,4 +412,10 @@ elif (( $D < 18 )); then
 else
 	__good "Good night! 🌙"
 fi
+
+if __exists fortune cowsay
+then
+	fortune | cowsay -n
+fi
 #}}}
+
