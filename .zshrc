@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v54"
+__emph "Zshrc v55"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -187,13 +187,15 @@ function dot-edit {
 
 	# Increase version number for .zshrc
 	if [[ $fpath =~ ".zshrc$" ]]; then
+		local old=$(cat $fpath | perl -nE 'say $1 if /"Zshrc (v\d+)"$/')
 		cat $fpath | perl -pE '
 			next unless /"Zshrc v(\d+)"$/;
 			my $num = $1 + 1;
 			$_ =~ s/$1/$num/;
 		' > $ftmp &&
 		mv $ftmp $fpath
-		cat $fpath | perl -nE 'say $1 if /"(Zshrc v\d+)"$/'
+		local new=$(cat $fpath | perl -nE 'say $1 if /"Zshrc (v\d+)"$/')
+		echo ".zshrc $old -> $new"
 	fi
 
 	rogu sync dotfiles
