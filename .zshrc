@@ -10,7 +10,7 @@ function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
 function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
 function __bold  { echo "$fg_bold[default]$*$reset_color" }
 
-__emph "Zshrc v55"
+__emph "Zshrc v56"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -195,7 +195,7 @@ function dot-edit {
 		' > $ftmp &&
 		mv $ftmp $fpath
 		local new=$(cat $fpath | perl -nE 'say $1 if /"Zshrc (v\d+)"$/')
-		echo ".zshrc $old -> $new"
+		echo "zshrc $old -> $new"
 	fi
 
 	rogu sync dotfiles
