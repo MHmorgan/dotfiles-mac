@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v61"
+__emph "Zshrc v62"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -171,7 +171,7 @@ function cdls {
 	ls
 }
 
-function dot-edit {
+function dotedit {
 	__exists rogu || { __err "rogu not installed!"; return 1 }
 
 	if [[ -z "$1" ]]; then
