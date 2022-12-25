@@ -1,4 +1,4 @@
-# vim: filetype=zsh:ts=2:sw=2
+# vim: filetype=zsh:ts=2:sw=2:expandtab
 
 rogu:
   # URL to the parent directory of the Rogu binaries.
@@ -98,4 +98,9 @@ files:
     destination: ~/bin/selector
     mode: 0o755
 
+
+templates:
+
+  go:
+    url: https://github.com/MHmorgan/go-template.git
 
