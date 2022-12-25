@@ -42,20 +42,7 @@ scripts:
     uninstall: |
       rm -rf ~/.oh-my-zsh
 
-  Shell Integration:
-    priority: 10
-    install: |
-      curl -sSL https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
-    check: |
-      test -f ~/.iterm2_shell_integration.zsh
-    uninstall: |
-      rm ~/.iterm2_shell_integration.zsh
-    update: |
-      curl -sSL https://iterm2.com/shell_integration/zsh -o ~/.cache/iterm2_shell_integration.zsh &&
-      mv ~/.cache/iterm2_shell_integration.zsh ~/.iterm2_shell_integration.zsh
-
   FiraMono Fonts:
-    priority: 10
     check: |
       cd ~/Library/Fonts
       find . -name 'Fura Mono*Nerd Font*' | grep -q .
@@ -82,17 +69,19 @@ files:
   common.py:
     source: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/common.py
     destination: ~/lib/common.py
-    mode: 0o644
 
   common.zsh:
     source: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/common.zsh
     destination: ~/lib/common.zsh
-    mode: 0o644
 
   selector:
     source: https://github.com/MHmorgan/selector/releases/latest/download/selector_darwin_arm64
     destination: ~/bin/selector
     mode: 0o755
+
+  iterm2_shell_integration.zsh:
+    source: https://iterm2.com/shell_integration/zsh 
+    destination: ~/.iterm2_shell_integration.zsh
 
 
 templates:
