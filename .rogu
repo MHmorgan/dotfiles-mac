@@ -33,7 +33,7 @@ boilerplates:
 scripts:
 
   Oh-my-zsh:
-    priority: 1
+    priority: 42
     install: |
       sh -c "RUNZSH=no $(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
       test -f ~/.zshrc.pre-oh-my-zsh && mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
@@ -75,25 +75,21 @@ scripts:
 files:
 
   kladd.pl:
-    priority: 10
     source: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/kladd.pl
     destination: ~/bin/kladd
     mode: 0o755
 
   common.py:
-    priority: 10
     source: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/common.py
     destination: ~/lib/common.py
     mode: 0o644
 
   common.zsh:
-    priority: 10
     source: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/common.zsh
     destination: ~/lib/common.zsh
     mode: 0o644
 
   selector:
-    priority: 10
     source: https://github.com/MHmorgan/selector/releases/latest/download/selector_darwin_arm64
     destination: ~/bin/selector
     mode: 0o755
