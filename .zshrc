@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v62"
+__emph "Zshrc v63"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -333,6 +333,60 @@ zstyle ':completion:*' group-name ''
 
 
 ################################################################################
+# Homebrew
+#
+#{{{
+
+export HOMEBREW_APPS=(
+	cheat
+	cowsay
+	docker
+	elm
+	figlet
+	fortune
+	gcc
+	gh
+	glow
+	go
+	graphviz
+	gum
+	ipython
+	jupyterlab
+	lazygit
+	mysql
+	neofetch
+	neovim
+	pandoc
+	pipgrip
+	plantuml
+	python-tk
+	python
+	ripgrep
+	rust
+	sl
+	starship
+	tag
+	thefuck
+	tldr
+	tmux
+)
+
+function brewinstall {
+	brew install -q $HOMEBREW_APPS
+}
+
+
+if __exists brew
+then
+	# brew command completion
+	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+	autoload -Uz compinit
+	compinit
+fi
+#}}}
+
+
+################################################################################
 # Misc
 #
 #{{{
@@ -353,23 +407,11 @@ fi
 # Check essential and non-essential applications, respectively
 #
 for APP in rogu brew git gh starship thefuck; do
-	type $APP &>/dev/null || __bad "Not installed: $APP"
+	__exists $APP || __bad "Not installed: $APP"
 done
 for APP in neofetch fortune cowsay rg pandoc tag; do
-	type $APP &>/dev/null || __warn "Not installed: $APP"
+	__exists $APP || __warn "Not installed: $APP"
 done
-
-
-#
-# Remaining homebrew setup
-#
-if type brew &>/dev/null
-then
-	# brew command completion
-	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-	autoload -Uz compinit
-	compinit
-fi
 
 
 #
