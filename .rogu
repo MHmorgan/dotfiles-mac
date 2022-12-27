@@ -89,3 +89,6 @@ templates:
   go:
     url: https://github.com/MHmorgan/go-template.git
 
+  apps:
+    url: https://github.com/MHmorgan/apps-template.git
+
