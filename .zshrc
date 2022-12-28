@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v68"
+__emph "Zshrc v69"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -211,6 +211,14 @@ function editdotfile {
 
 function editreadme {
 	__exists selector || { __bad "'selector' not installed."; return 1 }
+	local DEPTH=5
+
+	if [[ -z "$1" ]]; then
+		find $GOTO_PATH -iname 'readme.*' -maxdepth $DEPTH |
+		sed "s/${HOME//\//\\/}/~/" | sort | uniq
+		return
+	fi
+
 	local DIR=$(selector -filter "$*" ${=GOTO_PATH})
 	[[ -n "$DIR" ]] || return
 	pushd -q $DIR
@@ -225,7 +233,7 @@ function editreadme {
 		fi
 
 		# Find readme file
-		local FILE=$(find . -iname 'readme.*' -maxdepth 3 | head -n1)
+		local FILE=$(find . -iname 'readme.*' -maxdepth $DEPTH)
 		if [[ -z $FILE ]]; then
 			__bad "no readme in $DIR"
 			return 1
