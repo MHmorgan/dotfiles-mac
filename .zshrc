@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v63"
+__emph "Zshrc v64"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -111,6 +111,9 @@ alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
 alias less="less -r"
 
+alias ch='clear && home'
+alias tmp='cd /tmp'
+
 alias n="nvim"
 alias ns="nvim -S"
 
@@ -136,8 +139,6 @@ alias aliases='alias | sort | less'
 
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-
-alias tmp='cd /tmp'
 #}}}
 
 
