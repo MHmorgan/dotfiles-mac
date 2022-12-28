@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v67"
+__emph "Zshrc v68"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -172,7 +172,7 @@ function cdls {
 	ls
 }
 
-function dotedit {
+function editdotfile {
 	__exists rogu || { __err "rogu not installed!"; return 1 }
 
 	if [[ -z "$1" ]]; then
@@ -209,6 +209,45 @@ function dotedit {
 	rogu sync dotfiles
 }
 
+function editreadme {
+	__exists selector || { __bad "'selector' not installed."; return 1 }
+	local DIR=$(selector -filter "$*" ${=GOTO_PATH})
+	[[ -n "$DIR" ]] || return
+	pushd -q $DIR
+
+	function () {
+		# Must be clean to side effects
+		if [[ -n "$(git status --short)" ]]; then
+			__warn "repo is dirty - must be clean"
+			__info $PWD
+			git status
+			return 1
+		fi
+
+		# Find readme file
+		local FILE=$(find . -iname 'readme.*' -maxdepth 3 | head -n1)
+		if [[ -z $FILE ]]; then
+			__bad "no readme in $DIR"
+			return 1
+		fi
+
+		__info "Editing $FILE"
+		$EDITOR $FILE || return $?
+
+		# Stop if no changes were made
+		[[ -n "$(git status --short)" ]] || return
+
+		__info "Committing..."
+		git commit -m "Update $FILE" $FILE &&
+		__info "Pushing..." &&
+		git push
+	}
+
+	local res=$?
+	popd -q
+	return $res
+}
+
 function gitaliases {
 	local file=$HOME/.oh-my-zsh/plugins/git/README.md
 	local command='
@@ -232,7 +271,7 @@ function gitaliases {
 unalias goto
 
 function goto {
-	type selector &>/dev/null || {
+	__exists selector || {
 		__bad "'selector' not installed."
 		return 1
 	}
