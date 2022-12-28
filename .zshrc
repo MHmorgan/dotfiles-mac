@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v64"
+__emph "Zshrc v65"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -251,14 +251,16 @@ function help {
 	# Applications
 	__bold "Applications (~/bin)"
 	echo "--------------------"
-	cd ~/bin
+	pushd ~/bin
 	print -l *(x) | column -c$W
+	popd
 
 	# Libraries
 	__bold "\nLibraries (~/lib)"
 	echo "-----------------"
-	cd ~/lib
+	pushd ~/lib
 	print -l *(.) | column -c$W
+	popd
 
 	# Aliases
 	__bold "\nMy Aliases"
