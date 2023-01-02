@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v70"
+__emph "Zshrc v71"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -420,6 +420,10 @@ export HOMEBREW_APPS=(
 )
 
 function brewinstall {
+	if ! __exists brew
+	then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
 	brew install -q $HOMEBREW_APPS
 }
 
