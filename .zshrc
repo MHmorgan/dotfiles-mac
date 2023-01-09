@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v73"
+__emph "Zshrc v74"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -324,6 +324,16 @@ function home {
 	echo $HOME
 	cd $HOME
 	ll
+}
+
+function s {
+	local USER=m
+	local HOST=134.122.59.44
+
+	case $1 in
+		*)
+			ssh $USER@$HOST
+	esac
 }
 
 function todo {
