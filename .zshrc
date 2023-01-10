@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v74"
+__emph "Zshrc v75"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -76,6 +76,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
 	brew
 	chucknorris
+	docker
 	gh
 	git
 	golang
