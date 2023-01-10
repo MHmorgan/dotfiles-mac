@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac 1"
+__emph "Zshrc Mac v77"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -200,7 +200,7 @@ function editdotfile {
 	if [[ $fpath =~ ".zshrc$" ]]; then
 		local old=$(cat $fpath | perl -nE 'say $1 if /"Zshrc ?\w* (v\d+)"$/')
 		cat $fpath | perl -pE '
-			next unless /"Zshrc ?\w* (v\d+)"$/;
+			next unless /"Zshrc ?\w* v(\d+)"$/;
 			my $num = $1 + 1;
 			$_ =~ s/$1/$num/;
 		' > $ftmp &&
