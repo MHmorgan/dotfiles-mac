@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc v75"
+__emph "Zshrc v76"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -198,14 +198,14 @@ function editdotfile {
 
 	# Increase version number for .zshrc
 	if [[ $fpath =~ ".zshrc$" ]]; then
-		local old=$(cat $fpath | perl -nE 'say $1 if /"Zshrc (v\d+)"$/')
+		local old=$(cat $fpath | perl -nE 'say $1 if /"Zshrc ?\w* (v\d+)"$/')
 		cat $fpath | perl -pE '
-			next unless /"Zshrc v(\d+)"$/;
+			next unless /"Zshrc ?\w* (v\d+)"$/;
 			my $num = $1 + 1;
 			$_ =~ s/$1/$num/;
 		' > $ftmp &&
 		mv $ftmp $fpath
-		local new=$(cat $fpath | perl -nE 'say $1 if /"Zshrc (v\d+)"$/')
+		local new=$(cat $fpath | perl -nE 'say $1 if /"Zshrc ?\w* (v\d+)"$/')
 		echo ".zshrc $old -> $new"
 	fi
 
