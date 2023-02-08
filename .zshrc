@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac v78"
+__emph "Zshrc Mac v79"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -108,6 +108,8 @@ __info "Aliases"
 alias l="ls -F"
 alias ll="ls -lh"
 alias l1="ls -1hF"
+alias lsf="ls -hd *(.)"
+alias llf="ls -lhd *(.)"
 alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
 alias less="less -r"
