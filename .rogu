@@ -61,11 +61,6 @@ scripts:
 # and is mixed with the `priority` of the `items` above.
 files:
 
-  kladd.pl:
-    url: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/kladd.pl
-    dst: ~/bin/kladd
-    mode: 0o755
-
   common.py:
     url: https://raw.githubusercontent.com/MHmorgan/boilerplates/main/common.py
     dst: ~/lib/common.py
