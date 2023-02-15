@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac v81"
+__emph "Zshrc Mac v82"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -511,11 +511,11 @@ eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 
 
-__ROGU_UPDATED=$(date '+%Y%m%d')
-if ! [[ -f ~/.cache/rogu-updated && "$__ROGU_UPDATED" == "$(cat ~/.cache/rogu-updated)" ]]
+UPDATED=$(date '+%Y%m%d')
+if ! [[ -f ~/.cache/rogu-updated && "$UPDATED" == "$(cat ~/.cache/rogu-updated)" ]]
 then
 	mkdir -p ~/.cache
-	echo $__ROGU_UPDATED > ~/.cache/rogu-updated
+	echo $UPDATED > ~/.cache/rogu-updated
 	__ifexists rogu doctor
 fi
 
