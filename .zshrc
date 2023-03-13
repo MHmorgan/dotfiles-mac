@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac v83"
+__emph "Zshrc Mac v84"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -356,12 +356,10 @@ function todo {
 function update {
 	__ifexists neofetch
 
-	__bold "Rogu update"
-	echo "-----------"
+	gum style --bold --border=rounded --width=20 --align=center "Rogu"
 	rogu sync
 
-	__bold "\nHomebrew update"
-	echo "---------------"
+	gum style --bold --border=rounded --width=20 --align=center "Homebrew"
 	brew update && brew upgrade
 }
 
