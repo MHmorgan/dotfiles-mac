@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac v82"
+__emph "Zshrc Mac v83"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -25,11 +25,12 @@ export GOTO_PATH=(
 
 
 ################################################################################
+#
 # PATH
 #
-#{{{
+################################################################################
 
-__info "PATHs"
+echo -n "\rPATHs               "
 
 export PATH="$HOME/bin:$PATH"
 
@@ -57,11 +58,12 @@ export PATH="$PATH:/usr/lib/postgresql/13/bin"
 
 
 ################################################################################
+#
 # Oh my zsh
 #
-#{{{
+################################################################################
 
-__info "Oh-my-zsh"
+echo -n "\rOh-my-zsh           "
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -99,11 +101,12 @@ fi
 
 
 ################################################################################
+#
 # Aliases
 #
-#{{{
+################################################################################
 
-__info "Aliases"
+echo -n "\rAliases             "
 
 alias l="ls -F"
 alias ll="ls -lh"
@@ -149,11 +152,12 @@ alias sshserver='ssh m@134.122.59.44'
 
 
 ################################################################################
+#
 # Functions
 #
-#{{{
+################################################################################
 
-__info "Functions"
+echo -n "\rFunctions           "
 
 function backup {
 	local src=$1
@@ -360,10 +364,10 @@ function update {
 	echo "---------------"
 	brew update && brew upgrade
 }
-#}}}
 
 
 ################################################################################
+#
 # Completion
 #
 # See:
@@ -371,9 +375,9 @@ function update {
 #	https://thevaluable.dev/zsh-completion-guide-examples/
 #   https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
 #
-#{{{
+################################################################################
 
-__info "Completion"
+echo -n "\rCompletion          "
 
 # Set completers
 #   _extensions  : Complete the glob *. with possible file extensions
@@ -393,13 +397,15 @@ zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches --%f'
 
 # Group matches under their description header
 zstyle ':completion:*' group-name ''
-#}}}
 
 
 ################################################################################
+#
 # Homebrew
 #
-#{{{
+################################################################################
+
+echo -n "\rHomebrew            "
 
 export HOMEBREW_APPS=(
 	cheat
@@ -451,16 +457,37 @@ then
 	autoload -Uz compinit
 	compinit
 fi
-#}}}
 
 
 ################################################################################
+#
+# Applications
+#
+################################################################################
+
+echo -n "\rApplications        "
+
+# ESSENTIAL
+
+for APP in rogu brew git gh starship thefuck gum; do
+	__exists $APP || __bad "Essential command not installed: $APP"
+done
+
+# NON-ESSENTIAL
+
+for APP in neofetch fortune cowsay rg pandoc tag glow; do
+	__exists $APP || __warn "Not installed: $APP"
+done
+
+
+################################################################################
+#
 # Misc
 #
-#{{{
+################################################################################
 
-__info "Misc"
-  
+echo -n "\rMisc                "
+
 #
 # EDITOR validation w/fallback
 #
@@ -472,32 +499,19 @@ fi
 
 
 #
-# Check essential and non-essential applications, respectively
-#
-for APP in rogu brew git gh starship thefuck; do
-	__exists $APP || __bad "Not installed: $APP"
-done
-for APP in neofetch fortune cowsay rg pandoc tag; do
-	__exists $APP || __warn "Not installed: $APP"
-done
-
-
-#
 # Library paths
 #
 if [[ -d ~/lib ]]; then
 	export PERL5LIB="$HOME/lib:$PERL5LIB"
 	export PYTHONPATH="$HOME/lib:$PYTHONPATH"
-else
-	__warn "Custom libraries directory not found (~/lib)"
 fi
 
 
-if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
-	source ~/.iterm2_shell_integration.zsh
-else
-	__info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
-fi
+#if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
+#	source ~/.iterm2_shell_integration.zsh
+#else
+#	__info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
+#fi
 
 
 if [[ -f $HOME/.myzshrc ]]; then
@@ -511,6 +525,15 @@ eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 
 
+################################################################################
+#
+# Outro
+#
+################################################################################
+
+
+echo "\rRemember to run \`update\`"
+
 UPDATED=$(date '+%Y%m%d')
 if ! [[ -f ~/.cache/rogu-updated && "$UPDATED" == "$(cat ~/.cache/rogu-updated)" ]]
 then
@@ -519,7 +542,6 @@ then
 	__ifexists rogu doctor
 fi
 
-__info "Remember to run \`update\`"
 
 local D=$(date +%H)
 if (( $D < 6 )); then
@@ -536,5 +558,4 @@ if __exists fortune cowsay
 then
 	fortune | cowsay -n
 fi
-#}}}
 
