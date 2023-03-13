@@ -13,7 +13,7 @@ function __bold  { echo "$fg_bold[default]$*$reset_color" }
 function __exists   { which $* &>/dev/null }
 function __ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac v84"
+__emph "Zshrc Mac v85"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -359,6 +359,7 @@ function update {
 	gum style --bold --border=rounded --width=20 --align=center "Rogu"
 	rogu sync
 
+	echo
 	gum style --bold --border=rounded --width=20 --align=center "Homebrew"
 	brew update && brew upgrade
 }
