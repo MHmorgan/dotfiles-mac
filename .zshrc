@@ -17,7 +17,7 @@ function m-ifexists { which $1 &>/dev/null && $* }
 function m-header { gum style --border=rounded --border-foreground="#ff6d67" --width=20 --align=center --margin="1 0" "$*" }
 #}}}
 
-m-emph "Zshrc Mac v86"
+m-emph "Zshrc Mac v87"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -527,7 +527,8 @@ eval "$(starship init zsh)"
 ################################################################################
 
 
-echo "\rRemember to run \`update\`"
+printf "\r"
+m-info "Remember to run \`update\`"
 
 UPDATED=$(date '+%Y%m%d')
 if ! [[ -f ~/.cache/rogu-updated && "$UPDATED" == "$(cat ~/.cache/rogu-updated)" ]]
