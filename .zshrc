@@ -1,19 +1,23 @@
 # vim: filetype=zsh:
 
+#{{{ Pretty-printing
 autoload -U colors && colors
 
-function __info  { echo "\e[${color[faint]};${color[default]}m[·] $*$reset_color" }
-function __emph  { echo "$fg_bold[default][*] $*$reset_color" }
-function __warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
-function __err   { echo "$fg_bold[red][!!] $*$reset_color" }
-function __good  { echo "$fg_bold[green][✓] $*$reset_color" }
-function __bad   { echo "$fg_bold[red][✗] $*$reset_color" }
-function __bold  { echo "$fg_bold[default]$*$reset_color" }
+function m-info  { echo "\e[${color[faint]};${color[default]}m[·] $*$reset_color" }
+function m-emph  { echo "$fg_bold[default][*] $*$reset_color" }
+function m-warn  { echo "$fg_bold[yellow][!] $*$reset_color" }
+function m-err   { echo "$fg_bold[red][!!] $*$reset_color" }
+function m-good  { echo "$fg_bold[green][✓] $*$reset_color" }
+function m-bad   { echo "$fg_bold[red][✗] $*$reset_color" }
+function m-bold  { echo "$fg_bold[default]$*$reset_color" }
 
-function __exists   { which $* &>/dev/null }
-function __ifexists { which $1 &>/dev/null && $* }
+function m-exists   { which $* &>/dev/null }
+function m-ifexists { which $1 &>/dev/null && $* }
 
-__emph "Zshrc Mac v85"
+function m-header { gum style --border=rounded --border-foreground="#ff6d67" --width=20 --align=center --margin="1 0" "$*" }
+#}}}
+
+m-emph "Zshrc Mac v86"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -40,7 +44,7 @@ if [[ -d /opt/homebrew ]]; then
 elif [[ -d $HOME/homebrew ]]; then
 	export PATH="$PATH:$HOME/homebrew/bin:$HOME/homebrew/sbin"
 else
-	__bad "Homebrew root folder not found."
+	m-bad "Homebrew root folder not found."
 fi
 
 # Go
@@ -95,7 +99,7 @@ plugins=(
 if [[ -d $ZSH ]]; then
 	source $ZSH/oh-my-zsh.sh
 else
-	__bad "Oh my zsh is not installed!"
+	m-bad "Oh my zsh is not installed!"
 fi
 #}}}
 
@@ -132,7 +136,7 @@ alias ipy='ipython3 --autocall=1 --pprint'
 alias activate-venv='source venv/bin/activate'
 
 for N in $(seq 4 20); do
-	if __exists python3.$N
+	if m-exists python3.$N
 	then
 		alias py${N}="python3.$N"
 		alias py${N}m="python3.$N -m"
@@ -183,7 +187,7 @@ function cdls {
 }
 
 function editdotfile {
-	__exists rogu || { __err "rogu not installed!"; return 1 }
+	m-exists rogu || { m-err "rogu not installed!"; return 1 }
 
 	if [[ -z "$1" ]]; then
 		rogu list
@@ -220,10 +224,10 @@ function editdotfile {
 }
 
 function editreadme {
-	__exists selector || { __bad "'selector' not installed."; return 1 }
+	m-exists selector || { m-bad "'selector' not installed."; return 1 }
 
 	if [[ -z "$1" ]]; then
-		__bad 'missing repo name'
+		m-bad 'missing repo name'
 		return 1
 	fi
 
@@ -234,8 +238,8 @@ function editreadme {
 	function () {
 		# Must be clean to side effects
 		if [[ -n "$(git status --short)" ]]; then
-			__warn "repo is dirty - must be clean"
-			__info $PWD
+			m-warn "repo is dirty - must be clean"
+			m-info $PWD
 			git status
 			return 1
 		fi
@@ -243,19 +247,19 @@ function editreadme {
 		# Find readme file
 		local FILE=$(find . -iname 'readme.*' -maxdepth 5)
 		if [[ -z $FILE ]]; then
-			__bad "no readme in $DIR"
+			m-bad "no readme in $DIR"
 			return 1
 		fi
 
-		__info "Editing $FILE"
+		m-info "Editing $FILE"
 		$EDITOR $FILE || return $?
 
 		# Stop if no changes were made
 		[[ -n "$(git status --short)" ]] || return
 
-		__info "Committing..."
+		m-info "Committing..."
 		git commit -m "Update $FILE" $FILE &&
-		__info "Pushing..." &&
+		m-info "Pushing..." &&
 		git push
 	}
 
@@ -287,8 +291,8 @@ function gitaliases {
 unalias goto
 
 function goto {
-	__exists selector || {
-		__bad "'selector' not installed."
+	m-exists selector || {
+		m-bad "'selector' not installed."
 		return 1
 	}
 	local SEL=$(selector -filter "$*" ${=GOTO_PATH})
@@ -303,28 +307,20 @@ function goto {
 function help {
 	local W=80
 
-	# Applications
-	__bold "Applications (~/bin)"
-	echo "--------------------"
+	m-header Applications
 	pushd -q ~/bin
 	print -l *(x) | column -c$W
 	popd -q
 
-	# Libraries
-	__bold "\nLibraries (~/lib)"
-	echo "-----------------"
+	m-header Libraries
 	pushd -q ~/lib
 	print -l *(.) | column -c$W
 	popd -q
 
-	# Aliases
-	__bold "\nMy Aliases"
-	echo "----------"
+	m-header Aliases
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_][^=]*)/' | sort | column -c$W
 
-	# Functions
-	__bold "\nMy Functions"
-	echo "------------"
+	m-header Functions
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
 }
 
@@ -354,13 +350,13 @@ function todo {
 }
 
 function update {
-	__ifexists neofetch
+	m-ifexists neofetch
 
-	gum style --bold --border=rounded --width=20 --align=center "Rogu"
+	m-header Rogu
 	rogu sync
 
 	echo
-	gum style --bold --border=rounded --width=20 --align=center "Homebrew"
+	m-header Homebrew
 	brew update && brew upgrade
 }
 
@@ -441,7 +437,7 @@ export HOMEBREW_APPS=(
 )
 
 function brewinstall {
-	if ! __exists brew
+	if ! m-exists brew
 	then
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	fi
@@ -449,7 +445,7 @@ function brewinstall {
 }
 
 
-if __exists brew
+if m-exists brew
 then
 	# brew command completion
 	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -469,13 +465,13 @@ echo -n "\rApplications        "
 # ESSENTIAL
 
 for APP in rogu brew git gh starship thefuck gum; do
-	__exists $APP || __bad "Essential command not installed: $APP"
+	m-exists $APP || m-bad "Essential command not installed: $APP"
 done
 
 # NON-ESSENTIAL
 
 for APP in neofetch fortune cowsay rg pandoc tag glow; do
-	__exists $APP || __warn "Not installed: $APP"
+	m-exists $APP || m-warn "Not installed: $APP"
 done
 
 
@@ -492,7 +488,7 @@ echo -n "\rMisc                "
 #
 if ! type $EDITOR &>/dev/null
 then
-	__warn "Editor $EDITOR not found!"
+	m-warn "Editor $EDITOR not found!"
 	export EDITOR='vi'
 fi
 
@@ -509,14 +505,14 @@ fi
 #if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
 #	source ~/.iterm2_shell_integration.zsh
 #else
-#	__info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
+#	m-info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
 #fi
 
 
 if [[ -f $HOME/.myzshrc ]]; then
 	source $HOME/.myzshrc
 else
-	__info "Local RC file (~/.myzshrc) not found."
+	m-info "Local RC file (~/.myzshrc) not found."
 fi
 
 
@@ -538,22 +534,22 @@ if ! [[ -f ~/.cache/rogu-updated && "$UPDATED" == "$(cat ~/.cache/rogu-updated)"
 then
 	mkdir -p ~/.cache
 	echo $UPDATED > ~/.cache/rogu-updated
-	__ifexists rogu doctor
+	m-ifexists rogu doctor
 fi
 
 
 local D=$(date +%H)
 if (( $D < 6 )); then
-	__warn "Why are you awake at this hour? 🤔"
+	m-warn "Why are you awake at this hour? 🤔"
 elif (( $D < 12 )); then
-	__good "Good morning! ☀️"
+	m-good "Good morning! ☀️"
 elif (( $D < 18 )); then
-	__good "Good evening! 🐉"
+	m-good "Good evening! 🐉"
 else
-	__good "Good night! 🌙"
+	m-good "Good night! 🌙"
 fi
 
-if __exists fortune cowsay
+if m-exists fortune cowsay
 then
 	fortune | cowsay -n
 fi
