@@ -15,9 +15,10 @@ function m-exists   { which $* &>/dev/null }
 function m-ifexists { which $1 &>/dev/null && $* }
 
 function m-header { gum style --border=rounded --border-foreground="#ff6d67" --width=20 --align=center --margin="1 0" "$*" }
+function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v87"
+m-emph "Zshrc Mac v88"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -34,7 +35,7 @@ export GOTO_PATH=(
 #
 ################################################################################
 
-echo -n "\rPATHs               "
+m-log "PATHs"
 
 export PATH="$HOME/bin:$PATH"
 
@@ -67,7 +68,7 @@ export PATH="$PATH:/usr/lib/postgresql/13/bin"
 #
 ################################################################################
 
-echo -n "\rOh-my-zsh           "
+m-log "Oh-my-zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -110,7 +111,7 @@ fi
 #
 ################################################################################
 
-echo -n "\rAliases             "
+m-log "Aliases"
 
 alias l="ls -F"
 alias ll="ls -lh"
@@ -161,7 +162,7 @@ alias sshserver='ssh m@134.122.59.44'
 #
 ################################################################################
 
-echo -n "\rFunctions           "
+m-log "Functions"
 
 function backup {
 	local src=$1
@@ -372,7 +373,7 @@ function update {
 #
 ################################################################################
 
-echo -n "\rCompletion          "
+m-log "Completion"
 
 # Set completers
 #   _extensions  : Complete the glob *. with possible file extensions
@@ -400,7 +401,7 @@ zstyle ':completion:*' group-name ''
 #
 ################################################################################
 
-echo -n "\rHomebrew            "
+m-log "Homebrew"
 
 export HOMEBREW_APPS=(
 	cheat
@@ -460,7 +461,7 @@ fi
 #
 ################################################################################
 
-echo -n "\rApplications        "
+m-log "Applications"
 
 # ESSENTIAL
 
@@ -481,7 +482,7 @@ done
 #
 ################################################################################
 
-echo -n "\rMisc                "
+m-log "Misc"
 
 #
 # EDITOR validation w/fallback
@@ -502,11 +503,12 @@ if [[ -d ~/lib ]]; then
 fi
 
 
-#if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
-#	source ~/.iterm2_shell_integration.zsh
-#else
-#	m-info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
-#fi
+if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
+	m-log "iTerm shell integration"
+	source ~/.iterm2_shell_integration.zsh
+else
+	m-info "iTerm2 integration script not found (~/.iterm2_shell_integration.zsh)"
+fi
 
 
 if [[ -f $HOME/.myzshrc ]]; then
@@ -516,7 +518,10 @@ else
 fi
 
 
+m-log "thefuck alias"
 eval "$(thefuck --alias)"
+
+m-log "starship completion"
 eval "$(starship init zsh)"
 
 
@@ -527,7 +532,6 @@ eval "$(starship init zsh)"
 ################################################################################
 
 
-printf "\r"
 m-info "Remember to run \`update\`"
 
 UPDATED=$(date '+%Y%m%d')
