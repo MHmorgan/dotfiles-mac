@@ -1,10 +1,7 @@
 [user]
 	name = Magnus Aa. Hirth
-	email = magnus.hirth@gmail.com
 [credential]
 	helper = store
 [core]
 	pager = cat
 	editor = nvim
-[pull]
-	rebase = true
