@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v88"
+m-emph "Zshrc Mac v89"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -182,7 +182,7 @@ function cdl {
 }
 
 
-function cdls {
+function cds {
 	cd $1 || return
 	ls
 }
