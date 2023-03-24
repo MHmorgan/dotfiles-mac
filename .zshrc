@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v89"
+m-emph "Zshrc Mac v90"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -120,11 +120,13 @@ alias lsf="ls -hd *(.)"
 alias llf="ls -lhd *(.)"
 alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
-alias less="less -r"
 
 alias cl='clear && ls -lh'
-alias ch='clear && home'
+alias ch='clear && cd && pwd && ls -lh'
 alias tmp='cd /tmp'
+alias home='cd && pwd && ls -G'
+alias documents='cd ~/Documents && pwd && ls -G'
+alias downloads='cd ~/Downloads && pwd && ls -G'
 
 alias n="nvim"
 alias ns="nvim -S"
@@ -323,12 +325,6 @@ function help {
 
 	m-header Functions
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
-}
-
-function home {
-	echo $HOME
-	cd $HOME
-	ll
 }
 
 function s {
