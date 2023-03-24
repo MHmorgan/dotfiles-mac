@@ -133,6 +133,9 @@ alias ns="nvim -S"
 
 alias lg='lazygit'
 alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
+alias glist='gh repo list --no-archive'
+alias gsync='gh repo sync'
+alias gclone='gh repo clone'
 
 alias pyvenv='python3 -m venv --upgrade-deps venv'
 alias ipy='ipython3 --autocall=1 --pprint'
