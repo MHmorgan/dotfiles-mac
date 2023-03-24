@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v90"
+m-emph "Zshrc Mac v91"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -133,7 +133,7 @@ alias ns="nvim -S"
 
 alias lg='lazygit'
 alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
-alias glist='gh repo list --no-archive'
+alias glist='gh repo list --no-archived'
 alias gsync='gh repo sync'
 alias gclone='gh repo clone'
 
