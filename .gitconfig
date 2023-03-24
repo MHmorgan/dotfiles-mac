@@ -1,9 +1,0 @@
-[user]
-	name = Magnus Aa. Hirth
-	email = magnus.hirth@bidbax.no
-[credential]
-	helper = store
-[core]
-	pager = cat
-	editor = nvim
-	autocrlf = input
