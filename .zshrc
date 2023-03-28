@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v92"
+m-emph "Zshrc Mac v93"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -195,7 +195,7 @@ function cds {
 function root {
 	local DIR=$PWD
 	while [[ -n "$DIR" ]]; do
-		test -d $DIR/.git && break
+		test -e $DIR/.git && break
 		DIR=${DIR%/*}
 	done
 
