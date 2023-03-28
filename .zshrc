@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v91"
+m-emph "Zshrc Mac v92"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -190,6 +190,23 @@ function cdl {
 function cds {
 	cd $1 || return
 	ls
+}
+
+function root {
+	local DIR=$PWD
+	while [[ -n "$DIR" ]]; do
+		test -d $DIR/.git && break
+		DIR=${DIR%/*}
+	done
+
+	if [[ -z "$DIR" ]]; then
+		m-err "Not in a git repo"
+		return 1
+	fi
+
+	echo $DIR
+	cd $DIR
+	ll
 }
 
 function editdotfile {
