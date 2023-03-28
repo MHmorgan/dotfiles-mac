@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v93"
+m-emph "Zshrc Mac v94"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -134,7 +134,6 @@ alias ns="nvim -S"
 alias lg='lazygit'
 alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
 alias glist='gh repo list --no-archived'
-alias gsync='gh repo sync'
 alias gclone='gh repo clone'
 
 alias pyvenv='python3 -m venv --upgrade-deps venv'
@@ -190,23 +189,6 @@ function cdl {
 function cds {
 	cd $1 || return
 	ls
-}
-
-function root {
-	local DIR=$PWD
-	while [[ -n "$DIR" ]]; do
-		test -e $DIR/.git && break
-		DIR=${DIR%/*}
-	done
-
-	if [[ -z "$DIR" ]]; then
-		m-err "Not in a git repo"
-		return 1
-	fi
-
-	echo $DIR
-	cd $DIR
-	ll
 }
 
 function editdotfile {
@@ -327,6 +309,11 @@ function goto {
 	ll
 }
 
+function gsync {
+	git pull --rebase &&
+	git push
+}
+
 function help {
 	local W=80
 
@@ -345,6 +332,23 @@ function help {
 
 	m-header Functions
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
+}
+
+function root {
+	local DIR=$PWD
+	while [[ -n "$DIR" ]]; do
+		test -e $DIR/.git && break
+		DIR=${DIR%/*}
+	done
+
+	if [[ -z "$DIR" ]]; then
+		m-err "Not in a git repo"
+		return 1
+	fi
+
+	echo $DIR
+	cd $DIR
+	ll
 }
 
 function s {
