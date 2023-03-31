@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v94"
+m-emph "Zshrc Mac v95"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -310,6 +310,13 @@ function goto {
 }
 
 function gsync {
+	if git status --porcelain=v1 | egrep '^.[^?!]'
+	then
+		gum confirm 'Commit changes?' &&
+		git commit -av ||
+		gum confirm 'Continue sync?' ||
+		return 1
+	fi
 	git pull --rebase &&
 	git push
 }
