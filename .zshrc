@@ -37,7 +37,7 @@ export GOTO_PATH=(
 
 m-log "PATHs"
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Homebrew
 if [[ -d /opt/homebrew ]]; then
