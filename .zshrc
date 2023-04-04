@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v95"
+m-emph "Zshrc Mac v96"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -88,6 +88,7 @@ plugins=(
 	git
 	golang
 	pip
+	poetry
 	pylint
 	python
 	ripgrep
