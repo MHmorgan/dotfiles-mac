@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v96"
+m-emph "Zshrc Mac v97"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -168,6 +168,12 @@ alias sshserver='ssh m@134.122.59.44'
 ################################################################################
 
 m-log "Functions"
+
+function all_gum_spinners {
+	for X in line dot minidot jump pulse points globe moon monkey meter hamburger; do
+		gum spin --spinner=$X --title=$X sleep 5
+	done
+}
 
 function backup {
 	local src=$1
