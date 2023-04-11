@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v98"
+m-emph "Zshrc Mac v99"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -346,6 +346,9 @@ function help {
 
 	m-header Functions
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
+
+	m-header 'Mac Cheatsheet'
+	echo $CHEATSHEET_MAC
 }
 
 function root {
@@ -604,6 +607,7 @@ fi
 
 CHEATSHEET_MAC=$(cat<<EOF
 caffeinate - Prevent sleep mode.
-ditto - Copy folder content to another folder.
-EOF)
+ditto      - Copy folder content to another folder.
+EOF
+)
 
