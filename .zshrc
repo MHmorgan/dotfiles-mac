@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v97"
+m-emph "Zshrc Mac v98"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -592,4 +592,18 @@ if m-exists fortune cowsay
 then
 	fortune | cowsay -n
 fi
+
+
+
+
+################################################################################
+#
+# Cheatsheet MAC
+#
+################################################################################
+
+CHEATSHEET_MAC=$(cat<<EOF
+caffeinate - Prevent sleep mode.
+ditto - Copy folder content to another folder.
+EOF)
 
