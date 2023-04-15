@@ -15,7 +15,7 @@ function m-exists   { which $* &>/dev/null }
 function m-ifexists { which $1 &>/dev/null && $* }
 
 function m-header { gum style --border=rounded --border-foreground="#ff6d67" --width=20 --align=center --margin="1 0" "$*" }
-function m-log { echo -n "$(tput el)$*\r" }
+function m-log { echo -n "$(tput el)$*\n" }
 #}}}
 
 m-emph "Zshrc Mac v99"
