@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v103"
+m-emph "Zshrc Mac v104"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -331,6 +331,9 @@ function gsync {
 function help {
 	local W=80
 
+	m-header 'Mac Cheatsheet'
+	echo $CHEATSHEET_MAC
+
 	m-header Applications
 	pushd -q ~/bin
 	print -l *(x) | column -c$W
@@ -346,9 +349,6 @@ function help {
 
 	m-header Functions
 	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
-
-	m-header 'Mac Cheatsheet'
-	echo $CHEATSHEET_MAC
 }
 
 function root {
