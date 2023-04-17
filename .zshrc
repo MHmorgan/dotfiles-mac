@@ -1,7 +1,4 @@
 # vim: filetype=zsh:
-#
-# Cool retro terminal theme:
-# 	https://github.com/Swordfish90/cool-retro-term/releases
 
 #{{{ Pretty-printing
 autoload -U colors && colors
@@ -21,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v100"
+m-emph "Zshrc Mac v101"
 
 export EDITOR='nvim'
 export PAGER='less'
