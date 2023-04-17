@@ -1,4 +1,7 @@
 # vim: filetype=zsh:
+#
+# Cool retro terminal theme:
+# 	https://github.com/Swordfish90/cool-retro-term/releases
 
 #{{{ Pretty-printing
 autoload -U colors && colors
