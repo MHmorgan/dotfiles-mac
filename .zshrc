@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --border-foreground="#ff6d67" --w
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v101"
+m-emph "Zshrc Mac v102"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -606,8 +606,40 @@ fi
 ################################################################################
 
 CHEATSHEET_MAC=$(cat<<EOF
-caffeinate - Prevent sleep mode.
-ditto      - Copy folder content to another folder.
+afplay          - Plays an audio file.
+airport         - Provides information about Wi-Fi networks and manages the Wi-Fi interface.
+brctl           - Manages iCloud documents and data.
+caffeinate      - Prevents the system from sleeping, displaying the screen saver, or going to sleep.
+csrutil         - Manages System Integrity Protection (SIP) settings.
+defaults        - Reads, writes, and deletes preferences in macOS.
+diskutil        - Manages disks and volumes.
+ditto           - Copy folder content to another folder.
+hdiutil         - Creates, converts, and manipulates disk images.
+ioreg           - Displays the I/O Kit registry, which provides information about devices and drivers in the system.
+kextload        - Loads a kernel extension.
+kextstat        - Shows the status of loaded kernel extensions.
+kextunload      - Unloads a loaded kernel extension.
+log             - Interacts with the unified logging system introduced in macOS Sierra and later.
+mdfind          - Searches for files using Spotlight metadata.
+mdls            - Lists metadata attributes for a file.
+networksetup    - Configures network settings.
+nvram           - Provides an interface to read and write NVRAM variables, which store system settings like boot arguments and startup disk selection.
+open            - Opens a file or directory with the default app, or opens a specified app.
+osascript       - Executes AppleScript and other OSA (Open Scripting Architecture) language scripts.
+pbcopy          - Copies text from stdin to the clipboard.
+pbpaste         - Pastes text from the clipboard to stdout.
+pkgutil         - Manages macOS installer packages, such as expanding or querying package information.
+plutil          - Converts property list files between formats, such as XML and binary, and can also validate and manipulate the contents.
+pmset           - Manages power management settings, such as sleep and wake times, display sleep times, and more.
+profiles        - Manages configuration profiles on macOS devices.
+say             - Converts text to speech and speaks it aloud.
+screencapture   - Takes a screenshot of the screen or a specified area.
+scutil          - Provides a command-line interface to the System Configuration framework, allowing you to manage system network configuration.
+softwareupdate  - Manages software updates from the command line.
+sw_vers         - Shows macOS version information.
+system_profiler - Provides detailed information about the system's hardware and software configuration.
+textutil        - Converts text files between different formats, such as HTML, RTF, and plain text.
+tmutil          - Manages Time Machine backups.
 EOF
 )
 
