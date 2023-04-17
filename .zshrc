@@ -14,11 +14,11 @@ function m-bold  { echo "$fg_bold[default]$*$reset_color" }
 function m-exists   { which $* &>/dev/null }
 function m-ifexists { which $1 &>/dev/null && $* }
 
-function m-header { gum style --border=rounded --border-foreground="#ff6d67" --width=20 --align=center --margin="1 0" "$*" }
+function m-header { gum style --border=rounded --width=20 --align=center --margin="1 0" "$*" }
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v102"
+m-emph "Zshrc Mac v103"
 
 export EDITOR='nvim'
 export PAGER='less'
