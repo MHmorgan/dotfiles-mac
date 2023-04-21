@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v107"
+m-emph "Zshrc Mac v108"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -229,7 +229,7 @@ function editdotfile {
 		echo ".zshrc $old -> $new"
 	fi
 
-	dot commit -am 'Update $1' &&
+	dot commit -am "Update $1" &&
 	dot pull --rebase &&
 	dot push
 }
