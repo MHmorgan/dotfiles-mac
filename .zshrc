@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v104"
+m-emph "Zshrc Mac v105"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -334,6 +334,9 @@ function help {
 	m-header 'Mac Cheatsheet'
 	echo $CHEATSHEET_MAC
 
+	m-header 'Unix Cheatsheet'
+	echo $CHEATSHEET_UNIX
+
 	m-header Applications
 	pushd -q ~/bin
 	print -l *(x) | column -c$W
@@ -601,7 +604,7 @@ fi
 
 ################################################################################
 #
-# Cheatsheet MAC
+# Cheatsheets
 #
 ################################################################################
 
@@ -640,6 +643,12 @@ sw_vers         - Shows macOS version information.
 system_profiler - Provides detailed information about the system's hardware and software configuration.
 textutil        - Converts text files between different formats, such as HTML, RTF, and plain text.
 tmutil          - Manages Time Machine backups.
+EOF
+)
+
+CHEATSHEET_UNIX=$(cat<<EOF
+gum             - Tool for glamorous shell scripts (homebrew)
+glow            - Render markdown in the CLI (homebrew)
 EOF
 )
 
