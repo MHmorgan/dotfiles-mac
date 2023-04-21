@@ -23,6 +23,7 @@ m-emph "Zshrc Mac v106"
 export EDITOR='nvim'
 export PAGER='less'
 
+# The paths used by the goto function
 export GOTO_PATH=(
 	$HOME/Documents
 	$HOME/Downloads
@@ -59,7 +60,6 @@ export PATH="$PATH:/usr/lib/dart/bin:$HOME/flutter/bin:$HOME/.pub-cache/bin"
 
 # PostgreSQL
 export PATH="$PATH:/usr/lib/postgresql/13/bin"
-#}}}
 
 
 ################################################################################
@@ -103,7 +103,6 @@ if [[ -d $ZSH ]]; then
 else
 	m-bad "Oh my zsh is not installed!"
 fi
-#}}}
 
 
 ################################################################################
@@ -153,12 +152,12 @@ done
 
 alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
 alias aliases='alias | sort | less'
+alias rogu-help='rogu help | glow'
 
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 alias sshserver='ssh m@134.122.59.44'
-#}}}
 
 
 ################################################################################
@@ -235,51 +234,6 @@ function editdotfile {
 	rogu sync dotfiles
 }
 
-function editreadme {
-	m-exists selector || { m-bad "'selector' not installed."; return 1 }
-
-	if [[ -z "$1" ]]; then
-		m-bad 'missing repo name'
-		return 1
-	fi
-
-	local DIR=$(selector -filter "$*" ${=GOTO_PATH})
-	[[ -n "$DIR" ]] || return
-	pushd -q $DIR
-
-	function () {
-		# Must be clean to side effects
-		if [[ -n "$(git status --short)" ]]; then
-			m-warn "repo is dirty - must be clean"
-			m-info $PWD
-			git status
-			return 1
-		fi
-
-		# Find readme file
-		local FILE=$(find . -iname 'readme.*' -maxdepth 5)
-		if [[ -z $FILE ]]; then
-			m-bad "no readme in $DIR"
-			return 1
-		fi
-
-		m-info "Editing $FILE"
-		$EDITOR $FILE || return $?
-
-		# Stop if no changes were made
-		[[ -n "$(git status --short)" ]] || return
-
-		m-info "Committing..."
-		git commit -m "Update $FILE" $FILE &&
-		m-info "Pushing..." &&
-		git push
-	}
-
-	local res=$?
-	popd -q
-	return $res
-}
-
 function gitaliases {
 	local file=$HOME/.oh-my-zsh/plugins/git/README.md
 	local command='
@@ -302,6 +256,7 @@ function gitaliases {
 # Defined it golang oh-my-zsh plugin
 unalias goto
 
+# TODO Use `gum` for this instead?
 function goto {
 	m-exists selector || {
 		m-bad "'selector' not installed."
@@ -381,6 +336,7 @@ function s {
 	esac
 }
 
+# TODO Add a status function which looks for TODOs?
 function todo {
 	local re='(TODO|FIXME|BUG)'
 	if [[ -n "$(git_repo_name)" ]]; then
@@ -390,6 +346,8 @@ function todo {
 	fi
 }
 
+# TODO Add updating git repos as well
+# Use a REPO_PATHS for where to look?
 function update {
 	m-ifexists neofetch
 
