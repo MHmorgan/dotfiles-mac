@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v105"
+m-emph "Zshrc Mac v106"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -641,14 +641,30 @@ scutil          - Provides a command-line interface to the System Configuration 
 softwareupdate  - Manages software updates from the command line.
 sw_vers         - Shows macOS version information.
 system_profiler - Provides detailed information about the system's hardware and software configuration.
+tag             - Manipulate and query tags on macOS files (homebrew)
 textutil        - Converts text files between different formats, such as HTML, RTF, and plain text.
 tmutil          - Manages Time Machine backups.
 EOF
 )
 
 CHEATSHEET_UNIX=$(cat<<EOF
-gum             - Tool for glamorous shell scripts (homebrew)
+cheat           - Create and view interactive cheat sheets for *nix commands (homebrew)
+cmatrix         - Console Matrix (homebrew)
+cowsay          - Configurable talking characters in ASCII art (homebrew)
+figlet          - Banner-like program prints strings as ASCII art (homebrew)
+fortune         - Infamous electronic fortune-cookie generator (homebrew)
+gh              - GitHub command-line tool (homebrew)
 glow            - Render markdown in the CLI (homebrew)
+gum             - Tool for glamorous shell scripts (homebrew)
+ipython         - Interactive computing in Python (homebrew)
+jq              - Lightweight and flexible command-line JSON processor (homebrew)
+neofetch        - Fast, highly customisable system info script (homebrew)
+pandoc          - Swiss-army knife of markup format conversion (homebrew)
+poetry          - Python package management tool (homebrew)
+sl              - Prints a steam locomotive if you type sl instead of ls (homebrew)
+starship        - Cross-shell prompt for astronauts (homebrew)
+thefuck         - Programmatically correct mistyped console commands (homebrew)
+tldr            - Simplified and community-driven man pages (homebrew)
 EOF
 )
 
