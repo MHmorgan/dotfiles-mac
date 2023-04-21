@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v106"
+m-emph "Zshrc Mac v107"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -198,10 +198,8 @@ function cds {
 }
 
 function editdotfile {
-	m-exists rogu || { m-err "rogu not installed!"; return 1 }
-
 	if [[ -z "$1" ]]; then
-		rogu list
+		m-err "Missing dotfile."
 		return
 	fi
 
@@ -231,7 +229,9 @@ function editdotfile {
 		echo ".zshrc $old -> $new"
 	fi
 
-	rogu sync dotfiles
+	dot commit -am 'Update $1' &&
+	dot pull --rebase &&
+	dot push
 }
 
 function gitaliases {
@@ -352,7 +352,7 @@ function update {
 	m-ifexists neofetch
 
 	m-header Rogu
-	rogu sync
+	rogu -v update
 
 	echo
 	m-header Homebrew
@@ -531,15 +531,6 @@ eval "$(starship init zsh)"
 
 
 m-info "Remember to run \`update\`"
-
-UPDATED=$(date '+%Y%m%d')
-if ! [[ -f ~/.cache/rogu-updated && "$UPDATED" == "$(cat ~/.cache/rogu-updated)" ]]
-then
-	mkdir -p ~/.cache
-	echo $UPDATED > ~/.cache/rogu-updated
-	m-ifexists rogu doctor
-fi
-
 
 local D=$(date +%H)
 if (( $D < 6 )); then
