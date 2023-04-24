@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v108"
+m-emph "Zshrc Mac v109"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -55,12 +55,6 @@ export PATH="$PATH:$HOME/go/bin"
 # Rust
 export PATH="$PATH:$HOME/.cargo/bin"
 
-# Dart & Flutter
-export PATH="$PATH:/usr/lib/dart/bin:$HOME/flutter/bin:$HOME/.pub-cache/bin"
-
-# PostgreSQL
-export PATH="$PATH:/usr/lib/postgresql/13/bin"
-
 
 ################################################################################
 #
@@ -82,20 +76,16 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	brew
-	chucknorris
 	docker
 	gh
 	git
 	golang
 	pip
 	poetry
-	pylint
 	python
-	ripgrep
 	rust
 	thefuck
 	tmux
-	vscode
 )
 
 if [[ -d $ZSH ]]; then
@@ -137,6 +127,7 @@ alias glist='gh repo list --no-archived'
 alias gclone='gh repo clone'
 
 alias pyvenv='python3 -m venv --upgrade-deps venv'
+#DOC> ipy :: IPython alias with flags. [Aliases]
 alias ipy='ipython3 --autocall=1 --pprint'
 alias activate-venv='source venv/bin/activate'
 
@@ -159,6 +150,9 @@ alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 alias sshserver='ssh m@134.122.59.44'
 
+# DOC> drogu :: Run Rogu in debug mode.
+alias drogu='python3 ~/bin/rogu'
+
 
 ################################################################################
 #
@@ -168,6 +162,7 @@ alias sshserver='ssh m@134.122.59.44'
 
 m-log "Functions"
 
+#DOC> all_gum_spinners :: Showcase all gum spinners.
 function all_gum_spinners {
 	for X in line dot minidot jump pulse points globe moon monkey meter hamburger; do
 		gum spin --spinner=$X --title=$X sleep 5
@@ -197,6 +192,7 @@ function cds {
 	ls
 }
 
+#DOC> editdotfile FILE :: Edit a dotfile and sync dotfile repo. [Functions]
 function editdotfile {
 	if [[ -z "$1" ]]; then
 		m-err "Missing dotfile."
@@ -283,6 +279,9 @@ function gsync {
 	git push
 }
 
+# Use special comments for indicating help messages?
+#
+#DOC> help :: Print this help message. [Functions]
 function help {
 	local W=80
 
@@ -361,15 +360,12 @@ function update {
 
 
 ################################################################################
-#
 # Completion
 #
 # See:
 #   manpage zshcompsys
 #	https://thevaluable.dev/zsh-completion-guide-examples/
 #   https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
-#
-################################################################################
 
 m-log "Completion"
 
