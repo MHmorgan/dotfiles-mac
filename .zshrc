@@ -18,10 +18,13 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v109"
+m-emph "Zshrc Mac v110"
 
 export EDITOR='nvim'
 export PAGER='less'
+
+export HELP_DIR=$HOME/Help
+export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc"
 
 # The paths used by the goto function
 export GOTO_PATH=(
@@ -193,7 +196,7 @@ function cds {
 }
 
 #DOC> editdotfile FILE :: Edit a dotfile and sync dotfile repo. [Functions]
-function editdotfile {
+function edit-dotfile {
 	if [[ -z "$1" ]]; then
 		m-err "Missing dotfile."
 		return
@@ -282,31 +285,31 @@ function gsync {
 # Use special comments for indicating help messages?
 #
 #DOC> help :: Print this help message. [Functions]
-function help {
-	local W=80
-
-	m-header 'Mac Cheatsheet'
-	echo $CHEATSHEET_MAC
-
-	m-header 'Unix Cheatsheet'
-	echo $CHEATSHEET_UNIX
-
-	m-header Applications
-	pushd -q ~/bin
-	print -l *(x) | column -c$W
-	popd -q
-
-	m-header Libraries
-	pushd -q ~/lib
-	print -l *(.) | column -c$W
-	popd -q
-
-	m-header Aliases
-	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_][^=]*)/' | sort | column -c$W
-
-	m-header Functions
-	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
-}
+#function help {
+#	local W=80
+#
+#	m-header 'Mac Cheatsheet'
+#	echo $CHEATSHEET_MAC
+#
+#	m-header 'Unix Cheatsheet'
+#	echo $CHEATSHEET_UNIX
+#
+#	m-header Applications
+#	pushd -q ~/bin
+#	print -l *(x) | column -c$W
+#	popd -q
+#
+#	m-header Libraries
+#	pushd -q ~/lib
+#	print -l *(.) | column -c$W
+#	popd -q
+#
+#	m-header Aliases
+#	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_][^=]*)/' | sort | column -c$W
+#
+#	m-header Functions
+#	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
+#}
 
 function root {
 	local DIR=$PWD
