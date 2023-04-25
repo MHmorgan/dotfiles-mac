@@ -18,12 +18,12 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v110"
+m-emph "Zshrc Mac v111"
 
 export EDITOR='nvim'
 export PAGER='less'
 
-export HELP_DIR=$HOME/Help
+export HELP_DIR=$HOME/help-pages
 export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc"
 
 # The paths used by the goto function
@@ -344,11 +344,13 @@ function todo {
 	if [[ -n "$(git_repo_name)" ]]; then
 		git grep -E $re
 	else
+		# TODO Use TODO_PATH and `find` with `xargs`
 		grep -rE $re .
 	fi
 }
 
-# TODO Add updating git repos as well
+# TODO Update git repos as well
+# TODO Update dotfiles
 # Use a REPO_PATHS for where to look?
 function update {
 	m-ifexists neofetch
