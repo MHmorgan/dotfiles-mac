@@ -1,4 +1,6 @@
 # vim: filetype=zsh:
+#
+# TODO Update m-log statements, or remove?
 
 #{{{ Pretty-printing
 autoload -U colors && colors
@@ -18,7 +20,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v121"
+m-emph "Zshrc Mac v122"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -269,7 +271,7 @@ alias rogu-help='rogu help | glow'
 #}}}
 
 ################################################################################
-# Functions
+# MISC
 
 m-log "Functions"
 
@@ -301,24 +303,6 @@ function cdl {
 function cds {
 	cd $1 || return
 	ls
-}
-
-function gitaliases {
-	local file=$HOME/.oh-my-zsh/plugins/git/README.md
-	local command='
-		$2 ~ /^ *g/ {
-			gsub(/(^ *| *$)/, "", $2)
-			gsub(/(^ *| *$)/, "", $3)
-			print $2 "\t" $3
-		}
-	'
-	# Look through all aliases or grep for a some specific aliases
-	if (( $# < 1 ))
-	then
-		awk -F '|' $command $file | less
-	else
-		awk -F '|' $command $file | grep $@
-	fi
 }
 
 
