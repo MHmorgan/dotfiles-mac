@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v115"
+m-emph "Zshrc Mac v116"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -271,6 +271,7 @@ function goto {
 	ll
 }
 
+#DOC> gsync :: Synchronize current git repo [GIT]
 function gsync {
 	if git status --porcelain=v1 | egrep '^.[^?!]'
 	then
@@ -334,7 +335,7 @@ function todo {
 	fi
 }
 
-# TODO Update git repos as well
+# TODO Update git repos as well (use gsync)
 # TODO Update dotfiles
 # Use a REPO_PATHS for where to look?
 function update {
