@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v112"
+m-emph "Zshrc Mac v113"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -283,33 +283,15 @@ function gsync {
 	git push
 }
 
-# Use special comments for indicating help messages?
-#
-#function help {
-#	local W=80
-#
-#	m-header 'Mac Cheatsheet'
-#	echo $CHEATSHEET_MAC
-#
-#	m-header 'Unix Cheatsheet'
-#	echo $CHEATSHEET_UNIX
-#
-#	m-header Applications
-#	pushd -q ~/bin
-#	print -l *(x) | column -c$W
-#	popd -q
-#
-#	m-header Libraries
-#	pushd -q ~/lib
-#	print -l *(.) | column -c$W
-#	popd -q
-#
-#	m-header Aliases
-#	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^alias +([^_][^=]*)/' | sort | column -c$W
-#
-#	m-header Functions
-#	cat ~/.{,my}zshrc | perl -nE 'say $1 if /^function +([^_]\S*)/' | sort | column -c$W
-#}
+#DOC> help :: Combining my `help.py` script and `glow`
+function help {
+	if ! m-exists help.py
+	then
+		m-err "Script help.py not found."
+		return 1
+	fi
+	help.py $@ | glow
+}
 
 function root {
 	local DIR=$PWD
