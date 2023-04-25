@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v120"
+m-emph "Zshrc Mac v121"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -137,8 +137,22 @@ function gsync {
 
 ################################################################################
 # Aliases
+#{{{
 
 m-log "Aliases"
+
+#DOC> cl :: Clear the screan and list dir content
+alias cl='clear && ls -lh'
+#DOC> ch :: Go home and list home content
+alias ch='clear && cd && pwd && ls -lh'
+#DOC> tmp :: Go to tmp dir
+alias tmp='cd /tmp'
+#DOC> home :: Go to home dir
+alias home='cd && pwd && ls -G'
+#DOC> documents :: Go to Documents dir and ls
+alias documents='cd ~/Documents && pwd && ls -G'
+#DOC> downloads :: Go to Downloads dir and ls
+alias downloads='cd ~/Downloads && pwd && ls -G'
 
 alias l="ls -F"
 alias ll="ls -lh"
@@ -148,13 +162,6 @@ alias llf="ls -lhd *(.)"
 alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
 
-alias cl='clear && ls -lh'
-alias ch='clear && cd && pwd && ls -lh'
-alias tmp='cd /tmp'
-alias home='cd && pwd && ls -G'
-alias documents='cd ~/Documents && pwd && ls -G'
-alias downloads='cd ~/Downloads && pwd && ls -G'
-
 alias n="nvim"
 alias ns="nvim -S"
 
@@ -163,76 +170,17 @@ alias aliases='alias | sort | less'
 
 alias sshserver='ssh m@134.122.59.44'
 
+#}}}
+
+################################################################################
 # DOTFILES
+#{{{
 
 #DOC> dot :: Git alias for dotfiles bare repo [DOTFILES]
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
 #DOC> dlg :: Dotfiles lazygit alias [DOTFILES]
 alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-
-# PYTHON
-
-#DOC> ipy :: IPython alias with flags. [PYTHON]
-alias ipy='ipython3 --autocall=1 --pprint'
-#DOC> activate-venv :: Activate venv at "venv/bin/activate" [PYTHON]
-alias activate-venv='source venv/bin/activate'
-
-#DOC> pyN   :: Alias for `python3.N` [PYTHON]
-#DOC> pyNm  :: Alias for `python3.N -m` [PYTHON]
-#DOC> pipN  :: Alias for `python3.N -m pip` [PYTHON]
-#DOC> venvN :: Alias for `python3.N venv --upgrade-deps venv` [PYTHON]
-for N in $(seq 4 20); do
-	if m-exists python3.$N
-	then
-		alias py${N}="python3.$N"
-		alias py${N}m="python3.$N -m"
-		alias pip${N}="python3.$N -m pip"
-		alias venv${N}="python3.$N -m venv --upgrade-deps venv"
-	fi
-done
-
-# ROGU
-
-#DOC> drogu :: Run Rogu in debug mode. [ROGU]
-alias drogu='python3 ~/bin/rogu'
-#DOC> rogu-help :: Pretty-print rogu's help page with glow [ROGU]
-alias rogu-help='rogu help | glow'
-
-
-################################################################################
-# Functions
-
-m-log "Functions"
-
-#DOC> all_gum_spinners :: Showcase all gum spinners.
-function all_gum_spinners {
-	for X in line dot minidot jump pulse points globe moon monkey meter hamburger; do
-		gum spin --spinner=$X --title=$X sleep 5
-	done
-}
-
-function backup {
-	local src=$1
-
-	if ! [[ -f "$src" ]]
-	then
-		echo "source file not found: $src"
-		return 1
-	fi
-
-	cp -vpr $src $src~
-}
-
-function cdl {
-	cd $1 || return
-	ll
-}
-
-
-function cds {
-	cd $1 || return
-	ls
-}
 
 #DOC> dls :: List all dotfiles [DOTFILES]
 function dls {
@@ -277,6 +225,82 @@ function edit-dotfile {
 	dot commit -am "Update $1" &&
 	dot pull --rebase &&
 	dot push
+}
+
+#}}}
+
+################################################################################
+# PYTHON
+#{{{
+
+#DOC> ipy :: IPython alias with flags. [PYTHON]
+alias ipy='ipython3 --autocall=1 --pprint'
+#DOC> activate-venv :: Activate venv at "venv/bin/activate" [PYTHON]
+alias activate-venv='source venv/bin/activate'
+
+#DOC> pyN   :: Alias for `python3.N` [PYTHON]
+#DOC> pyNm  :: Alias for `python3.N -m` [PYTHON]
+#DOC> pipN  :: Alias for `python3.N -m pip` [PYTHON]
+#DOC> venvN :: Alias for `python3.N venv --upgrade-deps venv` [PYTHON]
+for N in $(seq 4 20); do
+	if m-exists python3.$N
+	then
+		alias py${N}="python3.$N"
+		alias py${N}m="python3.$N -m"
+		alias pip${N}="python3.$N -m pip"
+		alias venv${N}="python3.$N -m venv --upgrade-deps venv"
+	fi
+done
+
+#}}}
+
+################################################################################
+# ROGU
+#{{{
+
+#DOC> rogu :: Rogu the alien [ROGU]
+
+#DOC> drogu :: Run Rogu in debug mode [ROGU]
+alias drogu='python3 ~/bin/rogu'
+
+#DOC> rogu-help :: Pretty-print rogu's help page with glow [ROGU]
+alias rogu-help='rogu help | glow'
+
+#}}}
+
+################################################################################
+# Functions
+
+m-log "Functions"
+
+#DOC> all_gum_spinners :: Showcase all gum spinners.
+function all_gum_spinners {
+	for X in line dot minidot jump pulse points globe moon monkey meter hamburger; do
+		gum spin --spinner=$X --title=$X sleep 5
+	done
+}
+
+function backup {
+	local src=$1
+
+	if ! [[ -f "$src" ]]
+	then
+		echo "source file not found: $src"
+		return 1
+	fi
+
+	cp -vpr $src $src~
+}
+
+function cdl {
+	cd $1 || return
+	ll
+}
+
+
+function cds {
+	cd $1 || return
+	ls
 }
 
 function gitaliases {
