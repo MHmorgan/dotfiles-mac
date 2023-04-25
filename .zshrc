@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v116"
+m-emph "Zshrc Mac v117"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -75,7 +75,6 @@ plugins=(
 	brew
 	docker
 	gh
-	git
 	golang
 	pip
 	poetry
@@ -115,9 +114,13 @@ alias downloads='cd ~/Downloads && pwd && ls -G'
 alias n="nvim"
 alias ns="nvim -S"
 
+#DOC> lg :: Start lazygit [GIT]
 alias lg='lazygit'
+#DOC> glog :: Print the last 7 log entries [GIT]
 alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
+#DOC> glist :: List my non-archived GitHub repos [GIT]
 alias glist='gh repo list --no-archived'
+#DOC> gclone :: Clone a GitHub repo [GIT]
 alias gclone='gh repo clone'
 
 alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
@@ -196,7 +199,14 @@ function cds {
 	ls
 }
 
-#DOC> edit-dotfile :: Edit a dotfile and sync dotfile repo. [DOTFILES]
+#DOC> dls :: List all dotfiles [DOTFILES]
+function dls {
+	pushd $HOME &>/dev/null
+	dot ls-tree -r main | awk '{ print $4}' | xargs ls -l
+	popd &>/dev/null
+}
+
+#DOC> edit-dotfile :: Edit a dotfile and sync dotfile repo [DOTFILES]
 function edit-dotfile {
 	if [[ -z "$1" ]]; then
 		m-err "Missing dotfile."
