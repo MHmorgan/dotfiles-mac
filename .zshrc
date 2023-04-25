@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v113"
+m-emph "Zshrc Mac v114"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -285,9 +285,12 @@ function gsync {
 
 #DOC> help :: Combining my `help.py` script and `glow`
 function help {
-	if ! m-exists help.py
-	then
-		m-err "Script help.py not found."
+	if ! m-exists help.py; then
+		m-err "Script 'help.py' not found."
+		return 1
+	fi
+	if ! m-exists glow; then
+		m-err "Command 'glow' not found."
 		return 1
 	fi
 	help.py $@ | glow
