@@ -18,13 +18,13 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v119"
+m-emph "Zshrc Mac v120"
 
 export EDITOR='nvim'
 export PAGER='less'
 
 export HELP_DIR=$HOME/help-pages
-export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc"
+export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
 
 # The paths used by the goto function
 export GOTO_PATH=(
