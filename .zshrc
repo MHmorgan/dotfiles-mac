@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v111"
+m-emph "Zshrc Mac v112"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -34,10 +34,7 @@ export GOTO_PATH=(
 
 
 ################################################################################
-#
 # PATH
-#
-################################################################################
 
 m-log "PATHs"
 
@@ -60,10 +57,7 @@ export PATH="$PATH:$HOME/.cargo/bin"
 
 
 ################################################################################
-#
 # Oh my zsh
-#
-################################################################################
 
 m-log "Oh-my-zsh"
 
@@ -99,10 +93,7 @@ fi
 
 
 ################################################################################
-#
 # Aliases
-#
-################################################################################
 
 m-log "Aliases"
 
@@ -129,39 +120,49 @@ alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgre
 alias glist='gh repo list --no-archived'
 alias gclone='gh repo clone'
 
-alias pyvenv='python3 -m venv --upgrade-deps venv'
-#DOC> ipy :: IPython alias with flags. [Aliases]
+alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
+alias aliases='alias | sort | less'
+
+alias sshserver='ssh m@134.122.59.44'
+
+# DOTFILES
+
+#DOC> dot :: Git alias for dotfiles bare repo [DOTFILES]
+alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+#DOC> dlg :: Dotfiles lazygit alias [DOTFILES]
+alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+# PYTHON
+
+#DOC> ipy :: IPython alias with flags. [PYTHON]
 alias ipy='ipython3 --autocall=1 --pprint'
+#DOC> activate-venv :: Activate venv at "venv/bin/activate" [PYTHON]
 alias activate-venv='source venv/bin/activate'
 
+#DOC> pyN   :: Alias for `python3.N` [PYTHON]
+#DOC> pyNm  :: Alias for `python3.N -m` [PYTHON]
+#DOC> pipN  :: Alias for `python3.N -m pip` [PYTHON]
+#DOC> venvN :: Alias for `python3.N venv --upgrade-deps venv` [PYTHON]
 for N in $(seq 4 20); do
 	if m-exists python3.$N
 	then
 		alias py${N}="python3.$N"
 		alias py${N}m="python3.$N -m"
 		alias pip${N}="python3.$N -m pip"
-		alias venv${N}="python3.$N -m venv"
+		alias venv${N}="python3.$N -m venv --upgrade-deps venv"
 	fi
 done
 
-alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
-alias aliases='alias | sort | less'
+# ROGU
+
+#DOC> drogu :: Run Rogu in debug mode. [ROGU]
+alias drogu='python3 ~/bin/rogu'
+#DOC> rogu-help :: Pretty-print rogu's help page with glow [ROGU]
 alias rogu-help='rogu help | glow'
 
-alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-
-alias sshserver='ssh m@134.122.59.44'
-
-# DOC> drogu :: Run Rogu in debug mode.
-alias drogu='python3 ~/bin/rogu'
-
 
 ################################################################################
-#
 # Functions
-#
-################################################################################
 
 m-log "Functions"
 
@@ -195,7 +196,7 @@ function cds {
 	ls
 }
 
-#DOC> editdotfile FILE :: Edit a dotfile and sync dotfile repo. [Functions]
+#DOC> edit-dotfile :: Edit a dotfile and sync dotfile repo. [DOTFILES]
 function edit-dotfile {
 	if [[ -z "$1" ]]; then
 		m-err "Missing dotfile."
@@ -284,7 +285,6 @@ function gsync {
 
 # Use special comments for indicating help messages?
 #
-#DOC> help :: Print this help message. [Functions]
 #function help {
 #	local W=80
 #
@@ -366,7 +366,7 @@ function update {
 
 ################################################################################
 # Completion
-#
+
 # See:
 #   manpage zshcompsys
 #	https://thevaluable.dev/zsh-completion-guide-examples/
@@ -395,10 +395,7 @@ zstyle ':completion:*' group-name ''
 
 
 ################################################################################
-#
 # Homebrew
-#
-################################################################################
 
 m-log "Homebrew"
 
@@ -455,10 +452,7 @@ fi
 
 
 ################################################################################
-#
 # Applications
-#
-################################################################################
 
 m-log "Applications"
 
@@ -476,10 +470,7 @@ done
 
 
 ################################################################################
-#
 # Misc
-#
-################################################################################
 
 m-log "Misc"
 
@@ -525,11 +516,7 @@ eval "$(starship init zsh)"
 
 
 ################################################################################
-#
 # Outro
-#
-################################################################################
-
 
 m-info "Remember to run \`update\`"
 
@@ -553,10 +540,7 @@ fi
 
 
 ################################################################################
-#
 # Cheatsheets
-#
-################################################################################
 
 CHEATSHEET_MAC=$(cat<<EOF
 afplay          - Plays an audio file.
