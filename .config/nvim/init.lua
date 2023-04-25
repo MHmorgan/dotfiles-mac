@@ -16,23 +16,61 @@ Open current window in another tab:
 
 --]]
 
-vim.cmd "set runtimepath^=~/.vim runtimepath+=~/.vim/after"
-vim.cmd "let &packpath = &runtimepath"
-vim.cmd "source ~/.vimrc"
+-- vim.cmd "set runtimepath^=~/.vim runtimepath+=~/.vim/after"
+-- vim.cmd "let &packpath = &runtimepath"
+-- vim.cmd "source ~/.vimrc"
 
-vim.g.mapleader = " "
-vim.keymap.set('n', '<Leader>h', '<cmd>echo "Example 1"<cr>')
---vim.keymap.set('n', '<Leader>r', function ()
---	-- print'Hello, World!'
---     vim.ui.select({ 'tabs', 'spaces' }, {
---         prompt = 'Select tabs or spaces:',
---         format_item = function(item)
---             return "I'd like to choose " .. item
---         end,
---     }, function(choice)
---		 print("in:", choice)
---     end)
---end)
+-- Neovim config - Magnus Hirth
+-- https://developer.ibm.com/technologies/linux/articles/l-vim-script-1/
+-- https://devhints.io/vimscript
+-- https://vim.rtorr.com/
 
--- require "foo"
+-- General
+vim.cmd('colorscheme default')
+
+vim.wo.number = true
+vim.wo.relativenumber = true
+
+vim.wo.wrap = false
+
+vim.cmd('syntax enable')
+vim.cmd('hi clear TODO')
+
+vim.bo.shiftwidth = 4
+vim.bo.tabstop = 4
+
+vim.o.path = vim.o.path .. ',**'
+
+vim.o.modeline = true
+
+vim.wo.foldmethod = 'marker'
+
+vim.cmd([[
+  autocmd Filetype c setlocal ts=4 sw=4 expandtab
+  autocmd Filetype perl setlocal ts=4 sw=4 expandtab
+  autocmd Filetype dart setlocal ts=2 sw=2 expandtab
+  autocmd Filetype m4 setlocal ts=4 sw=4 expandtab
+  autocmd Filetype python setlocal ts=4 sw=4 expandtab
+  autocmd Filetype tcl setlocal ts=2 sw=2 expandtab
+  autocmd Filetype xml setlocal ts=2 sw=2 expandtab
+  autocmd Filetype html setlocal ts=2 sw=2 expandtab
+]])
+
+-- Packer plugin
+-- https://github.com/wbthomason/packer.nvim
+
+vim.cmd('packadd packer.nvim')
+
+require('packer').startup(function()
+  -- Let Packer manage Packer
+  use 'wbthomason/packer.nvim'
+
+  use 'tpope/vim-fugitive'
+  use 'vim-airline/vim-airline'
+
+  use 'tbastos/vim-lua'
+end)
+
+vim.cmd('filetype plugin indent on')
+
 
