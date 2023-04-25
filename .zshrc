@@ -18,7 +18,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v118"
+m-emph "Zshrc Mac v119"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -35,6 +35,7 @@ export GOTO_PATH=(
 
 ################################################################################
 # PATH
+#{{{
 
 m-log "PATHs"
 
@@ -55,9 +56,11 @@ export PATH="$PATH:$HOME/go/bin"
 # Rust
 export PATH="$PATH:$HOME/.cargo/bin"
 
+#}}}
 
 ################################################################################
 # Oh my zsh
+#{{{
 
 m-log "Oh-my-zsh"
 
@@ -90,6 +93,47 @@ else
 	m-bad "Oh my zsh is not installed!"
 fi
 
+#}}}
+
+################################################################################
+# GIT
+#{{{
+
+#DOC> lg :: Start lazygit [GIT]
+alias lg='lazygit'
+
+#DOC> glog :: Print the last 7 log entries [GIT]
+alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
+
+#DOC> glist :: List my non-archived GitHub repos [GIT]
+alias glist='gh repo list --no-archived'
+
+#DOC> gclone :: Clone a GitHub repo [GIT]
+alias gclone='gh repo clone'
+
+#DOC> gc :: Git commit alias [GIT]
+alias gc='git commit --verbose'
+
+#DOC> gca :: Git commit all alias [GIT]
+alias gca='git commit --verbose --all'
+
+#DOC> gst :: Git status alias [GIT]
+alias gst='git status'
+
+#DOC> gsync :: Synchronize current git repo [GIT]
+function gsync {
+	if git status --porcelain=v1 | egrep '^.[^?!]'
+	then
+		gum confirm 'Commit changes?' &&
+		git commit -av ||
+		gum confirm 'Continue sync?' ||
+		return 1
+	fi
+	git pull --rebase &&
+	git push
+}
+
+#}}}
 
 ################################################################################
 # Aliases
@@ -113,15 +157,6 @@ alias downloads='cd ~/Downloads && pwd && ls -G'
 
 alias n="nvim"
 alias ns="nvim -S"
-
-#DOC> lg :: Start lazygit [GIT]
-alias lg='lazygit'
-#DOC> glog :: Print the last 7 log entries [GIT]
-alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" -7'
-#DOC> glist :: List my non-archived GitHub repos [GIT]
-alias glist='gh repo list --no-archived'
-#DOC> gclone :: Clone a GitHub repo [GIT]
-alias gclone='gh repo clone'
 
 alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
 alias aliases='alias | sort | less'
@@ -281,19 +316,6 @@ function goto {
 	ll
 }
 
-#DOC> gsync :: Synchronize current git repo [GIT]
-function gsync {
-	if git status --porcelain=v1 | egrep '^.[^?!]'
-	then
-		gum confirm 'Commit changes?' &&
-		git commit -av ||
-		gum confirm 'Continue sync?' ||
-		return 1
-	fi
-	git pull --rebase &&
-	git push
-}
-
 #DOC> help :: Combining `help.py` script and `glow`
 function help {
 	if ! m-exists help.py; then
@@ -375,6 +397,7 @@ function update {
 
 ################################################################################
 # Completion
+#{{{
 
 # See:
 #   manpage zshcompsys
@@ -402,9 +425,11 @@ zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches --%f'
 # Group matches under their description header
 zstyle ':completion:*' group-name ''
 
+#}}}
 
 ################################################################################
 # Homebrew
+#{{{
 
 m-log "Homebrew"
 
@@ -459,6 +484,7 @@ then
 	compinit
 fi
 
+#}}}
 
 ################################################################################
 # Applications
@@ -545,69 +571,4 @@ then
 	fortune | cowsay -n
 fi
 
-
-
-
-################################################################################
-# Cheatsheets
-
-CHEATSHEET_MAC=$(cat<<EOF
-afplay          - Plays an audio file.
-airport         - Provides information about Wi-Fi networks and manages the Wi-Fi interface.
-brctl           - Manages iCloud documents and data.
-caffeinate      - Prevents the system from sleeping, displaying the screen saver, or going to sleep.
-csrutil         - Manages System Integrity Protection (SIP) settings.
-defaults        - Reads, writes, and deletes preferences in macOS.
-diskutil        - Manages disks and volumes.
-ditto           - Copy folder content to another folder.
-hdiutil         - Creates, converts, and manipulates disk images.
-ioreg           - Displays the I/O Kit registry, which provides information about devices and drivers in the system.
-kextload        - Loads a kernel extension.
-kextstat        - Shows the status of loaded kernel extensions.
-kextunload      - Unloads a loaded kernel extension.
-log             - Interacts with the unified logging system introduced in macOS Sierra and later.
-mdfind          - Searches for files using Spotlight metadata.
-mdls            - Lists metadata attributes for a file.
-networksetup    - Configures network settings.
-nvram           - Provides an interface to read and write NVRAM variables, which store system settings like boot arguments and startup disk selection.
-open            - Opens a file or directory with the default app, or opens a specified app.
-osascript       - Executes AppleScript and other OSA (Open Scripting Architecture) language scripts.
-pbcopy          - Copies text from stdin to the clipboard.
-pbpaste         - Pastes text from the clipboard to stdout.
-pkgutil         - Manages macOS installer packages, such as expanding or querying package information.
-plutil          - Converts property list files between formats, such as XML and binary, and can also validate and manipulate the contents.
-pmset           - Manages power management settings, such as sleep and wake times, display sleep times, and more.
-profiles        - Manages configuration profiles on macOS devices.
-say             - Converts text to speech and speaks it aloud.
-screencapture   - Takes a screenshot of the screen or a specified area.
-scutil          - Provides a command-line interface to the System Configuration framework, allowing you to manage system network configuration.
-softwareupdate  - Manages software updates from the command line.
-sw_vers         - Shows macOS version information.
-system_profiler - Provides detailed information about the system's hardware and software configuration.
-tag             - Manipulate and query tags on macOS files (homebrew)
-textutil        - Converts text files between different formats, such as HTML, RTF, and plain text.
-tmutil          - Manages Time Machine backups.
-EOF
-)
-
-CHEATSHEET_UNIX=$(cat<<EOF
-cheat           - Create and view interactive cheat sheets for *nix commands (homebrew)
-cmatrix         - Console Matrix (homebrew)
-cowsay          - Configurable talking characters in ASCII art (homebrew)
-figlet          - Banner-like program prints strings as ASCII art (homebrew)
-fortune         - Infamous electronic fortune-cookie generator (homebrew)
-gh              - GitHub command-line tool (homebrew)
-glow            - Render markdown in the CLI (homebrew)
-gum             - Tool for glamorous shell scripts (homebrew)
-ipython         - Interactive computing in Python (homebrew)
-jq              - Lightweight and flexible command-line JSON processor (homebrew)
-neofetch        - Fast, highly customisable system info script (homebrew)
-pandoc          - Swiss-army knife of markup format conversion (homebrew)
-poetry          - Python package management tool (homebrew)
-sl              - Prints a steam locomotive if you type sl instead of ls (homebrew)
-starship        - Cross-shell prompt for astronauts (homebrew)
-thefuck         - Programmatically correct mistyped console commands (homebrew)
-tldr            - Simplified and community-driven man pages (homebrew)
-EOF
-)
 
