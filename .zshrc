@@ -20,7 +20,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v124"
+m-emph "Zshrc Mac v125"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -405,13 +405,11 @@ function todo {
 	fi
 }
 
-# Use a REPO_PATHS for where to look?
 function update {
 	m-ifexists neofetch
 
 	m-header Rogu
 	rogu -v update
-	echo
 
 	m-header Dotfiles
 	if dot status --porcelain=v1 | egrep '^.[^?!]'
@@ -426,6 +424,8 @@ function update {
 		dot pull --rebase &&
 		dot push
 	fi
+
+	# TODO Update git repos? For repos in REPO_PATH do a pull if they're clean?
 
 	m-header Homebrew
 	brew update && brew upgrade
