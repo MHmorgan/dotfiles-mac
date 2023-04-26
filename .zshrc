@@ -20,7 +20,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v123"
+m-emph "Zshrc Mac v124"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -190,11 +190,8 @@ function status {
 		git status --show-stash
 	fi
 
-	if m-exists gh
-	then
-		m-header "GitHub"
-		gh status
-	fi
+	m-header "GitHub"
+	gh status
 }
 
 #}}}
@@ -417,17 +414,17 @@ function update {
 	echo
 
 	m-header Dotfiles
-	if git status --porcelain=v1 | egrep '^.[^?!]'
+	if dot status --porcelain=v1 | egrep '^.[^?!]'
 	then
 		if gum confirm 'Commit changes and sync?'
 		then
-			git commit -av &&
-			git pull --rebase &&
-			git push
+			dot commit -av &&
+			dot pull --rebase &&
+			dot push
 		fi
 	else
-		git pull --rebase &&
-		git push
+		dot pull --rebase &&
+		dot push
 	fi
 
 	m-header Homebrew
