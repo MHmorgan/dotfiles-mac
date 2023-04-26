@@ -20,12 +20,12 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v122"
+m-emph "Zshrc Mac v123"
 
 export EDITOR='nvim'
 export PAGER='less'
 
-export HELP_DIR=$HOME/help-pages
+export HELP_PATH="$HOME/help-pages"
 export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
 
 # The paths used by the goto function
@@ -33,6 +33,32 @@ export GOTO_PATH=(
 	$HOME/Documents
 	$HOME/Downloads
 )
+
+#DOC> help :: Combining `help.py` script and `glow`
+function help {
+	if ! m-exists help.py; then
+		m-err "Script 'help.py' not found."
+		return 1
+	fi
+	if ! m-exists glow; then
+		m-err "Command 'glow' not found."
+		return 1
+	fi
+	help.py $@ | glow
+}
+
+#DOC> helpp :: Combining `help.py` script and `glow` with pager
+function helpp {
+	if ! m-exists help.py; then
+		m-err "Script 'help.py' not found."
+		return 1
+	fi
+	if ! m-exists glow; then
+		m-err "Command 'glow' not found."
+		return 1
+	fi
+	help.py $@ | glow --pager
+}
 
 
 ################################################################################
@@ -133,6 +159,42 @@ function gsync {
 	fi
 	git pull --rebase &&
 	git push
+}
+
+#DOC> root :: Go to the root dir of current repo [GIT]
+function root {
+	local DIR=$PWD
+	while [[ -n "$DIR" ]]; do
+		test -e $DIR/.git && break
+		DIR=${DIR%/*}
+	done
+
+	if [[ -z "$DIR" ]]; then
+		m-err "Not in a git repo"
+		return 1
+	fi
+
+	echo $DIR
+	cd $DIR
+	ll
+}
+
+#DOT> status :: Show git and gh status for repos [GIT]
+# TODO Visit all repos from REPO_PATH
+function status {
+
+	#if git status --porcelain=v1 | egrep '^.[^?!]'
+	if [[ -n $(git_repo_name) ]]; then
+		echo
+		m-header "Git"
+		git status --show-stash
+	fi
+
+	if m-exists gh
+	then
+		m-header "GitHub"
+		gh status
+	fi
 }
 
 #}}}
@@ -324,49 +386,6 @@ function goto {
 	ll
 }
 
-#DOC> help :: Combining `help.py` script and `glow`
-function help {
-	if ! m-exists help.py; then
-		m-err "Script 'help.py' not found."
-		return 1
-	fi
-	if ! m-exists glow; then
-		m-err "Command 'glow' not found."
-		return 1
-	fi
-	help.py $@ | glow
-}
-
-#DOC> helpp :: Combining `help.py` script and `glow` with pager
-function helpp {
-	if ! m-exists help.py; then
-		m-err "Script 'help.py' not found."
-		return 1
-	fi
-	if ! m-exists glow; then
-		m-err "Command 'glow' not found."
-		return 1
-	fi
-	help.py $@ | glow --pager
-}
-
-function root {
-	local DIR=$PWD
-	while [[ -n "$DIR" ]]; do
-		test -e $DIR/.git && break
-		DIR=${DIR%/*}
-	done
-
-	if [[ -z "$DIR" ]]; then
-		m-err "Not in a git repo"
-		return 1
-	fi
-
-	echo $DIR
-	cd $DIR
-	ll
-}
-
 function s {
 	local USER=m
 	local HOST=134.122.59.44
@@ -384,20 +403,33 @@ function todo {
 		git grep -E $re
 	else
 		# TODO Use TODO_PATH and `find` with `xargs`
+		# TODO Also use REPO_PATH with `git grep`
 		grep -rE $re .
 	fi
 }
 
-# TODO Update git repos as well (use gsync)
-# TODO Update dotfiles
 # Use a REPO_PATHS for where to look?
 function update {
 	m-ifexists neofetch
 
 	m-header Rogu
 	rogu -v update
-
 	echo
+
+	m-header Dotfiles
+	if git status --porcelain=v1 | egrep '^.[^?!]'
+	then
+		if gum confirm 'Commit changes and sync?'
+		then
+			git commit -av &&
+			git pull --rebase &&
+			git push
+		fi
+	else
+		git pull --rebase &&
+		git push
+	fi
+
 	m-header Homebrew
 	brew update && brew upgrade
 }
