@@ -20,7 +20,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v125"
+m-emph "Zshrc Mac v126"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -34,21 +34,8 @@ export GOTO_PATH=(
 	$HOME/Downloads
 )
 
-#DOC> help :: Combining `help.py` script and `glow`
+#DOC> help :: Combining `help.py` script and `glow` w/pager
 function help {
-	if ! m-exists help.py; then
-		m-err "Script 'help.py' not found."
-		return 1
-	fi
-	if ! m-exists glow; then
-		m-err "Command 'glow' not found."
-		return 1
-	fi
-	help.py $@ | glow
-}
-
-#DOC> helpp :: Combining `help.py` script and `glow` with pager
-function helpp {
 	if ! m-exists help.py; then
 		m-err "Script 'help.py' not found."
 		return 1
@@ -325,7 +312,7 @@ done
 alias drogu='python3 ~/bin/rogu'
 
 #DOC> rogu-help :: Pretty-print rogu's help page with glow [ROGU]
-alias rogu-help='rogu help | glow'
+alias rogu-help='rogu help | glow --pager'
 
 #}}}
 
