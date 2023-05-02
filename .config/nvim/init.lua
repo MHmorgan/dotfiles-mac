@@ -56,23 +56,26 @@ vim.cmd([[
   autocmd Filetype html setlocal ts=2 sw=2 expandtab
 ]])
 
+-- LEADER KEY
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Packer plugin
 -- https://github.com/wbthomason/packer.nvim
 
 -- PLUGINS
 --
 -- My plugin setup (./lua/plugins.lua)
+--
 require 'plugins'
 
 vim.cmd('filetype plugin indent on')
 
--- LEADER KEY
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- FILE EXPLORER
 --
--- Open netrw file explorer with <leader>e
-vim.api.nvim_set_keymap('n', '<leader>e', ':Explore<CR>', {noremap = true, silent = true})
+-- Using NERDTree as file explorer for neovim
+--
+vim.api.nvim_set_keymap('n', '<leader>e', ':NERDTreeFocus<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>E', ':NERDTreeToggle<CR>', {noremap = true, silent = true})
 
 

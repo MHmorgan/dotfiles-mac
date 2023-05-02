@@ -12,5 +12,7 @@ require('packer').startup(function()
 	use 'vim-airline/vim-airline'
 	
 	use 'tbastos/vim-lua'
+
+	use 'preservim/nerdtree'
 end)
 
