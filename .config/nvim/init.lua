@@ -59,18 +59,20 @@ vim.cmd([[
 -- Packer plugin
 -- https://github.com/wbthomason/packer.nvim
 
-vim.cmd('packadd packer.nvim')
-
-require('packer').startup(function()
-  -- Let Packer manage Packer
-  use 'wbthomason/packer.nvim'
-
-  use 'tpope/vim-fugitive'
-  use 'vim-airline/vim-airline'
-
-  use 'tbastos/vim-lua'
-end)
+-- PLUGINS
+--
+-- My plugin setup (./lua/plugins.lua)
+require 'plugins'
 
 vim.cmd('filetype plugin indent on')
+
+-- LEADER KEY
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- FILE EXPLORER
+--
+-- Open netrw file explorer with <leader>e
+vim.api.nvim_set_keymap('n', '<leader>e', ':Explore<CR>', {noremap = true, silent = true})
 
 

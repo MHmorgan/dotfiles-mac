@@ -1,1 +1,25 @@
-*
+/*
+!.gitignore
+!.ideavimrc
+!.vimrc
+!.zshrc
+
+# ----------------------------------------------------------
+# .config
+
+# Negate for more detailed control
+!/.config 
+# Ignore everything inside it by default
+/.config/*
+!/.config/starship.toml
+
+# ----------------------------------------------------------
+# .config/nvim
+
+# Negate for more detailed control
+!/.config/nvim
+/.config/nvim/*
+!/.config/nvim/init.lua
+!/.config/nvim/lua
+!/.config/nvim/plugins
+
