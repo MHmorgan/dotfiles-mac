@@ -20,7 +20,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v126"
+m-emph "Zshrc Mac v127"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -201,6 +201,8 @@ alias home='cd && pwd && ls -G'
 alias documents='cd ~/Documents && pwd && ls -G'
 #DOC> downloads :: Go to Downloads dir and ls
 alias downloads='cd ~/Downloads && pwd && ls -G'
+#DOC> projects :: Go to Projects dir and ls
+alias projects='cd ~/Projects && pwd && ls -G'
 
 alias l="ls -F"
 alias ll="ls -lh"
