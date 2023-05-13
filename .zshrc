@@ -20,7 +20,7 @@ function m-header { gum style --border=rounded --width=20 --align=center --margi
 function m-log { echo -n "$(tput el)$*\r" }
 #}}}
 
-m-emph "Zshrc Mac v127"
+m-emph "Zshrc Mac v128"
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -212,11 +212,15 @@ alias llf="ls -lhd *(.)"
 alias lsd="ls -hd *(/)"
 alias lld="ls -lhd *(/)"
 
+#DOC> n :: Start Neovim
 alias n="nvim"
+#DOC> ns :: Start Neovim from a saved session (-S)
 alias ns="nvim -S"
+alias nd="nvim -d"
 
 alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
 alias aliases='alias | sort | less'
+alias lines='wc -l'
 
 alias sshserver='ssh m@134.122.59.44'
 
