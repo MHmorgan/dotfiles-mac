@@ -29,10 +29,7 @@ export HELP_PATH="$HOME/help-pages"
 export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
 
 # The paths used by the goto function
-export GOTO_PATH=(
-	$HOME/Documents
-	$HOME/Downloads
-)
+export GOTO_PATH="$HOME/Documents:$HOME/Downloads"
 
 #DOC> help :: Combining `help.py` script and `glow` w/pager
 function help {
@@ -361,15 +358,40 @@ function cds {
 # Defined it golang oh-my-zsh plugin
 unalias goto
 
-# TODO Use `gum` for this instead?
 function goto {
-	m-exists selector || {
-		m-bad "'selector' not installed."
+	local IFS=':'
+	local -a targets
+	local DIR FLT
+
+	m-exists gum || {
+		m-bad "'gum' not installed."
 		return 1
 	}
-	local SEL=$(selector -filter "$*" ${=GOTO_PATH})
-	[[ -n "$SEL" ]] || return
-	local DIR=$SEL
+
+	# Filter out directories
+	for DIR in ${=GOTO_PATH}
+	do
+		# Each input argument is a filter
+		for FLT in $@
+		do
+			if ! [[ "$DIR" =~ "$FLT" ]]
+			then
+				DIR=''
+			fi
+		done
+
+		test -n $DIR && targets+=($DIR)
+	done
+
+	# Choose target directory
+	if (( ${#targets} <= 1 ))
+	then
+		DIR=$targets
+	else
+		DIR=$(gum choose --header='Where to goto?' $targets)
+	fi
+
+	[[ -n "$DIR" ]] || return 1
 	echo $DIR
 	# -P use the physical directory structure instead of following symbolic links
 	cd -P $DIR
