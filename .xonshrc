@@ -1,0 +1,101 @@
+# vim: filetype=python:
+
+# XONSH WIZARD START
+#source-zsh "echo loading xonsh foreign shell"
+xontrib load xog vox abbrevs
+# XONSH WIZARD END
+
+${'PATH'}.extend([
+    f'{$HOME}/bin',
+    f'{$HOME}/.local/bin',
+])
+
+$EDITOR = 'nvim'
+$PAGER = 'less'
+
+$HELP_PATH = f'{$HOME}/help-pages'
+$HELP_FILES = f'{$HOME}/.zshrc:{$HOME}/.vimrc:{$HOME}/.myzshrc'
+
+$GOTO_PATH = f'{$HOME}/Documents:{$HOME}/Downloads'
+
+
+# ------------------------------------------------------------------------------
+# PROMPT
+#{{{
+
+$PROMPT = \
+    '\n↳ {localtime} {cwd_base}' \
+	'{gitstatus: [{}]}' \
+	'{BOLD_RED}{last_return_code_if_nonzero: {}}{RESET}' \
+	'\n{prompt_end} '
+
+#$RIGHT_PROMPT = '{last_return_code}'
+#$BOTTOM_TOOLBAR = '{cwd} {RESET}'
+#}}}
+
+
+# ------------------------------------------------------------------------------
+# NEOVIM
+#{{{
+
+$EDITOR = 'nvim'
+
+#DOC> n :: Start Neovim
+aliases['n'] = "nvim"
+
+#DOC> ns :: Start Neovim from a saved session (-S)
+aliases['ns'] = "nvim -S"
+
+aliases['nd'] = "nvim -d"
+#}}}
+
+
+# ------------------------------------------------------------------------------
+# ALIASES
+#{{{
+
+# NAVIGATION
+
+aliases['..'] = 'cd ..'
+aliases['cdl'] = 'cd $arg0 && ll'
+
+#DOC> cl :: Clear the screan and list dir content
+aliases['cl'] = 'clear && ls -lh'
+
+#DOC> ch :: Go home and list home content
+aliases['ch'] = 'clear && cd && pwd && ls -lh'
+
+#DOC> tmp :: Go to tmp dir
+aliases['tmp'] = 'cd /tmp'
+
+#DOC> home :: Go to home dir
+aliases['home'] = 'cd && pwd && ls -G'
+
+#DOC> documents :: Go to Documents dir and ls
+aliases['documents'] = 'cd ~/Documents && pwd && ls -G'
+
+#DOC> downloads :: Go to Downloads dir and ls
+aliases['downloads'] = 'cd ~/Downloads && pwd && ls -G'
+
+#DOC> projects :: Go to Projects dir and ls
+aliases['projects'] = 'cd ~/Projects && pwd && ls -G'
+
+aliases['l'] = "ls -F"
+aliases['ll'] = "ls -lh"
+aliases['l1'] = "ls -1hF"
+
+aliases['path'] = 'echo $PATH | sed "s/:/\\\\n/g" | sort | less'
+aliases['aliases'] = 'alias | sort | less'
+aliases['lines'] = 'wc -l'
+
+aliases['sshserver'] = 'ssh m@134.122.59.44'
+
+#}}}
+
+
+# ------------------------------------------------------------------------------
+# CLEANUP
+#{{{
+
+#}}}
+
