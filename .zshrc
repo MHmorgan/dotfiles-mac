@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v129"
+echo "Zshrc Mac v130"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -240,9 +240,31 @@ alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 #DOC> dls :: List all dotfiles [DOTFILES]
 function dls {
-    pushd $HOME &>/dev/null
+    pushd -q $HOME
     dot ls-tree -r main | awk '{ print $4}' | xargs ls -l
     popd &>/dev/null
+}
+
+#DOC> dst :: Show dotfiles repo status [DOTFILES]
+function dst {
+    pushd -q $HOME
+    dot status
+    popd -q
+}
+
+#DOC> dsync :: Synchronize the dotfiles repo [DOTFILES]
+function dsync {
+    pushd -q $HOME
+    if dot status --porcelain=v1 | egrep '^.[^?!]'
+    then
+        gum confirm 'Commit changes?' &&
+        dot commit -av ||
+        gum confirm 'Continue sync?' ||
+        return 1
+    fi
+    dot pull --rebase &&
+    dot push
+    popd -q
 }
 
 #DOC> edit-dotfile :: Edit a dotfile and sync dotfile repo [DOTFILES]
