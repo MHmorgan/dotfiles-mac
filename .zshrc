@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v130"
+echo "Zshrc Mac v131"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -25,6 +25,7 @@ export GOTO_PATH="$HOME/Documents:$HOME/Downloads:$HOME/Projects"
 alias ls="ls -FG"
 alias la="ls -AFG"
 alias ll="ls -Glh"
+alias lla="ls -AGlh"
 alias l1="ls -1FGh"
 
 alias help='help.py | glow --pager'
@@ -436,7 +437,7 @@ fi
 #}}}
 
 # ------------------------------------------------------------------------------
-# Misc
+# MISC
 #{{{
 
 #DOC> path :: List all directories in PATH [MISC]
@@ -509,7 +510,7 @@ function all_gum_spinners {
 #}}}
 
 # ------------------------------------------------------------------------------
-# Outro
+# OUTRO
 #{{{
 
 if [[ -d ~/lib ]]; then
