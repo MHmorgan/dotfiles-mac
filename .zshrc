@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v132"
+echo "Zshrc Mac v133"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -340,7 +340,7 @@ done
 alias drogu='python3 ~/bin/rogu'
 
 #DOC> rogu-help :: Pretty-print rogu's help page with glow [ROGU]
-alias rogu-help='rogu help | glow --pager'
+alias rogu-help='rogu help | glow'
 
 #}}}
 
