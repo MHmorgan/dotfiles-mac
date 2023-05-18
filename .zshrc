@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v137"
+echo "Zshrc Mac v138"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -116,7 +116,7 @@ function root {
     ll
 }
 
-#DOT> st :: Show git and gh status for repos [GIT]
+#DOC> st :: Show git and gh status for repos [GIT]
 function st {
 
     # Show status of current git repo
