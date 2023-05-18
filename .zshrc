@@ -29,48 +29,6 @@ alias l1="ls -1FGh"
 
 alias help='help.py | glow --pager'
 
-#DOC> todo :: List todo entries [CORE]
-# TODO Add a status function which looks for TODOs?
-# TODO Outsource `todo` to a xonsh script?
-function todo {
-    local re='(TODO|FIXME|BUG)'
-    if [[ -n "$(git_repo_name)" ]]; then
-        git grep -E $re
-    else
-        # TODO Use TODO_PATH and `find` with `xargs`
-        # TODO Also use REPO_PATH with `git grep`
-        grep -rE $re .
-    fi
-}
-
-#DOC> update :: Update the system [CORE]
-# TODO Outsource `update` to a xonsh script?
-function update {
-    neofetch
-
-    header Rogu
-    rogu -v update
-
-    header Dotfiles
-    if dot status --porcelain=v1 | egrep '^.[^?!]'
-    then
-        if gum confirm 'Commit changes and sync?'
-        then
-            dot commit -av &&
-            dot pull --rebase &&
-            dot push
-        fi
-    else
-        dot pull --rebase &&
-        dot push
-    fi
-
-    # TODO Update git repos? For repos in REPO_PATH do a pull if they're clean?
-
-    header Homebrew
-    brew update && brew upgrade
-}
-
 #}}}
 
 # ------------------------------------------------------------------------------
@@ -367,32 +325,33 @@ alias rogu-help='rogu help | glow --pager'
 #}}}
 
 # ------------------------------------------------------------------------------
-# TODO COMPLETION
+# COMPLETION
 #{{{
 
-# # See:
-# #   manpage zshcompsys
-# #    https://thevaluable.dev/zsh-completion-guide-examples/
-# #   https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
-# 
-# # Set completers
-# #   _extensions  : Complete the glob *. with possible file extensions
-# #   _complete    : The main completer needed for completion.
-# #   _approximate : Try to correct what you've already typed if no match is found.
-# zstyle ':completion:*' completer _extensions _complete _approximate
-# 
-# # Completion caching
-# zstyle ':completion:*' use-cache on
-# zstyle ':completion:*' cache-path "$HOME/.zcompcache"
-# 
-# # Print description headers for completions
-# zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
-# # Print completion messages and warnings
-# zstyle ':completion:*:*:*:*:messages' format ' %F{purple} -- %d --%f'
-# zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches --%f'
-# 
-# # Group matches under their description header
-# zstyle ':completion:*' group-name ''
+# See:
+#   manpage zshcompsys
+#    https://thevaluable.dev/zsh-completion-guide-examples/
+#   https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+
+# Set completers
+#   _extensions  : Complete the glob *. with possible file extensions
+#   _complete    : The main completer needed for completion.
+#   _approximate : Try to correct what you've already typed if no match is found.
+zstyle ':completion:*' completer _extensions _complete _approximate
+
+
+# Completion caching
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$HOME/.zcompcache"
+
+# Print description headers for completions
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+# Print completion messages and warnings
+zstyle ':completion:*:*:*:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches --%f'
+
+# Group matches under their description header
+zstyle ':completion:*' group-name ''
 
 #}}}
 
@@ -475,6 +434,48 @@ function backup {
     fi
 
     cp -vpr $src $src~
+}
+
+#DOC> todo :: List todo entries [MISC]
+# TODO Add a status function which looks for TODOs?
+# TODO Outsource `todo` to a xonsh script?
+function todo {
+    local re='(TODO|FIXME|BUG)'
+    if [[ -n "$(git_repo_name)" ]]; then
+        git grep -E $re
+    else
+        # TODO Use TODO_PATH and `find` with `xargs`
+        # TODO Also use REPO_PATH with `git grep`
+        grep -rE $re .
+    fi
+}
+
+#DOC> update :: Update the system [MISC]
+# TODO Outsource `update` to a xonsh script?
+function update {
+    neofetch
+
+    header Rogu
+    rogu -v update
+
+    header Dotfiles
+    if dot status --porcelain=v1 | egrep '^.[^?!]'
+    then
+        if gum confirm 'Commit changes and sync?'
+        then
+            dot commit -av &&
+            dot pull --rebase &&
+            dot push
+        fi
+    else
+        dot pull --rebase &&
+        dot push
+    fi
+
+    # TODO Update git repos? For repos in REPO_PATH do a pull if they're clean?
+
+    header Homebrew
+    brew update && brew upgrade
 }
 
 function all_gum_spinners {
