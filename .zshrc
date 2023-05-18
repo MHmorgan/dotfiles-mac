@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v133"
+echo "Zshrc Mac v134"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -502,6 +502,12 @@ function all_gum_spinners {
     for X in line dot minidot jump pulse points globe moon monkey meter hamburger; do
         gum spin --spinner=$X --title=$X sleep 5
     done
+}
+
+#DOC> makels [FILE] :: List makefile targets [MISC]
+function makels {
+    local FILE=${1:-Makefile}
+    cat $FILE | egrep -o '^\w+:' | tr -d ':' | sort | column
 }
 
 #}}}
