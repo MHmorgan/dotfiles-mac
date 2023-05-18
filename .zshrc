@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v135"
+echo "Zshrc Mac v136"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -134,6 +134,9 @@ alias n="nvim"
 
 #DOC> ns :: Start Neovim from a saved session [NEOVIM]
 alias ns="nvim -S"
+
+#DOC> no :: Start Neovim with vsplit windows [NEOVIM]
+alias no="nvim -O"
 
 #DOC> nd :: Start Neovim in diff mode [NEOVIM]
 alias nd="nvim -d"
