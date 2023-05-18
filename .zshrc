@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v136"
+echo "Zshrc Mac v137"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -16,10 +16,18 @@ function header { gum style --border=rounded --width=20 --align=center --margin=
 export EDITOR='nvim'
 export PAGER='less'
 
+# Paths for the help.py script
 export HELP_PATH="$HOME/help-pages"
 export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
 
+# Paths for the goto command
 export GOTO_PATH="$HOME/Documents:$HOME/Downloads:$HOME/Projects"
+
+# Paths for the todo command
+export TODO_PATH="$HOME/Documents:$HOME/Projects:$HOME/bin:$HOME/lib:$HOME/.config/nvim"
+
+# Paths for the update and status commands
+export REPO_PATH="$HOME/Projects"
 
 alias ls="ls -FG"
 alias la="ls -AFG"
@@ -108,15 +116,26 @@ function root {
     ll
 }
 
-#DOT> status :: Show git and gh status for repos [GIT]
-# TODO Visit all repos from REPO_PATH
-function status {
+#DOT> st :: Show git and gh status for repos [GIT]
+function st {
 
-    #if git status --porcelain=v1 | egrep '^.[^?!]'
-    if [[ -n $(git_repo_name) ]]; then
-        echo
-        header "Git"
-        git status --show-stash
+    # Show status of current git repo
+    if ! git status --show-stash 2>/dev/null
+    then
+        # Or, show status of unclean repos
+        for DIR in $(find ${(s.:.)REPO_PATH} -maxdepth 7 -name '.git')
+        do
+            DIR=${DIR%/.git}
+            pushd -q $DIR
+
+            if git status --porcelain=v1 | egrep '^.[^?!]'
+            then
+                header ${DIR##*/}
+                git status --show-stash
+            fi
+
+            popd -q
+        done
     fi
 
     header "GitHub"
@@ -465,28 +484,30 @@ function backup {
 }
 
 #DOC> todo :: List todo entries [MISC]
-# TODO Add a status function which looks for TODOs?
-# TODO Outsource `todo` to a xonsh script?
 function todo {
-    local re='(TODO|FIXME|BUG)'
-    if [[ -n "$(git_repo_name)" ]]; then
-        git grep -E $re
-    else
-        # TODO Use TODO_PATH and `find` with `xargs`
-        # TODO Also use REPO_PATH with `git grep`
-        grep -rE $re .
-    fi
+    local RE='\b(TODO|FIXME|BUG)\b'
+    local DIR=$PWD
+
+    # Do git grep if inside a repo
+    git grep -E $RE 2>/dev/null && return
+
+    find -E ${(s.:.)TODO_PATH} .zshrc \
+        -type f \
+        -maxdepth 7 \
+        -not -regex '.*/(venv|thirdparty|\..+)/.*' \
+        -print0 \
+        2>/dev/null |
+    xargs -0 grep -IE --color=always $RE
 }
 
 #DOC> update :: Update the system [MISC]
-# TODO Outsource `update` to a xonsh script?
 function update {
     neofetch
 
-    header Rogu
+    header 'Rogu'
     rogu -v update
 
-    header Dotfiles
+    header 'Dotfiles'
     if dot status --porcelain=v1 | egrep '^.[^?!]'
     then
         if gum confirm 'Commit changes and sync?'
@@ -500,9 +521,25 @@ function update {
         dot push
     fi
 
-    # TODO Update git repos? For repos in REPO_PATH do a pull if they're clean?
+    header 'Repos'
+    for DIR in $(find ${(s.:.)REPO_PATH} -maxdepth 7 -name '.git')
+    do
+        DIR=${DIR%/.git}
+        NAME=${DIR##*/}
 
-    header Homebrew
+        pushd -q $DIR
+        if git status --porcelain=v1 | egrep '^.[^?!]'
+        then
+            echo "Dirty repo: ${NAME}"
+            git status --short
+        else
+            echo "Updating: ${NAME}"
+            git pull --rebase
+        fi
+        popd -q
+    done
+
+    header 'Homebrew'
     brew update && brew upgrade
 }
 
