@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v134"
+echo "Zshrc Mac v135"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -143,6 +143,11 @@ alias nd="nvim -d"
 # ------------------------------------------------------------------------------
 # NAVIGATION
 #{{{
+
+alias ..='cd ..'
+alias ...='cd ...'
+alias ....='cd ....'
+alias .....='cd .....'
 
 #DOC> cl :: Clear the screan and list dir content [NAVIGATION]
 alias cl='clear && ls -lh'
