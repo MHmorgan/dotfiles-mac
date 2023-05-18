@@ -1,10 +1,9 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v131"
+echo "Zshrc Mac v132"
 
 # ------------------------------------------------------------------------------
 # CORE
-#{{{
 
 autoload -U colors && colors
 function info   { echo "\e[${color[faint]};${color[default]}m$*$reset_color" }
@@ -28,9 +27,7 @@ alias ll="ls -Glh"
 alias lla="ls -AGlh"
 alias l1="ls -1FGh"
 
-alias help='help.py | glow --pager'
-
-#}}}
+alias help='help.py | glow'
 
 # ------------------------------------------------------------------------------
 # PATH
@@ -511,7 +508,6 @@ function all_gum_spinners {
 
 # ------------------------------------------------------------------------------
 # OUTRO
-#{{{
 
 if [[ -d ~/lib ]]; then
     export PERL5LIB="$HOME/lib:$PERL5LIB"
@@ -561,6 +557,4 @@ elif (( $D < 18 )); then
 else
     echo "Good night! 🌙"
 fi
-
-#}}}
 
