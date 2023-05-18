@@ -31,7 +31,6 @@ disabled = false
 
 [status]
 format = ' [$symbol $status]($style)'
-symbol = ''
 map_symbol = true
 disabled = false
 
