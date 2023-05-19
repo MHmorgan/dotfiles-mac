@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v142"
+echo "Zshrc Mac v143"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -190,25 +190,25 @@ alias ....='cd ....'
 alias .....='cd .....'
 
 #DOC> cl :: Clear the screan and list dir content [NAVIGATION]
-alias cl='clear && ls -lh'
+alias cl='clear && ls -Glh'
 
 #DOC> ch :: Go home and list home content [NAVIGATION]
-alias ch='clear && cd && pwd && ls -lh'
+alias ch='clear && cd && pwd && ls -Glh'
 
 #DOC> tmp :: Go to tmp dir [NAVIGATION]
 alias tmp='cd /tmp'
 
 #DOC> home :: Go to home dir [NAVIGATION]
-alias home='cd && pwd && ls -G'
+alias home='cd && pwd && ls -FG'
 
 #DOC> documents :: Go to Documents dir and ls [NAVIGATION]
-alias documents='cd ~/Documents && pwd && ls -G'
+alias documents='cd ~/Documents && pwd && ls -FG'
 
 #DOC> downloads :: Go to Downloads dir and ls [NAVIGATION]
-alias downloads='cd ~/Downloads && pwd && ls -G'
+alias downloads='cd ~/Downloads && pwd && ls -FG'
 
 #DOC> projects :: Go to Projects dir and ls [NAVIGATION]
-alias projects='cd ~/Projects && pwd && ls -G'
+alias projects='cd ~/Projects && pwd && ls -FG'
 
 #DOC> cdl :: Change directory and ll [NAVIGATION]
 function cdl {
@@ -224,41 +224,42 @@ function cds {
 
 #DOC> goto STR... :: Goto a matching directory on the system [NAVIGATION]
 function goto {
-    local -a TARGETS FILTERS
-    local DIR TMP
-
-    if ! exists gum
-    then 
+    if ! exists gum; then 
         err "'gum' not installed."
         return 1
     fi
-    
-    if (( $# == 0 ))
-    then
+    if (( $# == 0 )); then
         err 'Need some input...'
         return 1
     fi
 
-    FILTERS+=(-name "*$1*")
+    # SEARCH
+
+    local DIR
+    local -a DIRS=(${(s.:.)GOTO_PATH})  # Split in :
+    local -a FILTERS=(-name "*$1*")
     test -n "$2" && FILTERS+=(-and -name "*$2*")
     test -n "$3" && FILTERS+=(-and -name "*$3*")
 
-    for DIR in ${(s.:.)GOTO_PATH}  # Split on :
+    local -a TARGETS
+    for DIR in $(find $DIRS -maxdepth 1 -mindepth 1 -and $FILTERS) 
     do
-        for TMP in $(find $DIR -maxdepth 1 -mindepth 1 -and $FILTERS)
-        do
-            TARGETS+=($TMP)
-        done
+        # An exact match wins
+        if (( $# == 1 )) && [[ $1 == ${DIR##*/} ]]; then
+            TARGETS=($DIR)
+            break
+        fi
+        TARGETS+=($DIR)
     done
 
-    if (( ${#TARGETS} <= 1 ))
-    then
+    # SELECT
+
+    if (( ${#TARGETS} <= 1 )); then
         DIR=$TARGETS
     else
         DIR=$(gum choose --header='Where to goto?' $TARGETS)
     fi
-    if ! [[ -n "$DIR" ]]
-    then
+    if ! [[ -n "$DIR" ]]; then
         err "Nowhere to go :("
         return 1
     fi
@@ -266,7 +267,7 @@ function goto {
     echo $DIR
     # -P use the physical directory structure instead of following symbolic links
     cd -P $DIR
-    ll
+    ls
 }
 
 #}}}
