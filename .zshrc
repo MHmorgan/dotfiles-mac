@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v139"
+echo "Zshrc Mac v140"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -228,7 +228,7 @@ function goto {
 
     for DIR in ${(s.:.)GOTO_PATH}  # Split on :
     do
-        for TMP in $(find $DIR/* -maxdepth 0 -and $FILTERS)
+        for TMP in $(find $DIR -maxdepth 1 -mindepth 1 -and $FILTERS)
         do
             TARGETS+=($TMP)
         done
