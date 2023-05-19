@@ -1,6 +1,7 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v138"
+echo "Zshrc Mac v139"
+echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
 # CORE
@@ -566,9 +567,10 @@ if [[ -d ~/lib ]]; then
 fi
 
 if [[ -f $HOME/.myzshrc ]]; then
+    echo "-> .myzshrc"
     source $HOME/.myzshrc
 else
-    info "Local RC file (~/.myzshrc) not found."
+    info ".myzshrc not found."
 fi
 
 if ! exists rogu
