@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v140"
+echo "Zshrc Mac v141"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -592,7 +592,7 @@ then
     eval "$(starship init zsh)"
 fi
 
-info "Remember to run \`update\`"
+info "Remember to run \`update\` and \`help\`"
 
 if exists fortune cowsay
 then
