@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v141"
+echo "Zshrc Mac v142"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -141,6 +141,23 @@ function st {
 
     header "GitHub"
     gh status
+}
+
+# Returns 0 if the currenty repo is dirty
+function git_is_dirty {
+    git status --porcelain=v1 | egrep '^.[^?!]' &>/dev/null
+}
+
+# Returns 0 if the current repo has remote updates
+function git_has_updates {
+    git remote update || return 0
+
+    # https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
+    local UPSTREAM=${1:-'@{u}'}
+    local REMOTE=$(git rev-parse "$UPSTREAM")
+    local BASE=$(git merge-base @ "$UPSTREAM")
+
+    [[ $REMOTE != $BASE ]]
 }
 
 #}}}
@@ -523,19 +540,20 @@ function update {
     fi
 
     header 'Repos'
-    for DIR in $(find ${(s.:.)REPO_PATH} -maxdepth 7 -name '.git')
+    for DIR in $(find ${(s.:.)REPO_PATH} -type d -maxdepth 7 -name '.git')
     do
         DIR=${DIR%/.git}
         NAME=${DIR##*/}
 
         pushd -q $DIR
-        if git status --porcelain=v1 | egrep '^.[^?!]'
-        then
-            echo "Dirty repo: ${NAME}"
-            git status --short
+        if git_is_dirty; then
+            echo "Dirty: ${NAME}"
         else
-            echo "Updating: ${NAME}"
-            git pull --rebase
+            echo "Clean: ${NAME}"
+            if git_has_updates; then
+                gum confirm "Pull remote changes in ${NAME}?" &&
+                git pull --rebase
+            fi
         fi
         popd -q
     done
