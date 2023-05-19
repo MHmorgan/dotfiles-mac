@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v145"
+echo "Zshrc Mac v146"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -145,7 +145,6 @@ function st {
 # GIT SCRIPTING HELPER FUNCTIONS
 
 function git_is_dirty {
-    echo ">>>> DIRTY $DIR"
     git status --porcelain=v1 &>/dev/null | egrep '^.[^?!]' &>/dev/null
 }
 
