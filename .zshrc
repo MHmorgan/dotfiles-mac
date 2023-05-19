@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v144"
+echo "Zshrc Mac v145"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -23,9 +23,6 @@ export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
 
 # Paths for the goto command
 export GOTO_PATH="$HOME/Documents:$HOME/Downloads:$HOME/Projects"
-
-# Paths for the todo command
-export TODO_PATH="$HOME/Documents:$HOME/Projects:$HOME/bin:$HOME/lib:$HOME/.config/nvim"
 
 # Paths for the update and status commands
 export REPO_PATH="$HOME/Projects"
@@ -117,24 +114,26 @@ function root {
     ll
 }
 
-#DOC> st :: Show git and gh status for repos [GIT]
+#DOC> st :: Show git and gh status [GIT]
 function st {
-
-    # Show status of current git repo
-    if ! git status --show-stash 2>/dev/null
-    then
+    if git_in_repo; then
+        # Show status of current repo
+        header ${$(git_root)##*/}
+        git status --show-stash
+        echo
+        git grep -P '\b(TODO|FIXME|BUG)\b'
+    else
         # Or, show status of unclean repos
+        header "Repos"
         for DIR in $(find ${(s.:.)REPO_PATH} -maxdepth 7 -name '.git')
         do
             DIR=${DIR%/.git}
             pushd -q $DIR
-
-            if git status --porcelain=v1 | egrep '^.[^?!]'
-            then
-                header ${DIR##*/}
-                git status --show-stash
+            if git_is_dirty; then
+                bold ${DIR##*/}
+                git status --short --show-stash
+                echo
             fi
-
             popd -q
         done
     fi
@@ -143,12 +142,13 @@ function st {
     gh status
 }
 
-# Returns 0 if the currenty repo is dirty
+# GIT SCRIPTING HELPER FUNCTIONS
+
 function git_is_dirty {
-    git status --porcelain=v1 | egrep '^.[^?!]' &>/dev/null
+    echo ">>>> DIRTY $DIR"
+    git status --porcelain=v1 &>/dev/null | egrep '^.[^?!]' &>/dev/null
 }
 
-# Returns 0 if the current repo has remote updates
 function git_has_updates {
     git remote update || return 0
 
@@ -160,9 +160,20 @@ function git_has_updates {
     [[ $REMOTE != $BASE ]]
 }
 
-# Returns 0 if inside a git repo
 function git_in_repo {
-    git status --short &>/dev/null
+    git show-branch &>/dev/null
+}
+
+function git_root {
+    local DIR=$PWD
+    while test -n "$DIR"; do
+        if test -e $DIR/.git; then
+            echo $DIR
+            return
+        fi
+        DIR=${DIR%/*}
+    done
+    return 1
 }
 
 #}}}
@@ -190,9 +201,9 @@ alias nd="nvim -d"
 #{{{
 
 alias ..='cd ..'
-alias ...='cd ...'
-alias ....='cd ....'
-alias .....='cd .....'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 
 #DOC> cl :: Clear the screan and list dir content [NAVIGATION]
 alias cl='clear && ls -Glh'
@@ -505,26 +516,6 @@ function backup {
     fi
 
     cp -vpr $src $src~
-}
-
-#DOC> todo :: List todo entries [MISC]
-function todo {
-    local RE='\b(TODO|FIXME|BUG)\b'
-    local DIR=$PWD
-
-    # Do git grep if inside a repo
-    if git_in_repo; then
-        git grep -E $RE
-        return
-    fi
-
-    find -E ${(s.:.)TODO_PATH} .zshrc \
-        -type f \
-        -maxdepth 7 \
-        -not -regex '.*/(venv|thirdparty|\..+)/.*' \
-        -print0 \
-        2>/dev/null |
-    xargs -0 grep -IE --color=always $RE
 }
 
 #DOC> update :: Update the system [MISC]
