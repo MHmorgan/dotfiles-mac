@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v143"
+echo "Zshrc Mac v144"
 echo "-> .zshrc"
 
 # ------------------------------------------------------------------------------
@@ -158,6 +158,11 @@ function git_has_updates {
     local BASE=$(git merge-base @ "$UPSTREAM")
 
     [[ $REMOTE != $BASE ]]
+}
+
+# Returns 0 if inside a git repo
+function git_in_repo {
+    git status --short &>/dev/null
 }
 
 #}}}
@@ -508,7 +513,10 @@ function todo {
     local DIR=$PWD
 
     # Do git grep if inside a repo
-    git grep -E $RE 2>/dev/null && return
+    if git_in_repo; then
+        git grep -E $RE
+        return
+    fi
 
     find -E ${(s.:.)TODO_PATH} .zshrc \
         -type f \
