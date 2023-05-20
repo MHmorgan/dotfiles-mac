@@ -442,40 +442,6 @@ zstyle ':completion:*' group-name ''
 # HOMEBREW
 #{{{
 
-export HOMEBREW_APPS=(
-    cheat
-    cowsay
-    docker
-    elm
-    figlet
-    fortune
-    gcc
-    gh
-    glow
-    go
-    graphviz
-    gum
-    ipython
-    jupyterlab
-    lazygit
-    mysql
-    neofetch
-    neovim
-    pandoc
-    pipgrip
-    plantuml
-    python-tk
-    python
-    ripgrep
-    rust
-    sl
-    starship
-    tag
-    thefuck
-    tldr
-    tmux
-)
-
 # TODO Move homebrew install stuff to a bin/ script?
 function brewinstall {
     if ! exists brew
