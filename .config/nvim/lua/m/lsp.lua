@@ -14,12 +14,7 @@ lsp.set_sign_icons({
 })
 
 -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
-lsp.ensure_installed({
-    'gopls',
-    'rust_analyzer',
-    'marksman', -- Markdown
-    'lua_ls',
-})
+lsp.ensure_installed({ 'lua_ls' })
 
 local cmp = require('cmp')
 cmp.setup({
