@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v150"
+echo "Zshrc Mac :: v150 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -330,40 +330,43 @@ function dsync {
     popd -q
 }
 
+function _increase_version {
+    local OLD=$(cat $1 | perl -nE 'say $1 if /:: (v\d+) ::/')
+    local TMP=/tmp/dotfiles/$1
+    mkdir -p /tmp/dotfiles
+
+    # Replace version like :: vN ::
+    cat $1 | perl -pE '
+        next unless /:: v(\d+) ::/;
+        my $num = $1 + 1;
+        $_ =~ s/$1/$num/;
+    ' > $TMP &&
+    mv $TMP $1
+
+    local NEW=$(cat $1 | perl -nE 'say $1 if /:: (v\d+) ::/')
+    if [[ "$OLD" != "$NEW" ]]; then
+        echo "$1 $OLD -> $NEW"
+    fi
+}
+
 #DOC> edit-dotfile :: Edit a dotfile and sync dotfile repo [DOTFILES]
 function edit-dotfile {
-    if [[ -z "$1" ]]; then
-        err "Missing dotfile."
+    if (( $# == 0 )); then
+        err "Missing dotfile(s)"
         return
     fi
 
-    local fpath=~/$1
-    local ftmp=/tmp/dotfiles/$1
-    mkdir -p /tmp/dotfiles
-
-    local edit=$EDITOR
-    [[ -n "$edit" ]] || edit=vi
-    $edit $fpath
+    for FILE in $*; do
+        $EDITOR ~/$1
+        _increase_version ~/$1
+    done
 
     # Return if there were no changes
     if [[ -z "$(dot status --short)" ]]; then
         return
     fi
 
-    # Increase version number for .zshrc
-    if [[ $fpath =~ ".zshrc$" ]]; then
-        local old=$(cat $fpath | perl -nE 'say $1 if /"Zshrc ?\w* (v\d+)"$/')
-        cat $fpath | perl -pE '
-            next unless /"Zshrc ?\w* v(\d+)"$/;
-            my $num = $1 + 1;
-            $_ =~ s/$1/$num/;
-        ' > $ftmp &&
-        mv $ftmp $fpath
-        local new=$(cat $fpath | perl -nE 'say $1 if /"Zshrc ?\w* (v\d+)"$/')
-        echo ".zshrc $old -> $new"
-    fi
-
-    dot commit -am "Update $1" &&
+    dot commit -am "Update $*" &&
     dot pull --rebase &&
     dot push
 }
