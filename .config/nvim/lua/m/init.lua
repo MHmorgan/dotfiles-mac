@@ -11,5 +11,3 @@ require('m.undotree')
 require('m.fugitive')
 require('m.lsp')
 
-print "Hello from M!"
-
