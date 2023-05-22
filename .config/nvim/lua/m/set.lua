@@ -9,6 +9,9 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
+-- Folding
+vim.opt.foldmethod = 'marker'
+
 -- Don't wrap lines
 vim.opt.wrap = false
 
