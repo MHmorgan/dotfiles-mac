@@ -31,3 +31,5 @@ vim.wo.foldmethod = 'marker'
 --]])
 
 --vim.cmd('filetype plugin indent on')
+
+print('Config :: v2 ::')

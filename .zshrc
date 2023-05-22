@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v150 ::"
+echo "Zshrc Mac :: v152 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -182,24 +182,6 @@ function git_root {
 #}}}
 
 # ------------------------------------------------------------------------------
-# NEOVIM
-#{{{
-
-#DOC> n :: Start Neovim [NEOVIM]
-alias n="nvim"
-
-#DOC> ns :: Start Neovim from a saved session [NEOVIM]
-alias ns="nvim -S"
-
-#DOC> no :: Start Neovim with vsplit windows [NEOVIM]
-alias no="nvim -O"
-
-#DOC> nd :: Start Neovim in diff mode [NEOVIM]
-alias nd="nvim -d"
-
-#}}}
-
-# ------------------------------------------------------------------------------
 # NAVIGATION
 #{{{
 
@@ -349,24 +331,57 @@ function _increase_version {
     fi
 }
 
-#DOC> edit-dotfile :: Edit a dotfile and sync dotfile repo [DOTFILES]
+#DOC> edit-dotfile FILE... :: Edit a dotfile and sync dotfile repo [DOTFILES]
 function edit-dotfile {
     if (( $# == 0 )); then
         err "Missing dotfile(s)"
         return
     fi
 
+    pushd -q
+    $EDITOR -p $*  # Assumes a vi-like editor
     for FILE in $*; do
-        $EDITOR ~/$1
-        _increase_version ~/$1
+        _increase_version $FILE
     done
+    popd -q
 
     # Return if there were no changes
     if [[ -z "$(dot status --short)" ]]; then
         return
     fi
 
+    gum confirm "Commit & push changes?" &&
     dot commit -am "Update $*" &&
+    dot pull --rebase &&
+    dot push
+}
+#}}}
+
+# ------------------------------------------------------------------------------
+# NEOVIM
+#{{{
+
+#DOC> n :: Start Neovim [NEOVIM]
+alias n="nvim"
+
+#DOC> ns :: Start Neovim from a saved session [NEOVIM]
+alias ns="nvim -S"
+
+#DOC> no :: Start Neovim with vsplit windows [NEOVIM]
+alias no="nvim -O"
+
+#DOC> nd :: Start Neovim in diff mode [NEOVIM]
+alias nd="nvim -d"
+
+#DOC> edit-nvim :: Edit the Neovim config setup [DOTFILES]
+function edit-nvim {
+    pushd -q ~/.config/nvim
+    $EDITOR .
+    _increase_version init.lua
+    popd -q
+
+    gum confirm "Commit & push changes?" &&
+    dot commit -am "Update Neovim config" &&
     dot pull --rebase &&
     dot push
 }
