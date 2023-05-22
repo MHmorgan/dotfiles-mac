@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac v149"
+echo "Zshrc Mac v150"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -35,7 +35,9 @@ alias ll="ls -Glh"
 alias lla="ls -AGlh"
 alias l1="ls -1FGh"
 
-alias help='help.py | glow'
+function help {
+    help.py $* | glow
+}
 
 # ------------------------------------------------------------------------------
 # PATH
