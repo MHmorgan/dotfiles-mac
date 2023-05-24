@@ -179,6 +179,18 @@ function git_root {
     return 1
 }
 
+function git_repo_name {
+    local DIR=$PWD
+    while test -n "$DIR"; do
+        if test -e $DIR/.git; then
+            echo ${DIR##*/}
+            return
+        fi
+        DIR=${DIR%/*}
+    done
+    return 1
+}
+
 #}}}
 
 # ------------------------------------------------------------------------------
