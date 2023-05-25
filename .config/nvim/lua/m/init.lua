@@ -9,5 +9,5 @@ require('m.treesitter')
 require('m.harpoon')
 require('m.undotree')
 require('m.fugitive')
-require('m.lsp')
+--require('m.lsp')
 

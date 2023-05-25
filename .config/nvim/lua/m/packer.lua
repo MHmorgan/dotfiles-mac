@@ -38,24 +38,24 @@ require('packer').startup(function()
 
     -- LSP with lsp-zero
     -- https://github.com/VonHeikemen/lsp-zero.nvim
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        requires = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' }, -- Required
-            {
-                'williamboman/mason.nvim',
-                run = function() -- Optional
-                    pcall(vim.cmd, 'MasonUpdate')
-                end
-            },
-            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+    --use {
+    --    'VonHeikemen/lsp-zero.nvim',
+    --    branch = 'v2.x',
+    --    requires = {
+    --        -- LSP Support
+    --        { 'neovim/nvim-lspconfig' }, -- Required
+    --        {
+    --            'williamboman/mason.nvim',
+    --            run = function() -- Optional
+    --                pcall(vim.cmd, 'MasonUpdate')
+    --            end
+    --        },
+    --        { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },     -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' },     -- Required
-        }
-    }
+    --        -- Autocompletion
+    --        { 'hrsh7th/nvim-cmp' },     -- Required
+    --        { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+    --        { 'L3MON4D3/LuaSnip' },     -- Required
+    --    }
+    --}
 end)
