@@ -18,6 +18,9 @@ $character"""
 
 right_format = '$status$cmd_duration'
 
+[battery]
+format = '[$percentage]($style) '
+
 [character]
 success_symbol = '[\$](green)'
 error_symbol = '[\$](red)'
