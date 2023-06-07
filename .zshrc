@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v152 ::"
+echo "Zshrc Mac :: v153 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -249,13 +249,13 @@ function goto {
     # SEARCH
 
     local DIR
-    local -a DIRS=(${(s.:.)GOTO_PATH})  # Split in :
+    local -a DIRS=(${(s.:.)GOTO_PATH})  # Split on :
     local -a FILTERS=(-name "*$1*")
     test -n "$2" && FILTERS+=(-and -name "*$2*")
     test -n "$3" && FILTERS+=(-and -name "*$3*")
 
     local -a TARGETS
-    for DIR in $(find $DIRS -maxdepth 1 -mindepth 1 -and $FILTERS) 
+    for DIR in $(find $DIRS -type d -maxdepth 1 -mindepth 1 -and $FILTERS) 
     do
         # An exact match wins
         if (( $# == 1 )) && [[ $1 == ${DIR##*/} ]]; then
