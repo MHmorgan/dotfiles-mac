@@ -15,14 +15,14 @@ require('packer').startup(function()
     }
 
     -- Treesitter: code parsing
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        -- this will fail on first PackerSync! Try twice!
-        run = ':TSUpdate'
-    }
-    -- See the treesitter AST
-    -- TSPlaygroundToggle
-    use 'nvim-treesitter/playground'
+    -- use {
+    --     'nvim-treesitter/nvim-treesitter',
+    --     -- this will fail on first PackerSync! Try twice!
+    --     run = ':TSUpdate'
+    -- }
+    -- -- See the treesitter AST
+    -- -- TSPlaygroundToggle
+    -- use 'nvim-treesitter/playground'
 
     -- Super-fast file navigation
     use 'theprimeagen/harpoon'

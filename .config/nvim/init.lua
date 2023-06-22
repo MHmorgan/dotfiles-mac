@@ -7,4 +7,4 @@
 -- See ./lua/m/
 require("m")
 
-print('Config :: v4 ::')
+print('Config :: v5 ::')
