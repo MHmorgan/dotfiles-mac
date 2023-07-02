@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v153 ::"
+echo "Zshrc Mac :: v154 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -22,6 +22,9 @@ export PAGER='less'
 # Paths for the help.py script
 export HELP_PATH="$HOME/help-pages"
 export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
+
+# Paths for the todo script
+export TODO_PATH="$HOME/Projects:$HOME/Documents"
 
 # Paths for the goto command
 export GOTO_PATH="$HOME/bin:$HOME/Documents:$HOME/Downloads:$HOME/Projects"
