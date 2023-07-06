@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v155 ::"
+echo "Zshrc Mac :: v156 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -58,10 +58,14 @@ else
 fi
 
 # Go
-export PATH="$PATH:$HOME/go/bin"
+if [[ -d $HOME/go/bin ]]; then
+    export PATH="$PATH:$HOME/go/bin"
+fi
 
 # Rust
-export PATH="$PATH:$HOME/.cargo/bin"
+if [[ -d $HOME/.cargo/bin ]]; then
+    export PATH="$PATH:$HOME/.cargo/bin"
+fi
 
 #}}}
 
