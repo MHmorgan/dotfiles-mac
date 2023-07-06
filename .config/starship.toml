@@ -22,8 +22,8 @@ right_format = '$status$cmd_duration'
 format = '[$percentage]($style) '
 
 [character]
-success_symbol = '[>](green)'
-error_symbol = '[>](red)'
+success_symbol = '>'
+error_symbol = '>'
 
 [cmd_duration]
 format = ' took [$duration]($style)'
