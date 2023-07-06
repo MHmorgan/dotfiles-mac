@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v154 ::"
+echo "Zshrc Mac :: v155 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -46,7 +46,7 @@ function help {
 # PATH
 #{{{
 
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/Documents/scripts:$HOME/.local/bin:$PATH"
 
 # Homebrew
 if [[ -d /opt/homebrew ]]; then
