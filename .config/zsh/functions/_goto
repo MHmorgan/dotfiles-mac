@@ -1,0 +1,9 @@
+#compdef goto
+
+local -a directories
+for DIR in ${(s.:.)GOTO_PATH}; do
+    directories+=(${DIR##*/})
+done
+
+_arguments "1: :($directories)"
+
