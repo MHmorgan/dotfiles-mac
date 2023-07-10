@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v160 ::"
+echo "Zshrc Mac :: v161 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -416,6 +416,11 @@ function update {
     fi
     for DIR in $GIT_REPOS; do
         NAME=${DIR##*/}
+
+        if ! [[ -d $DIR ]]; then
+            err "Repo not found: $DIR"
+            continue
+        fi
 
         pushd -q $DIR
         if git-is-dirty; then
