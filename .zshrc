@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v163 ::"
+echo "Zshrc Mac :: v164 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -349,6 +349,8 @@ function dsync {
 }
 
 function dot-increase-version {
+    test -f $1 || return
+
     local OLD=$(cat $1 | perl -nE 'say $1 if /:: (v\d+) ::/')
     local TMP=/tmp/dotfiles/increase-version-file
     mkdir -p /tmp/dotfiles
