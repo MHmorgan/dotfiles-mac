@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v156 ::"
+echo "Zshrc Mac :: v158 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -312,20 +312,30 @@ function dls {
 #DOC> dst :: Show dotfiles repo status [DOTFILES]
 function dst {
     pushd -q $HOME
-    dot status
+    dot status --show-stash
     popd -q
 }
 
 #DOC> dsync :: Synchronize the dotfiles repo [DOTFILES]
 function dsync {
     pushd -q $HOME
+
+    # Commit a dirty repo
     if dot status --porcelain=v1 | egrep '^.[^?!]'
     then
-        gum confirm 'Commit changes?' &&
+        gum confirm 'Commit changes?' || return 1
+
+        # Update version for modified files
+        for FILE in $(dot status --porcelain=v1 | egrep '^.[^?!]' | awk '{ print $2 }')
+        do
+            _increase_version $FILE
+        done
+
         dot commit -av ||
         gum confirm 'Continue sync?' ||
         return 1
     fi
+
     dot pull --rebase &&
     dot push
     popd -q
@@ -333,7 +343,7 @@ function dsync {
 
 function _increase_version {
     local OLD=$(cat $1 | perl -nE 'say $1 if /:: (v\d+) ::/')
-    local TMP=/tmp/dotfiles/$1
+    local TMP=/tmp/dotfiles/increase_version_file
     mkdir -p /tmp/dotfiles
 
     # Replace version like :: vN ::
@@ -357,22 +367,11 @@ function edit-dotfile {
         return
     fi
 
-    pushd -q
+    pushd -q $HOME
     $EDITOR -p $*  # Assumes a vi-like editor
-    for FILE in $*; do
-        _increase_version $FILE
-    done
     popd -q
 
-    # Return if there were no changes
-    if [[ -z "$(dot status --short)" ]]; then
-        return
-    fi
-
-    gum confirm "Commit & push changes?" &&
-    dot commit -am "Update $*" &&
-    dot pull --rebase &&
-    dot push
+    dot status
 }
 #}}}
 
@@ -396,13 +395,7 @@ alias nd="nvim -d"
 function edit-nvim {
     pushd -q ~/.config/nvim
     $EDITOR .
-    _increase_version init.lua
     popd -q
-
-    gum confirm "Commit & push changes?" &&
-    dot commit -am "Update Neovim config" &&
-    dot pull --rebase &&
-    dot push
 }
 
 #}}}
@@ -595,6 +588,11 @@ if [[ -f $HOME/.myzshrc ]]; then
     source $HOME/.myzshrc
 else
     info ".myzshrc not found."
+fi
+
+if [[ -d "$HOME/.config/zsh/functions" ]]; then
+    fpath=("$HOME/.config/zsh/functions" $fpath)
+    autoload -Uz compinit && compinit
 fi
 
 if ! exists rogu
