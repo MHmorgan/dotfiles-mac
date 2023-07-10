@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v161 ::"
+echo "Zshrc Mac :: v162 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -10,8 +10,8 @@ echo "-> .zshrc"
 
 autoload -U colors && colors
 function info   { echo "\e[${color[faint]};${color[default]}m$*$reset_color" }
-function warn   { echo "$fg_bold[yellow]WARN: $*$reset_color" }
-function err    { echo "$fg_bold[red]ERROR: $*$reset_color" }
+function warn   { echo "WARN: $*" }
+function err    { echo "ERROR: $*" }
 function bold   { echo "$fg_bold[default]$*$reset_color" }
 function exists { which $* &>/dev/null }
 function header { gum style --border=rounded --width=20 --align=center --margin="1 0" "$*" }
