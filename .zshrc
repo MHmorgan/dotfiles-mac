@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v159 ::"
+echo "Zshrc Mac :: v160 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -31,16 +31,16 @@ export PAGER='less'
 
 # Paths for the help.py script
 export HELP_PATH="$HOME/help-pages"
+
+#DOC> HELP_FILES :: Paths for `help` to search (: separated) [VARIABLES]
 export HELP_FILES="$HOME/.zshrc:$HOME/.vimrc:$HOME/.myzshrc"
 
-# Paths for the todo script
+#DOC> TODO_PATH :: Paths for the todo script (: separated) [VARIABLES]
 export TODO_PATH="$HOME/Projects:$HOME/Documents"
 
-# Paths for the goto command
+#DOC> GOTO_PATH :: Paths for the goto command (: separated) [VARIABLES]
 export GOTO_PATH="$HOME/bin:$HOME/Documents:$HOME/Downloads:$HOME/Projects"
 
-# Paths for the update and status commands
-export REPO_PATH="$HOME/Projects"
 
 # ------------------------------------------------------------------------------
 # PATH
@@ -96,13 +96,17 @@ alias gst='git status'
 
 #DOC> gsync :: Synchronize current git repo [GIT]
 function gsync {
-    if git status --porcelain=v1 | egrep '^.[^?!]'
+    # Commit a dirty repo
+    if git-is-dirty
     then
-        gum confirm 'Commit changes?' &&
+        git status --untracked-files=no 
+        gum confirm 'Commit changes?' || return 1
+
         git commit -av ||
         gum confirm 'Continue sync?' ||
         return 1
     fi
+
     git pull --rebase &&
     git push
 }
@@ -127,9 +131,9 @@ function root {
 
 #DOC> st :: Show git and gh status [GIT]
 function st {
-    if git_in_repo; then
+    if git-in-repo; then
         # Show status of current repo
-        header ${$(git_root)##*/}
+        header ${$(git-root)##*/}
         git status --show-stash
         echo
         git grep -P '\b(TODO|FIXME|BUG)\b'
@@ -140,7 +144,7 @@ function st {
         do
             DIR=${DIR%/.git}
             pushd -q $DIR
-            if git_is_dirty; then
+            if git-is-dirty; then
                 bold ${DIR##*/}
                 git status --short --show-stash
                 echo
@@ -155,11 +159,11 @@ function st {
 
 # GIT SCRIPTING HELPER FUNCTIONS
 
-function git_is_dirty {
-    git status --porcelain=v1 &>/dev/null | egrep '^.[^?!]' &>/dev/null
+function git-is-dirty {
+    test -n "$(git status --untracked-files=no --porcelain)"
 }
 
-function git_has_updates {
+function git-has-updates {
     git remote update || return 0
 
     # https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
@@ -170,11 +174,11 @@ function git_has_updates {
     [[ $REMOTE != $BASE ]]
 }
 
-function git_in_repo {
+function git-in-repo {
     git show-branch &>/dev/null
 }
 
-function git_root {
+function git-root {
     local DIR=$PWD
     while test -n "$DIR"; do
         if test -e $DIR/.git; then
@@ -186,7 +190,7 @@ function git_root {
     return 1
 }
 
-function git_repo_name {
+function git-repo-name {
     local DIR=$PWD
     while test -n "$DIR"; do
         if test -e $DIR/.git; then
@@ -321,14 +325,15 @@ function dsync {
     pushd -q $HOME
 
     # Commit a dirty repo
-    if dot status --porcelain=v1 | egrep '^.[^?!]'
+    if dot-is-dirty
     then
+        dot status --untracked-files=no 
         gum confirm 'Commit changes?' || return 1
 
         # Update version for modified files
-        for FILE in $(dot status --porcelain=v1 | egrep '^.[^?!]' | awk '{ print $2 }')
+        for FILE in $(dot status -uno --porcelain=v1 | awk '{ print $2 }')
         do
-            _increase_version $FILE
+            dot-increase-version $FILE
         done
 
         dot commit -av ||
@@ -341,9 +346,9 @@ function dsync {
     popd -q
 }
 
-function _increase_version {
+function dot-increase-version {
     local OLD=$(cat $1 | perl -nE 'say $1 if /:: (v\d+) ::/')
-    local TMP=/tmp/dotfiles/increase_version_file
+    local TMP=/tmp/dotfiles/increase-version-file
     mkdir -p /tmp/dotfiles
 
     # Replace version like :: vN ::
@@ -360,6 +365,11 @@ function _increase_version {
     fi
 }
 
+function dot-is-dirty {
+    test -n "$(dot status --untracked-files=no --porcelain)"
+}
+
+
 #DOC> edit-dotfile FILE... :: Edit a dotfile and sync dotfile repo [DOTFILES]
 function edit-dotfile {
     if (( $# == 0 )); then
@@ -371,7 +381,9 @@ function edit-dotfile {
     $EDITOR -p $*  # Assumes a vi-like editor
     popd -q
 
-    dot status
+    dot-is-dirty &&
+    gum confirm 'Sync dotfiles?' &&
+    dsync
 }
 #}}}
 
@@ -379,10 +391,14 @@ function edit-dotfile {
 # UPDATE
 #{{{
 
+#DOC> GO_APPS :: Zsh array of go applications for `update` [VARIABLES]
 export GO_APPS=(
     github.com/mhmorgan/todo@latest
     github.com/mhmorgan/watch@latest
 )
+
+#DOC> GIT_REPOS :: Zsh array of repo directories for `update` [VARIABLES]
+export GIT_REPOS=()
 
 #DOC> update :: Update the system [MISC]
 function update {
@@ -395,17 +411,18 @@ function update {
     dsync
 
     header 'Repos'
-    for DIR in $(find ${(s.:.)REPO_PATH} -type d -maxdepth 7 -name '.git')
-    do
-        DIR=${DIR%/.git}
+    if (( ${#GIT_REPOS} == 0 )); then
+        echo '$GIT_REPOS is empty.'
+    fi
+    for DIR in $GIT_REPOS; do
         NAME=${DIR##*/}
 
         pushd -q $DIR
-        if git_is_dirty; then
+        if git-is-dirty; then
             echo "Dirty: ${NAME}"
         else
             echo "Clean: ${NAME}"
-            if git_has_updates; then
+            if git-has-updates; then
                 gum confirm "Pull remote changes in ${NAME}?" &&
                 git pull --rebase
             fi
