@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v158 ::"
+echo "Zshrc Mac :: v159 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -15,6 +15,16 @@ function err    { echo "$fg_bold[red]ERROR: $*$reset_color" }
 function bold   { echo "$fg_bold[default]$*$reset_color" }
 function exists { which $* &>/dev/null }
 function header { gum style --border=rounded --width=20 --align=center --margin="1 0" "$*" }
+
+alias ls="ls -FG"
+alias la="ls -AFG"
+alias ll="ls -Glh"
+alias lla="ls -AGlh"
+alias l1="ls -1FGh"
+
+function help {
+    help.py $* | glow
+}
 
 export EDITOR='nvim'
 export PAGER='less'
@@ -31,16 +41,6 @@ export GOTO_PATH="$HOME/bin:$HOME/Documents:$HOME/Downloads:$HOME/Projects"
 
 # Paths for the update and status commands
 export REPO_PATH="$HOME/Projects"
-
-alias ls="ls -FG"
-alias la="ls -AFG"
-alias ll="ls -Glh"
-alias lla="ls -AGlh"
-alias l1="ls -1FGh"
-
-function help {
-    help.py $* | glow
-}
 
 # ------------------------------------------------------------------------------
 # PATH
@@ -376,6 +376,59 @@ function edit-dotfile {
 #}}}
 
 # ------------------------------------------------------------------------------
+# UPDATE
+#{{{
+
+export GO_APPS=(
+    github.com/mhmorgan/todo@latest
+    github.com/mhmorgan/watch@latest
+)
+
+#DOC> update :: Update the system [MISC]
+function update {
+    neofetch
+
+    header 'Rogu'
+    rogu -v update
+
+    header 'Dotfiles'
+    dsync
+
+    header 'Repos'
+    for DIR in $(find ${(s.:.)REPO_PATH} -type d -maxdepth 7 -name '.git')
+    do
+        DIR=${DIR%/.git}
+        NAME=${DIR##*/}
+
+        pushd -q $DIR
+        if git_is_dirty; then
+            echo "Dirty: ${NAME}"
+        else
+            echo "Clean: ${NAME}"
+            if git_has_updates; then
+                gum confirm "Pull remote changes in ${NAME}?" &&
+                git pull --rebase
+            fi
+        fi
+        popd -q
+    done
+
+    header 'Homebrew'
+    brew update && brew upgrade
+
+    if exists go
+    then
+        header 'Go Apps'
+        for APP in $GO_APPS; do
+            echo $APP
+            go install $APP
+        done
+    fi
+}
+
+#}}}
+
+# ------------------------------------------------------------------------------
 # NEOVIM
 #{{{
 
@@ -515,50 +568,6 @@ function backup {
     fi
 
     cp -vpr $src $src~
-}
-
-#DOC> update :: Update the system [MISC]
-function update {
-    neofetch
-
-    header 'Rogu'
-    rogu -v update
-
-    header 'Dotfiles'
-    if dot status --porcelain=v1 | egrep '^.[^?!]'
-    then
-        if gum confirm 'Commit changes and sync?'
-        then
-            dot commit -av &&
-            dot pull --rebase &&
-            dot push
-        fi
-    else
-        dot pull --rebase &&
-        dot push
-    fi
-
-    header 'Repos'
-    for DIR in $(find ${(s.:.)REPO_PATH} -type d -maxdepth 7 -name '.git')
-    do
-        DIR=${DIR%/.git}
-        NAME=${DIR##*/}
-
-        pushd -q $DIR
-        if git_is_dirty; then
-            echo "Dirty: ${NAME}"
-        else
-            echo "Clean: ${NAME}"
-            if git_has_updates; then
-                gum confirm "Pull remote changes in ${NAME}?" &&
-                git pull --rebase
-            fi
-        fi
-        popd -q
-    done
-
-    header 'Homebrew'
-    brew update && brew upgrade
 }
 
 function all_gum_spinners {
