@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v162 ::"
+echo "Zshrc Mac :: v163 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -140,9 +140,11 @@ function st {
     else
         # Or, show status of unclean repos
         header "Repos"
-        for DIR in $(find ${(s.:.)REPO_PATH} -maxdepth 7 -name '.git')
-        do
-            DIR=${DIR%/.git}
+        for DIR in $GIT_REPOS; do
+            if ! [[ -d $DIR ]]; then
+                err "Repo not found: $DIR"
+                continue
+            fi
             pushd -q $DIR
             if git-is-dirty; then
                 bold ${DIR##*/}
