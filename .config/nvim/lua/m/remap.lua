@@ -21,3 +21,6 @@ vim.keymap.set('n', '<leader>x', '<cmd>!./%<CR>')
 -- Make current file executable
 vim.keymap.set('n', '<leader>X', '<cmd>!chmod +x %<CR>', { silent = true })
 
+-- Run spell checker
+vim.keymap.set('n', '<leader>s', '<cmd>:te aspell -c %<CR>')
+
