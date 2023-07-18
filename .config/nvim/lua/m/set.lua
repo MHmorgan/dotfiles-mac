@@ -33,3 +33,6 @@ vim.opt.updatetime = 50
 
 --vim.opt.colorcolumn = '80'
 
+-- Disable cursor styling - don't override the terminal configuration...
+vim.opt.guicursor = nil
+
