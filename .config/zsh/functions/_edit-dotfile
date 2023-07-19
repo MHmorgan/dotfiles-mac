@@ -1,7 +1,12 @@
 #compdef edit-dotfile
 
+# The `git ls-tree` command doesn't work if we're not in the home directory.
+pushd -q $HOME
+
 local -a dotfiles
 dotfiles=$(git --git-dir=$HOME/.dotfiles --work-tree=$HOME ls-tree -r main | awk '{ print $4}')
+
+popd -q
 
 _arguments "1: :($dotfiles)"
 
