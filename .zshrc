@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v164 ::"
+echo "Zshrc Mac :: v165 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -501,6 +501,15 @@ for N in $(seq 4 20); do
         alias venv${N}="python3.$N -m venv --upgrade-deps venv"
     fi
 done
+
+#}}}
+
+# ------------------------------------------------------------------------------
+# JVM
+#{{{
+
+#DOC> jdump :: Dump class file (javap w/options) [JVM]
+alias jdump='javap -c -p -s'
 
 #}}}
 
