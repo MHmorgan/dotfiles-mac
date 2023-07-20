@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v168 ::"
+echo "Zshrc Mac :: v169 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -655,6 +655,14 @@ function makels {
 # ------------------------------------------------------------------------------
 # OUTRO
 
+if exists brew
+then
+    # brew command completion
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    autoload -Uz compinit
+    compinit
+fi
+
 if [[ -d ~/lib ]]; then
     export PERL5LIB="$HOME/lib:$PERL5LIB"
     export PYTHONPATH="$HOME/lib:$PYTHONPATH"
@@ -676,14 +684,6 @@ if ! exists rogu
 then
     err "Rogu is not installed!"
     echo "Install rogu from https://ugor.hirth.dev"
-fi
-
-if exists brew
-then
-    # brew command completion
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    autoload -Uz compinit
-    compinit
 fi
 
 # Warn about missing applications which are essential for my
