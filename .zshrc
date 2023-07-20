@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v167 ::"
+echo "Zshrc Mac :: v168 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -49,6 +49,38 @@ export GO_APPS=(
 
 #DOC> RUST_APPS :: Zsh array of rust applications for `update` [VARIABLES]
 export RUST_APPS=()
+
+#DOC> HOMEBREW_APPS :: Essential Homebrew apps which should be installed [VARIABLES]
+export HOMEBREW_APPS=(
+    aspell
+    cheat
+    cmatrix
+    cowsay
+    figlet
+    fortune
+    gcc
+    gdbm
+    gh
+    glow
+    go
+    gradle
+    gum
+    ipython
+    jq
+    kotlin
+    lazygit
+    neofetch
+    neovim
+    openjdk
+    pandoc
+    parallel
+    plantuml
+    python
+    rust
+    sl
+    starship
+    tldr
+)
 
 #DOC> GIT_REPOS :: Zsh array of repo directories for `update` [VARIABLES]
 export GIT_REPOS=()
@@ -380,6 +412,13 @@ function doctor {
 function setup-system {
     err "NOT IMPLEMENTED"
     return 1
+
+    header Homebrew
+    if ! exists brew
+    then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew install -q $HOMEBREW_APPS
 }
 
 #DOC> st :: Show git and gh status [GIT]
@@ -577,29 +616,6 @@ zstyle ':completion:*' group-name ''
 #}}}
 
 # ------------------------------------------------------------------------------
-# HOMEBREW
-#{{{
-
-function brewinstall {
-    if ! exists brew
-    then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-    brew install -q $HOMEBREW_APPS
-}
-
-
-if exists brew
-then
-    # brew command completion
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    autoload -Uz compinit
-    compinit
-fi
-
-#}}}
-
-# ------------------------------------------------------------------------------
 # MISC
 #{{{
 
@@ -660,6 +676,14 @@ if ! exists rogu
 then
     err "Rogu is not installed!"
     echo "Install rogu from https://ugor.hirth.dev"
+fi
+
+if exists brew
+then
+    # brew command completion
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    autoload -Uz compinit
+    compinit
 fi
 
 # Warn about missing applications which are essential for my
