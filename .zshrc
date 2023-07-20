@@ -1,6 +1,6 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v166 ::"
+echo "Zshrc Mac :: v167 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
@@ -369,7 +369,7 @@ function edit-dotfile {
 # UPDATE DOCTOR SETUP ST GOTO
 #{{{
 
-#DOC> doctor :: Do some sanity checks of the system [MISC]
+#DOC> doctor :: Do some sanity checks of the system [CORE]
 function doctor {
     for P in ${(s.:.)PATH}; do
         test -d $P || echo "PATH: $P not found"
@@ -408,7 +408,7 @@ function st {
     fi
 }
 
-#DOC> update :: Update the system [MISC]
+#DOC> update :: Update the system [CORE]
 function update {
     neofetch
 
