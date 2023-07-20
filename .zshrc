@@ -1,12 +1,9 @@
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-echo "Zshrc Mac :: v165 ::"
+echo "Zshrc Mac :: v166 ::"
 echo "-> .zshrc"
 
 # TODO Add `edit-rogu` which opens a file which is a Rogu resource
-
-# ------------------------------------------------------------------------------
-# CORE
 
 autoload -U colors && colors
 function info   { echo "\e[${color[faint]};${color[default]}m$*$reset_color" }
@@ -26,6 +23,9 @@ function help {
     help.py $* | glow
 }
 
+# ------------------------------------------------------------------------------
+# VARIABLES
+
 export EDITOR='nvim'
 export PAGER='less'
 
@@ -41,10 +41,19 @@ export TODO_PATH="$HOME/Projects:$HOME/Documents"
 #DOC> GOTO_PATH :: Paths for the goto command (: separated) [VARIABLES]
 export GOTO_PATH="$HOME/bin:$HOME/Documents:$HOME/Downloads:$HOME/Projects"
 
+#DOC> GO_APPS :: Zsh array of go applications for `update` [VARIABLES]
+export GO_APPS=(
+    github.com/mhmorgan/todo@latest
+    github.com/mhmorgan/watch@latest
+)
 
-# ------------------------------------------------------------------------------
+#DOC> RUST_APPS :: Zsh array of rust applications for `update` [VARIABLES]
+export RUST_APPS=()
+
+#DOC> GIT_REPOS :: Zsh array of repo directories for `update` [VARIABLES]
+export GIT_REPOS=()
+
 # PATH
-#{{{
 
 export PATH="$HOME/bin:$HOME/Documents/scripts:$HOME/.local/bin:$PATH"
 
@@ -58,16 +67,11 @@ else
 fi
 
 # Go
-if [[ -d $HOME/go/bin ]]; then
-    export PATH="$PATH:$HOME/go/bin"
-fi
+export PATH="$PATH:$HOME/go/bin"
 
 # Rust
-if [[ -d $HOME/.cargo/bin ]]; then
-    export PATH="$PATH:$HOME/.cargo/bin"
-fi
+export PATH="$PATH:$HOME/.cargo/bin"
 
-#}}}
 
 # ------------------------------------------------------------------------------
 # GIT
@@ -127,36 +131,6 @@ function root {
     echo $DIR
     cd $DIR
     ll
-}
-
-#DOC> st :: Show git and gh status [GIT]
-function st {
-    if git-in-repo; then
-        # Show status of current repo
-        header ${$(git-root)##*/}
-        git status --show-stash
-        echo
-        git grep -P '\b(TODO|FIXME|BUG)\b'
-    else
-        # Or, show status of unclean repos
-        header "Repos"
-        for DIR in $GIT_REPOS; do
-            if ! [[ -d $DIR ]]; then
-                err "Repo not found: $DIR"
-                continue
-            fi
-            pushd -q $DIR
-            if git-is-dirty; then
-                bold ${DIR##*/}
-                git status --short --show-stash
-                echo
-            fi
-            popd -q
-        done
-    fi
-
-    header "GitHub"
-    gh status
 }
 
 # GIT SCRIPTING HELPER FUNCTIONS
@@ -392,17 +366,47 @@ function edit-dotfile {
 #}}}
 
 # ------------------------------------------------------------------------------
-# UPDATE
+# UPDATE DOCTOR SETUP ST GOTO
 #{{{
 
-#DOC> GO_APPS :: Zsh array of go applications for `update` [VARIABLES]
-export GO_APPS=(
-    github.com/mhmorgan/todo@latest
-    github.com/mhmorgan/watch@latest
-)
+#DOC> doctor :: Do some sanity checks of the system [MISC]
+function doctor {
+    for P in ${(s.:.)PATH}; do
+        test -d $P || echo "PATH: $P not found"
+    done
+}
 
-#DOC> GIT_REPOS :: Zsh array of repo directories for `update` [VARIABLES]
-export GIT_REPOS=()
+#DOC> setup-system :: TODO Setup the current system [MISC]
+function setup-system {
+    err "NOT IMPLEMENTED"
+    return 1
+}
+
+#DOC> st :: Show git and gh status [GIT]
+function st {
+    gh status
+
+    if git-in-repo; then
+        # Status of current repo
+        bold "Repo: ${$(git-root)##*/}"
+        git status --show-stash
+    else
+        # Or, show status of unclean repos
+        for DIR in $GIT_REPOS; do
+            if ! [[ -d $DIR ]]; then
+                err "Repo not found: $DIR"
+                continue
+            fi
+            pushd -q $DIR
+            if git-is-dirty; then
+                bold ${DIR##*/}
+                git status --short --show-stash
+                echo
+            fi
+            popd -q
+        done
+    fi
+}
 
 #DOC> update :: Update the system [MISC]
 function update {
@@ -414,9 +418,10 @@ function update {
     header 'Dotfiles'
     dsync
 
-    header 'Repos'
     if (( ${#GIT_REPOS} == 0 )); then
-        echo '$GIT_REPOS is empty.'
+        echo '\nGIT_REPOS is empty.'
+    else
+        header Repos
     fi
     for DIR in $GIT_REPOS; do
         NAME=${DIR##*/}
@@ -442,13 +447,26 @@ function update {
     header 'Homebrew'
     brew update && brew upgrade
 
-    if exists go
+    if exists go && (( $#GO_APPS > 0 ))
     then
         header 'Go Apps'
         for APP in $GO_APPS; do
             echo $APP
             go install $APP
         done
+    else
+        echo "\nGO_APPS is empty."
+    fi
+
+    if exists cargo && (( $#RUST_APPS > 0 ))
+    then
+        header 'Rust Apps'
+        for APP in $RUST_APPS; do
+            echo $APP
+            cargo install $APP
+        done
+    else
+        echo "\nRUST_APPS is empty."
     fi
 }
 
@@ -562,7 +580,6 @@ zstyle ':completion:*' group-name ''
 # HOMEBREW
 #{{{
 
-# TODO Move homebrew install stuff to a bin/ script?
 function brewinstall {
     if ! exists brew
     then
