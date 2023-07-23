@@ -1,5 +1,5 @@
 
-#DOC> goto STR... :: Goto a matching directory on the system :: NAVIGATION
+#DOC> goto STR :: Goto a matching directory on the system :: NAVIGATION
 function goto {
     if ! exists gum; then 
         err "'gum' not installed."
@@ -12,21 +12,14 @@ function goto {
 
     # SEARCH
 
-    local DIR
-    local -a DIRS=(${(s.:.)GOTO_PATH})  # Split on :
-    local -a FILTERS=(-name "*$1*")
-    test -n "$2" && FILTERS+=(-and -name "*$2*")
-    test -n "$3" && FILTERS+=(-and -name "*$3*")
-
     local -a TARGETS
-    for DIR in $(find $DIRS -type d -maxdepth 1 -mindepth 1 -and $FILTERS) 
-    do
+    for DIR in $GOTO_DIRS; do
         # An exact match wins
-        if (( $# == 1 )) && [[ $1 == ${DIR##*/} ]]; then
+        if [[ $1 == ${DIR##*/} ]]; then
             TARGETS=($DIR)
             break
         fi
-        TARGETS+=($DIR)
+        [[ ${DIR##*/} =~ $1 ]] && TARGETS+=($DIR)
     done
 
     # SELECT

@@ -4,19 +4,19 @@
 # =========
 #
 # - [ ] Look for TODOs in projects
-# - [ ] Goto often used directories
+# - [x] Goto often used directories
 # - [ ] Install/update GitHub gist files
-# - [ ] Easy access to quick-help for terminal functionality
+# - [x] Easy access to quick-help for terminal functionality
 # - [ ] Semi-automatic updating applications:
-#    - [ ] Go apps
-#    - [ ] Rust apps
-#    - [ ] Homebrew apps
+#    - [x] Go apps
+#    - [x] Rust apps
+#    - [x] Homebrew apps
 #    - [ ] Gist binaries
 # - [ ] Semi-automatic updating git repos
-# - [ ] Semi-automatic updating dotfiles
-# - [ ] Super-easy to change dotfiles
+# - [x] Semi-automatic updating dotfiles
+# - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v170 ::"
+echo "Zshrc Mac :: v171 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -136,8 +136,6 @@ for FILE in ~/.config/zsh/local/*.zsh; do
     info "-> local/${FILE##*/}"
     source $FILE
 done
-
-unsetopt NULL_GLOB
 #}}}
 
 # OUTRO {{{

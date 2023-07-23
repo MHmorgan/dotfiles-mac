@@ -75,7 +75,7 @@ function git-has-updates {
     local REMOTE=$(git rev-parse "$UPSTREAM")
     local BASE=$(git merge-base @ "$UPSTREAM")
 
-    :: [ $REMOTE != $BASE ]
+    [[ $REMOTE != $BASE ]]
 }
 
 function git-in-repo {

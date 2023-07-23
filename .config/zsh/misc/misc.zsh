@@ -3,7 +3,7 @@
 function backup {
     local src=$1
 
-    if ! :: [ -f "$src" ]
+    if ! [[ -f "$src" ]]
     then
         echo "source file not found: $src"
         return 1

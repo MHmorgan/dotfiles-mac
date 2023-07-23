@@ -96,17 +96,10 @@ alias ipy='ipython3 --autocall=1 --pprint'
 #DOC> activate-venv :: Activate venv at "venv/bin/activate" :: PYTHON
 alias activate-venv='source venv/bin/activate'
 
-#DOC> pyN   :: Alias for `python3.N` :: PYTHON
-#DOC> pyNm  :: Alias for `python3.N -m` :: PYTHON
-#DOC> pipN  :: Alias for `python3.N -m pip` :: PYTHON
-#DOC> venvN :: Alias for `python3.N venv --upgrade-deps venv` :: PYTHON
+#DOC> pyN :: Alias for `python3.N` :: PYTHON
 for N in $(seq 4 20); do
-    if exists python3.$N
-    then
+    if exists python3.$N; then
         alias py${N}="python3.$N"
-        alias py${N}m="python3.$N -m"
-        alias pip${N}="python3.$N -m pip"
-        alias venv${N}="python3.$N -m venv --upgrade-deps venv"
     fi
 done
 #}}}
