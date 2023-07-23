@@ -14,6 +14,9 @@ export TODO_PATH="$HOME/Projects:$HOME/Documents"
 #DOC> GOTO_PATH :: Paths for the goto command (: separated) [VARIABLES]
 export GOTO_PATH="$HOME/bin:$HOME/Documents:$HOME/Downloads:$HOME/Projects"
 
+#DOC> GIT_REPOS :: Zsh array of repo directories for `update` [VARIABLES]
+export GIT_REPOS=()
+
 #DOC> GO_APPS :: Zsh array of go applications for `update` [VARIABLES]
 export GO_APPS=(
     github.com/mhmorgan/todo@latest
@@ -55,6 +58,8 @@ export HOMEBREW_APPS=(
     tldr
 )
 
-#DOC> GIT_REPOS :: Zsh array of repo directories for `update` [VARIABLES]
-export GIT_REPOS=()
+if [[ -d ~/lib ]]; then
+    export PERL5LIB="$HOME/lib:$PERL5LIB"
+    export PYTHONPATH="$HOME/lib:$PYTHONPATH"
+fi
 

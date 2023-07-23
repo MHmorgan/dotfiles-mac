@@ -16,7 +16,7 @@
 # - [ ] Semi-automatic updating dotfiles
 # - [ ] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v169 ::"
+echo "Zshrc Mac :: v170 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -73,15 +73,17 @@ export PATH="$PATH:$HOME/.cargo/bin"
 
 # Check that some of the most fundamental applications,
 # commonly used in scripts and functions, are installed.
-exists cargo   || warn "'cargo' (rust) not installed"
-exists gh      || warn "'gh' not installed"
-exists git     || warn "'git' not installed"
-exists glow    || warn "'glow' not installed"
-exists go      || warn "'go' not installed"
-exists gum     || warn "'gum' not installed"
-exists nvim    || warn "'nvim' not installed"
-exists perl    || warn "'perl' not installed"
-exists python3 || warn "'python3' not installed"
+exists brew     || warn "'brew' (homebrew) not installed"
+exists cargo    || warn "'cargo' (rust) not installed"
+exists gh       || warn "'gh' not installed"
+exists git      || warn "'git' not installed"
+exists glow     || warn "'glow' not installed"
+exists go       || warn "'go' not installed"
+exists gum      || warn "'gum' not installed"
+exists nvim     || warn "'nvim' not installed"
+exists perl     || warn "'perl' not installed"
+exists python3  || warn "'python3' not installed"
+exists starship || warn "'starship' not installed"
 
 # Check if the dotfiles directory structure looks as expected.
 if ! [[ -d ~/.config/zsh ]]; then
@@ -113,7 +115,8 @@ setopt NULL_GLOB
 
 for FILE in \
     ~/.config/zsh/variables.zsh \
-    ~/.config/zsh/aliases.zsh
+    ~/.config/zsh/aliases.zsh \
+    ~/.config/zsh/completion.zsh
 do
     if [[ -f $FILE ]]; then
         source $FILE
@@ -143,20 +146,7 @@ if exists brew
 then
     # brew command completion
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    autoload -Uz compinit
-    compinit
-fi
-
-if [[ -d ~/lib ]]; then
-    export PERL5LIB="$HOME/lib:$PERL5LIB"
-    export PYTHONPATH="$HOME/lib:$PYTHONPATH"
-fi
-
-if [[ -f $HOME/.myzshrc ]]; then
-    echo "-> .myzshrc"
-    source $HOME/.myzshrc
-else
-    info ".myzshrc not found."
+    autoload -Uz compinit && compinit
 fi
 
 if [[ -d "$HOME/.config/zsh/functions" ]]; then
@@ -169,13 +159,6 @@ then
     err "Rogu is not installed!"
     echo "Install rogu from https://ugor.hirth.dev"
 fi
-
-# Warn about missing applications which are essential for my
-# zsh setup to work as intended.
-for APP in brew git gh starship gum neofetch fortune cowsay glow
-do
-    exists $APP || warn "Not installed: $APP"
-done
 
 if exists starship
 then
