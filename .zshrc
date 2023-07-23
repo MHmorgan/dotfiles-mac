@@ -15,7 +15,10 @@
 # - [x] Semi-automatic updating dotfiles
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v172 ::"
+# TODO Remove Rogu - replace with gist and boilerplates
+# TODO Use .config/zsh/boilerplates for storing script boilerplates
+
+echo "Zshrc Mac :: v173 ::"
 
 # PRINTING FUNCTIONS {{{
 
