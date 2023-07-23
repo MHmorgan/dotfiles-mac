@@ -1,5 +1,5 @@
 
-#DOC> update :: Update the system [CORE]
+#DOC> update :: Update the system :: ESSENTIALS
 function update {
     neofetch
 

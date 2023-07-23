@@ -1,6 +1,5 @@
 
-
-#DOC> gsync :: Synchronize current git repo [GIT]
+#DOC> gsync :: Synchronize current git repo :: GIT
 function gsync {
     # Commit a dirty repo
     if git-is-dirty
@@ -17,7 +16,7 @@ function gsync {
     git push
 }
 
-#DOC> root :: Go to the root dir of current repo [GIT]
+#DOC> root :: Go to the root dir of current repo :: GIT
 function root {
     local DIR=$PWD
     while [[ -n "$DIR" ]]; do
@@ -35,7 +34,7 @@ function root {
     ll
 }
 
-#DOC> st :: Show git and gh status [GIT]
+#DOC> st :: Show git and gh status :: GIT
 function st {
     gh status
 
@@ -76,7 +75,7 @@ function git-has-updates {
     local REMOTE=$(git rev-parse "$UPSTREAM")
     local BASE=$(git merge-base @ "$UPSTREAM")
 
-    [[ $REMOTE != $BASE ]]
+    :: [ $REMOTE != $BASE ]
 }
 
 function git-in-repo {

@@ -1,14 +1,9 @@
 
-#DOC> help :: Show this help message [CORE]
-function help {
-    help.py $* | glow
-}
-
-#DOC> backup FILE... :: Create a backup of files [MISC]
+#DOC> backup FILE... :: Create a backup of files
 function backup {
     local src=$1
 
-    if ! [[ -f "$src" ]]
+    if ! :: [ -f "$src" ]
     then
         echo "source file not found: $src"
         return 1
@@ -23,7 +18,7 @@ function all_gum_spinners {
     done
 }
 
-#DOC> makels [FILE] :: List makefile targets [MISC]
+#DOC> makels :: List makefile targets
 function makels {
     local FILE=${1:-Makefile}
     cat $FILE | egrep -o '^\w+:' | tr -d ':' | sort | column

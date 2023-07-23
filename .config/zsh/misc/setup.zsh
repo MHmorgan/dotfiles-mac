@@ -1,6 +1,6 @@
 # Setup of a clean Mac system
 
-#DOC> setup-system :: TODO Setup the current system [MISC]
+#DOC> setup-system :: TODO Setup the current system :: MISC
 function setup-system {
     err "NOT IMPLEMENTED"
     return 1

@@ -1,19 +1,19 @@
 
-#DOC> dls :: List all dotfiles [DOTFILES]
+#DOC> dls :: List all dotfiles :: DOTFILES
 function dls {
     pushd -q $HOME
     dot ls-tree -r main | awk '{ print $4}' | xargs ls -l
     popd &>/dev/null
 }
 
-#DOC> dst :: Show dotfiles repo status [DOTFILES]
+#DOC> dst :: Show dotfiles repo status :: DOTFILES
 function dst {
     pushd -q $HOME
     dot status --show-stash
     popd -q
 }
 
-#DOC> dsync :: Synchronize the dotfiles repo [DOTFILES]
+#DOC> dsync :: Synchronize the dotfiles repo :: DOTFILES
 function dsync {
     pushd -q $HOME
 
@@ -40,7 +40,7 @@ function dsync {
 }
 
 
-#DOC> edit-dotfile FILE... :: Edit a dotfile and sync dotfile repo [DOTFILES]
+#DOC> edit-dotfile FILE... :: Edit a dotfile and sync dotfile repo :: DOTFILES
 function edit-dotfile {
     if (( $# == 0 )); then
         err "Missing dotfile(s)"
@@ -56,7 +56,7 @@ function edit-dotfile {
     dsync
 }
 
-#DOC> edit-nvim :: Edit the Neovim config setup [DOTFILES]
+#DOC> edit-nvim [FILE...] :: Edit the Neovim config setup :: DOTFILES
 function edit-nvim {
     pushd -q ~/.config/nvim
     if (( $# > 0 )); then
@@ -71,7 +71,7 @@ function edit-nvim {
     dsync
 }
 
-#DOC> edit-zsh :: Edit the Zsh config setup [DOTFILES]
+#DOC> edit-zsh [FILE...] :: Edit the Zsh config setup :: DOTFILES
 function edit-zsh {
     pushd -q ~/.config/zsh
     if (( $# > 0 )); then

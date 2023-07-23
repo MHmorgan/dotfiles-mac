@@ -8,5 +8,5 @@ dotfiles=$(git --git-dir=$HOME/.dotfiles --work-tree=$HOME ls-tree -r main | awk
 
 popd -q
 
-_arguments "1: :($dotfiles)"
+_arguments "*: :($dotfiles)"
 

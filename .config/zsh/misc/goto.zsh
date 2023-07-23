@@ -1,5 +1,5 @@
 
-#DOC> goto STR... :: Goto a matching directory on the system [NAVIGATION]
+#DOC> goto STR... :: Goto a matching directory on the system :: NAVIGATION
 function goto {
     if ! exists gum; then 
         err "'gum' not installed."
