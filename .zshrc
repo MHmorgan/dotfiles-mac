@@ -3,7 +3,6 @@
 # Features 
 # =========
 #
-# - [ ] Look for TODOs in projects
 # - [x] Goto often used directories
 # - [ ] Install/update GitHub gist files
 # - [x] Easy access to quick-help for terminal functionality
@@ -12,11 +11,11 @@
 #    - [x] Rust apps
 #    - [x] Homebrew apps
 #    - [ ] Gist binaries
-# - [ ] Semi-automatic updating git repos
+# - [x] Semi-automatic updating git repos
 # - [x] Semi-automatic updating dotfiles
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v171 ::"
+echo "Zshrc Mac :: v172 ::"
 
 # PRINTING FUNCTIONS {{{
 
