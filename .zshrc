@@ -14,7 +14,7 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v176 ::"
+echo "Zshrc Mac :: v177 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -112,12 +112,9 @@ fi
 # just continue executing zshrc setup.
 setopt NULL_GLOB
 
-for FILE in \
-    ~/.config/zsh/variables.zsh \
-    ~/.config/zsh/aliases.zsh \
-    ~/.config/zsh/completion.zsh
-do
+for FILE in ~/.config/zsh/{variables,aliases,completion}.zsh; do
     if [[ -f $FILE ]]; then
+        info "-> ${FILE##*/}"
         source $FILE
     else
         warn "Essential file not found: $FILE"
