@@ -4,7 +4,7 @@
 # =========
 #
 # - [x] Goto often used directories
-# - [ ] Install/update GitHub gist files
+# - [x] Add support for boilerplate files
 # - [x] Easy access to quick-help for terminal functionality
 # - [ ] Semi-automatic updating applications:
 #    - [x] Go apps
@@ -18,7 +18,7 @@
 # TODO Remove Rogu - replace with gist and boilerplates
 # TODO Use .config/zsh/boilerplates for storing script boilerplates
 
-echo "Zshrc Mac :: v173 ::"
+echo "Zshrc Mac :: v174 ::"
 
 # PRINTING FUNCTIONS {{{
 

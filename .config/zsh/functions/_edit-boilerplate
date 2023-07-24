@@ -1,0 +1,8 @@
+#compdef _edit-boilerplate
+
+pushd -q ~/.config/zsh/boilerplates
+local files=(*)
+popd -q
+
+_arguments "1: :($files)"
+

@@ -11,3 +11,11 @@ function boilerplate {
     cat $FILE
 }
 
+#DOC> edit-boilerplate NAME... :: Edit a boilerplate file.
+function edit-boilerplate {
+    (( $# > 0 )) || { err "Missing boilerplate name."; return 1 }
+    pushd -q ~/.config/zsh/boilerplates
+    $EDITOR -p $*
+    popd -q
+}
+
