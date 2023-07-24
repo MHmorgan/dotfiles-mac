@@ -14,7 +14,7 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v175 ::"
+echo "Zshrc Mac :: v176 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -87,8 +87,9 @@ exists starship || warn "'starship' not installed"
 if ! [[ -d ~/.config/zsh ]]; then
     warn "~/.config/zsh not found! Please setup dotfiles."
 else
-    [[ -d ~/.config/zsh/core ]] || warn "~/.config/zsh/core not found! Please setup dotfiles."
-    [[ -d ~/.config/zsh/misc ]] || warn "~/.config/zsh/misc not found! Please setup dotfiles."
+    for DIR in ~/.config/zsh/{core,misc,boilerplates,functions}; do
+        [[ -d $DIR ]] || warn "$DIR not found! Check dotfiles setup."
+    done
 fi
 #}}}
 
