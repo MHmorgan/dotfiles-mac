@@ -1,7 +1,7 @@
 #compdef edit-zsh
 
 pushd -q ~/.config/zsh
-files=$(print **/*.zsh)
+local files=(**/*.zsh)
 popd -q
 
 _arguments "*: :($files)"

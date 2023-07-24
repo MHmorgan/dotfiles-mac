@@ -1,7 +1,7 @@
 #compdef edit-nvim
 
 pushd -q ~/.config/nvim
-files=$(print **/*.zsh)
+local files=(**/*.zsh)
 popd -q
 
 _arguments "*: :($files)"
