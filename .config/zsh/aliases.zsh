@@ -91,12 +91,12 @@ alias nd="nvim -d"
 
 # PYTHON {{{
 
-#DOC> ipy :: IPython alias with flags. :: PYTHON
+#DOC> ipy :: IPython alias with flags. :: DEV
 alias ipy='ipython3 --autocall=1 --pprint'
-#DOC> activate-venv :: Activate venv at "venv/bin/activate" :: PYTHON
-alias activate-venv='source venv/bin/activate'
+#DOC> py-activate :: Activate venv at "venv/bin/activate" :: DEV
+alias py-activate='source venv/bin/activate'
 
-#DOC> pyN :: Alias for `python3.N` :: PYTHON
+#DOC> pyN :: Alias for `python3.N` :: DEV
 for N in $(seq 4 20); do
     if exists python3.$N; then
         alias py${N}="python3.$N"
@@ -106,7 +106,7 @@ done
 
 # JVM {{{
 
-#DOC> jdump :: Dump class file (javap w/options) :: JVM
+#DOC> jdump :: Dump class file (javap w/options) :: DEV
 alias jdump='javap -c -p -s'
 #}}}
 

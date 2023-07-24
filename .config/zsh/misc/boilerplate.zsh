@@ -1,5 +1,5 @@
 
-#DOC> boilerplate [NAME] :: Print a boilerplate or list boilerplates.
+#DOC> boilerplate [NAME] :: Print a boilerplate or list boilerplates. :: ESSENTIALS
 function boilerplate {
     if (( $# == 0 )); then
         ls ~/.config/zsh/boilerplates
@@ -11,7 +11,7 @@ function boilerplate {
     cat $FILE
 }
 
-#DOC> edit-boilerplate NAME... :: Edit a boilerplate file.
+#DOC> edit-boilerplate NAME... :: Edit a boilerplate file. :: DOTFILES
 function edit-boilerplate {
     (( $# > 0 )) || { err "Missing boilerplate name."; return 1 }
     pushd -q ~/.config/zsh/boilerplates

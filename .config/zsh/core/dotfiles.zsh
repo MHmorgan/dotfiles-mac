@@ -13,6 +13,13 @@ function dst {
     popd -q
 }
 
+#DOC> ddiff :: Show dotfiles git diff :: DOTFILES
+function ddiff {
+    pushd -q $HOME
+    dot diff
+    popd -q
+}
+
 #DOC> dsync :: Synchronize the dotfiles repo :: DOTFILES
 function dsync {
     pushd -q $HOME
