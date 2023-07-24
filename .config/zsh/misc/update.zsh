@@ -3,8 +3,8 @@
 function update {
     neofetch
 
-    header 'Rogu'
-    rogu -v update
+    #header 'Rogu'
+    #rogu -v update
 
     header 'Dotfiles'
     dsync
