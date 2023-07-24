@@ -30,40 +30,7 @@ if [[ -d ~/lib ]]; then
     export PYTHONPATH="$HOME/lib:$PYTHONPATH"
 fi
 
-#DOC> HOMEBREW_CASKS :: Essential Homebrew casks that should be installed :: VARIABLES
 export HOMEBREW_CASKS=(
     xquarts # X.Org windows system for mac
-)
-
-#DOC> HOMEBREW_APPS :: Essential Homebrew apps which should be installed :: VARIABLES
-export HOMEBREW_APPS=(
-    aspell
-    cheat
-    cmatrix
-    cowsay
-    figlet
-    fortune
-    gcc
-    gdbm
-    gh
-    glow
-    go
-    gradle
-    gum
-    ipython
-    jq
-    kotlin
-    lazygit
-    neofetch
-    neovim
-    openjdk
-    pandoc
-    parallel
-    plantuml
-    python
-    rust
-    sl
-    starship
-    tldr
 )
 

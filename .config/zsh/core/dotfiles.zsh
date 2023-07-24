@@ -20,8 +20,8 @@ function dsync {
     # Commit a dirty repo
     if dot-is-dirty
     then
-        dot status --untracked-files=no 
-        gum confirm 'Commit changes?' || return 1
+        dot status
+        gum confirm 'Add & commit changes?' || return 1
 
         # Update version for modified files
         for FILE in $(dot status -uno --porcelain=v1 | awk '{ print $2 }')
@@ -29,7 +29,8 @@ function dsync {
             dot-increase-version $FILE
         done
 
-        dot commit -av ||
+        dot add --all &&
+        dot commit -v ||
         gum confirm 'Continue sync?' ||
         return 1
     fi
