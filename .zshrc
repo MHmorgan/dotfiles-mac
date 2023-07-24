@@ -6,19 +6,15 @@
 # - [x] Goto often used directories
 # - [x] Add support for boilerplate files
 # - [x] Easy access to quick-help for terminal functionality
-# - [ ] Semi-automatic updating applications:
+# - [x] Semi-automatic updating:
 #    - [x] Go apps
 #    - [x] Rust apps
 #    - [x] Homebrew apps
-#    - [ ] Gist binaries
-# - [x] Semi-automatic updating git repos
-# - [x] Semi-automatic updating dotfiles
+#    - [x] Dotfiles
+#    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-# TODO Remove Rogu - replace with gist and boilerplates
-# TODO Use .config/zsh/boilerplates for storing script boilerplates
-
-echo "Zshrc Mac :: v174 ::"
+echo "Zshrc Mac :: v175 ::"
 
 # PRINTING FUNCTIONS {{{
 
