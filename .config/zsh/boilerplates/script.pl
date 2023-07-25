@@ -1,13 +1,6 @@
 #!/usr/bin/env perl
 # vim: filetype=zsh:tabstop=4:shiftwidth=4:expandtab:
 
-#  _____
-# |  ___|__   ___
-# | |_ / _ \ / _ \
-# |  _| (_) | (_) |
-# |_|  \___/ \___/
-#
-
 use v5.30.0;
 use utf8;
 use strict;

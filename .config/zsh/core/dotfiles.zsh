@@ -48,7 +48,7 @@ function dsync {
 }
 
 
-#DOC> edit-?? [NAME...] :: Edit a file of dotfile/nvim/zsh/boilerplate :: DOTFILES
+#DOC> edit-?? [NAME...] :: Edit files of some kind. :: DOTFILES
 function edit-dotfile {
     if (( $# == 0 )); then
         err "Missing dotfile(s)"

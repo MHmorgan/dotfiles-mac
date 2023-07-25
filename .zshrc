@@ -14,15 +14,15 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v178 ::"
+echo "Zshrc Mac :: v179 ::"
 
 # PRINTING FUNCTIONS {{{
 
 autoload -U colors && colors
 
-function info   { echo "\e[${color[faint]};${color[default]}m$*$reset_color" }
-function warn   { echo "WARN: $*" }
-function err    { echo "ERROR: $*" }
+function info   { echo "\e[${color[faint]};${color[default]}m$*$reset_color" >&2 }
+function warn   { echo "WARN: $*" >&2 }
+function err    { echo "ERROR: $*" >&2 }
 function bold   { echo "$fg_bold[default]$*$reset_color" }
 
 function exists { which $* &>/dev/null }
