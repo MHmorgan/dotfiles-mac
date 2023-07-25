@@ -1,2 +1,2 @@
-#compdef edit-boilerplate
+#compdef boilerplate-m4
 source ~/.config/zsh/functions/_boilerplate
