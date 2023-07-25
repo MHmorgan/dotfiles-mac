@@ -13,28 +13,18 @@ alias cl='clear && ls -Glh'
 #DOC> ch :: Go home and list home content :: NAVIGATION
 alias ch='clear && cd && pwd && ls -Glh'
 
-#DOC> tmp :: Go to tmp dir :: NAVIGATION
+#DOC> home/etc. :: Move to home/documents/downloads/projects/tmp :: NAVIGATION
+alias home='cd && pwd && ls -FG'
+alias documents='cd ~/Documents && pwd && ls -FG'
+alias downloads='cd ~/Downloads && pwd && ls -FG'
+alias projects='cd ~/Projects && pwd && ls -FG'
 alias tmp='cd /tmp'
 
-#DOC> home :: Go to home dir :: NAVIGATION
-alias home='cd && pwd && ls -FG'
-
-#DOC> documents :: Go to Documents dir and ls :: NAVIGATION
-alias documents='cd ~/Documents && pwd && ls -FG'
-
-#DOC> downloads :: Go to Downloads dir and ls :: NAVIGATION
-alias downloads='cd ~/Downloads && pwd && ls -FG'
-
-#DOC> projects :: Go to Projects dir and ls :: NAVIGATION
-alias projects='cd ~/Projects && pwd && ls -FG'
-
-#DOC> cdl :: Change directory and ll :: NAVIGATION
+#DOC> cdl/cds :: Change directory and ls/ll :: NAVIGATION
 function cdl {
     cd $1 || return
     ll
 }
-
-#DOC> cds :: Change directory and ls :: NAVIGATION
 function cds {
     cd $1 || return
     ls
@@ -95,13 +85,6 @@ alias nd="nvim -d"
 alias ipy='ipython3 --autocall=1 --pprint'
 #DOC> py-activate :: Activate venv at "venv/bin/activate" :: DEV
 alias py-activate='source venv/bin/activate'
-
-#DOC> pyN :: Alias for `python3.N` :: DEV
-for N in $(seq 4 20); do
-    if exists python3.$N; then
-        alias py${N}="python3.$N"
-    fi
-done
 #}}}
 
 # JVM {{{
@@ -110,20 +93,19 @@ done
 alias jdump='javap -c -p -s'
 #}}}
 
-# ROGU {{{
-
-#DOC> rogu :: Rogu the alien :: ROGU
-#DOC> drogu :: Run Rogu in debug mode :: ROGU
-alias drogu='python3 ~/bin/rogu'
-#}}}
 
 # MISC
 
-#DOC> path :: List all directories in PATH
-alias path='echo $PATH | sed "s/:/\\n/g" | sort | less'
+alias drogu='python3 ~/bin/rogu'
+
+#DOC> help :: Print this help message :: INFO
+alias help='cat $HELP_FILES | python3 ~/.config/zsh/misc/help.py | glow'
+
+#DOC> print-?? :: Print some specific information. :: INFO
+alias print-path='echo ${PATH//:/\\n} | sort'
+alias print-gotos='echo ${(j:\n:)GOTO_DIRS} | sed "s/${HOME//\//\\/}/~/" | sort'
+alias print-repos='echo ${(j:\n:)GIT_REPOS} | sed "s/${HOME//\//\\/}/~/" | sort'
+alias print-helpfiles='echo ${(j:\n:)HELP_FILES} | sed "s/${HOME//\//\\/}/~/" | sort'
 
 #DOC> lines :: Count the lines a file
 alias lines='wc -l'
-
-#DOC> help :: Print this help message :: ESSENTIALS
-alias help='cat $HELP_FILES | python3 ~/.config/zsh/misc/help.py | glow'

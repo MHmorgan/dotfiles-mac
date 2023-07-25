@@ -14,7 +14,7 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v177 ::"
+echo "Zshrc Mac :: v178 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -33,6 +33,13 @@ function header {
     else
         echo; bold $*; echo
     fi
+}
+
+# This has some quirks, but are usefull for detecting
+# time-consuming parts of the setup.
+function _debug {
+    tput el
+    (( $# > 0 )) && echo -n $* "\r"
 }
 #}}}
 
@@ -136,24 +143,20 @@ done
 
 # OUTRO {{{
 
+_debug "Homebrew command complietion"
 if exists brew
 then
     # brew command completion
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    autoload -Uz compinit && compinit
 fi
 
+_debug "Setup fpath and compinit"
 if [[ -d "$HOME/.config/zsh/functions" ]]; then
     fpath=("$HOME/.config/zsh/functions" $fpath)
-    autoload -Uz compinit && compinit
 fi
+autoload -Uz compinit && compinit
 
-if ! exists rogu
-then
-    err "Rogu is not installed!"
-    echo "Install rogu from https://ugor.hirth.dev"
-fi
-
+_debug "Starship init"
 if exists starship
 then
     # Awesome prompt customization
@@ -178,5 +181,6 @@ elif (( $D < 18 )); then
 else
     echo "Good night! 🌙"
 fi
-#}}}
 
+unfunction _debug
+#}}}

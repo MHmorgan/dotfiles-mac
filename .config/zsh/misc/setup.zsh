@@ -1,6 +1,6 @@
 # Setup of a clean Mac system
 
-#DOC> setup-system :: TODO Setup the current system :: ESSENTIALS
+#DOC> setup-system :: TODO Setup the current system
 function setup-system {
     err "NOT IMPLEMENTED"
     return 1

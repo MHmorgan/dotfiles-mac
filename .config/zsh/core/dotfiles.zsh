@@ -48,7 +48,7 @@ function dsync {
 }
 
 
-#DOC> edit-dotfile FILE... :: Edit a dotfile and sync dotfile repo :: DOTFILES
+#DOC> edit-?? [NAME...] :: Edit a file of dotfile/nvim/zsh/boilerplate :: DOTFILES
 function edit-dotfile {
     if (( $# == 0 )); then
         err "Missing dotfile(s)"
@@ -64,7 +64,6 @@ function edit-dotfile {
     dsync
 }
 
-#DOC> edit-nvim [FILE...] :: Edit the Neovim config setup :: DOTFILES
 function edit-nvim {
     pushd -q ~/.config/nvim
     if (( $# > 0 )); then
@@ -79,7 +78,6 @@ function edit-nvim {
     dsync
 }
 
-#DOC> edit-zsh [FILE...] :: Edit the Zsh config setup :: DOTFILES
 function edit-zsh {
     pushd -q ~/.config/zsh
     if (( $# > 0 )); then

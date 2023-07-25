@@ -1,4 +1,4 @@
-#compdef _edit-boilerplate
+#compdef edit-boilerplate
 
 pushd -q ~/.config/zsh/boilerplates
 local files=(*)

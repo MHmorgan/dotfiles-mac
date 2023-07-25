@@ -1,5 +1,5 @@
 
-#DOC> doctor :: Do some sanity checks of the system :: ESSENTIALS
+#DOC> doctor :: Do some sanity checks of the system :: INFO
 function doctor {
 
     # PATH

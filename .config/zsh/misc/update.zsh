@@ -1,5 +1,5 @@
 
-#DOC> update :: Update the system :: ESSENTIALS
+#DOC> update :: Update the system
 function update {
     neofetch
 
@@ -36,7 +36,7 @@ function update {
     done
 
     header 'Homebrew'
-    brew update && brew upgrade
+    brew update && brew upgrade --quiet
 
     if exists go && (( $#GO_APPS > 0 ))
     then
