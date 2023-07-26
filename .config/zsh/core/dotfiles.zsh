@@ -117,6 +117,6 @@ function dot-increase-version {
 }
 
 function dot-is-dirty {
-    test -n "$(dot status --untracked-files=no --porcelain)"
+    test -n "$(dot status --porcelain)"
 }
 
