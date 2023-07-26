@@ -23,7 +23,7 @@ export GO_APPS=(
 )
 
 #DOC> RUST_APPS :: Zsh array of rust applications for `update` :: VARIABLES
-export RUST_APPS=()
+export RUST_APPS=(ripgrep)
 
 if [[ -d ~/lib ]]; then
     export PERL5LIB="$HOME/lib:$PERL5LIB"

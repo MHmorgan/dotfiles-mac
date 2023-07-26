@@ -54,7 +54,7 @@ function update {
         header 'Rust Apps'
         for APP in $RUST_APPS; do
             echo $APP
-            cargo install $APP
+            cargo install $APP 2>&1 | egrep -v 'Updating|Ignored'
         done
     else
         echo "\nRUST_APPS is empty."
