@@ -109,3 +109,7 @@ alias print-helpfiles='echo ${(j:\n:)HELP_FILES} | sed "s/${HOME//\//\\/}/~/" | 
 
 #DOC> lines :: Count the lines a file
 alias lines='wc -l'
+
+#DOC> loc :: Count the lines of code by filtering out empty lines from stdin
+alias loc='egrep -v "^\s*\$" | wc -l'
+
