@@ -1,0 +1,6 @@
+#compdef help
+
+local -a NAMES
+NAMES=( $(printenv | perl -nE 'say lc $1 if /__(\w+)_HELP/') )
+_arguments "1: :($NAMES)"
+

@@ -98,9 +98,6 @@ alias jdump='javap -c -p -s'
 
 alias drogu='python3 ~/bin/rogu'
 
-#DOC> help :: Print this help message :: INFO
-alias help='cat $HELP_FILES | python3 ~/.config/zsh/misc/help.py | glow'
-
 #DOC> print-?? :: Print some specific information. :: INFO
 alias print-path='echo ${PATH//:/\\n} | sort'
 alias print-gotos='echo ${(j:\n:)GOTO_DIRS} | sed "s/${HOME//\//\\/}/~/" | sort'
