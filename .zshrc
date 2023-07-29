@@ -29,7 +29,7 @@ function exists { which $* &>/dev/null }
 
 function header {
     if exists gum; then
-        gum style --border=rounded --width=20 --align=center --margin="1 0" "$*"
+        gum style --border=rounded --width=40 --align=center --margin="1 0" "$*"
     else
         echo; bold $*; echo
     fi
