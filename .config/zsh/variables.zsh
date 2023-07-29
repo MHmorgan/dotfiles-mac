@@ -14,7 +14,7 @@ export TODO_PATH="$HOME/Projects:$HOME/Documents"
 export GIT_REPOS=()
 
 #DOC> GOTO_DIRS :: Possible targets directories for `goto` :: VARIABLES
-export GOTO_DIRS=( $HOME/Projects/*(/) )
+export GOTO_DIRS=( $HOME/Projects/*(/) $HOME/.config/{nvim,zsh} )
 
 #DOC> GO_APPS :: Zsh array of go applications for `update` :: VARIABLES
 export GO_APPS=(
