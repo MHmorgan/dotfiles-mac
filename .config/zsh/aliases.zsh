@@ -1,5 +1,14 @@
 # All my Zsh aliases (except ls)
 
+# LS ALIASES {{{
+
+alias ls="ls -FG"
+alias la="ls -AFG"
+alias ll="ls -Glh"
+alias lla="ls -AGlh"
+alias l1="ls -1FGh"
+#}}}
+
 # NAVIGATION {{{
 
 alias ..='cd ..'

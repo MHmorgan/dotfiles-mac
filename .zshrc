@@ -14,7 +14,7 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v182 ::"
+echo "Zshrc Mac :: v183 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -44,15 +44,6 @@ function _debug {
 #}}}
 
 info "-> .zshrc"
-
-# LS ALIASES {{{
-
-alias ls="ls -FG"
-alias la="ls -AFG"
-alias ll="ls -Glh"
-alias lla="ls -AGlh"
-alias l1="ls -1FGh"
-#}}}
 
 # PATH {{{
 
