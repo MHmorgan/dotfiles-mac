@@ -31,10 +31,15 @@ function dsync {
         gum confirm 'Add & commit changes?' || return 1
 
         # Update version for modified files
+        local UPDATED_ZSHRC=false
         for FILE in $(dot status -uno --porcelain=v1 | awk '{ print $2 }')
         do
+            [[ $FILE == ".zshrc" ]] && UPDATED_ZSHRC=true
             dot-increase-version $FILE
         done
+        # Zshrc should always be updated, as its version number reflects the
+        # version for the entire dotfile setup.
+        $UPDATED_ZSHRC || dot-increase-version .zshrc
 
         dot add --all &&
         dot commit -v ||
