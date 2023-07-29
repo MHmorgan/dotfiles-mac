@@ -52,6 +52,12 @@ function dsync {
     popd -q
 }
 
+export __DSYNC_HELP='Usage: dsync
+
+Synchronize dotfiles: add all modifications and new files;
+increment version numbers in files; create a commit and push.
+'
+
 
 #DOC> edit-?? [NAME...] :: Edit files of some kind. :: DOTFILES
 function edit-dotfile {
