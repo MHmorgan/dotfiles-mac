@@ -1,0 +1,2 @@
+#compdef reminders
+source ~/.config/zsh/functions/_goto
