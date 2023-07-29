@@ -1,10 +1,19 @@
 
-#DOC> reminders [NAME] :: Look for reminders in comments of source files :: INFO
+#DOC> reminders [-a] [NAME] :: Look for reminders in comments of source files :: INFO
 function reminders {
-    local RE='(@\w+|\b(TODO|FIXME|BUG)\b)'
+    if [[ "$1" == '-a' ]]; then
+        for DIR in $GOTO_DIRS; do
+            header ${DIR//$HOME/\~}
+            reminders $DIR
+        done
+        return 0
+    fi
+
+    local RE='(\s*(@\w+|\b(TODO|FIXME|BUG)\b))+'
     local DIR=${1:-.}
 
-    if (( $# > 0 )); then
+    # Expand goto directory if $1 is an exact match
+    if (( $# > 0 )) && [[ ! -d $1 ]]; then
         local TMP
         for TMP in $GOTO_DIRS; do
             if [[ $1 == ${TMP##*/} ]]; then
@@ -15,16 +24,21 @@ function reminders {
     fi
 
     test -d $DIR || { err "not a directory: $DIR"; return 1 }
-
-    # Languages with // comments
-    find -E $DIR -type f -regex ".*\.(go|java|kt|rs)$" | xargs rg "//.*$RE"
-
-    # Languages with # comments
-    find -E $DIR -type f -regex ".*\.(pl|py|zsh)$" | xargs rg "#.*$RE"
+    local ARGS="-E $DIR -type f -maxdepth 13"
+    find ${=ARGS} -regex ".*\.(c|go|java|kt|rs)$" |
+        xargs rg "//$RE"
+    find ${=ARGS} -regex ".*\.(js|lua|pl|py|ts|zsh)$" |
+        grep -v '/venv/' |
+        xargs rg "#$RE"
 }
 
-export __REMINDERS_HELP='usage: reminders [NAME]
+export __REMINDERS_HELP='usage: reminders [-a] [NAME]
 
 Look for reminders in comments of source files.
+
+The current directory is searched unless NAME is given.
+NAME must be a name of a goto directory, or a directory path.
+
+-a makes it search through all the directories in GOTO_DIRS.
 '
 
