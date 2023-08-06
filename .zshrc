@@ -14,7 +14,7 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v183 ::"
+echo "Zshrc Mac :: v184 ::"
 
 # PRINTING FUNCTIONS {{{
 
@@ -57,6 +57,8 @@ elif [[ -d $HOME/homebrew ]]; then
 else
     err "Homebrew root folder not found."
 fi
+
+export PATH="$PATH:/opt/homebrew/opt/llvm/bin"
 
 # Go
 export PATH="$PATH:$HOME/go/bin"
