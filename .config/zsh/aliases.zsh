@@ -111,7 +111,8 @@ alias drogu='python3 ~/bin/rogu'
 alias print-path='echo ${PATH//:/\\n} | sort'
 alias print-gotos='echo ${(j:\n:)GOTO_DIRS} | sed "s/${HOME//\//\\/}/~/" | sort'
 alias print-repos='echo ${(j:\n:)GIT_REPOS} | sed "s/${HOME//\//\\/}/~/" | sort'
-alias print-helpfiles='echo ${(j:\n:)HELP_FILES} | sed "s/${HOME//\//\\/}/~/" | sort'
+alias print-help-files='echo ${(j:\n:)HELP_FILES} | sed "s/${HOME//\//\\/}/~/" | sort'
+alias print-help-messages='printenv | perl -nE "say \$1 if /__(\w+)_HELP/" | tr "[:upper:]" "[:lower:]"'
 
 #DOC> lines :: Count the lines a file
 alias lines='wc -l'
