@@ -39,6 +39,7 @@ Look for reminders in comments of source files.
 The current directory is searched unless NAME is given.
 NAME must be a name of a goto directory, or a directory path.
 
--a makes it search through all the directories in GOTO_DIRS.
+Options:
+    -a  Search through all the directories in GOTO_DIRS.
 '
 
