@@ -14,7 +14,7 @@
 #    - [x] Git repos
 # - [x] Super-easy to change dotfiles
 
-echo "Zshrc Mac :: v187 ::"
+echo "Zshrc Mac :: v188 ::"
 
 # PRINTING FUNCTIONS {{{
 

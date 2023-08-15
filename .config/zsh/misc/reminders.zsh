@@ -26,10 +26,10 @@ function reminders {
     test -d $DIR || { err "not a directory: $DIR"; return 1 }
     local ARGS="-E $DIR -type f -maxdepth 13"
     find ${=ARGS} -regex ".*\.(c|go|java|kt|rs)$" |
-        xargs rg "//$RE"
+        xargs rg --trim "//$RE"
     find ${=ARGS} -regex ".*\.(js|lua|pl|py|ts|zsh)$" |
         grep -v '/venv/' |
-        xargs rg "#$RE"
+        xargs rg --trim "#$RE"
 }
 
 export __REMINDERS_HELP='usage: reminders [-a] [NAME]
