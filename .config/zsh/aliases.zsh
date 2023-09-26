@@ -99,7 +99,7 @@ alias py-activate='source venv/bin/activate'
 # JVM {{{
 
 #DOC> jdump :: Dump class file (javap w/options) :: DEV
-alias jdump='javap -c -p -s'
+alias jdump='javap -c -p -s -v'
 #}}}
 
 
