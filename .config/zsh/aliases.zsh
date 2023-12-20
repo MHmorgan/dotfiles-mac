@@ -63,6 +63,9 @@ alias gca='git commit --verbose --all'
 #DOC> gst :: Git status alias :: GIT
 alias gst='git status'
 
+#DOC> gcob :: Git checkout -B alias :: GIT
+alias gcob='git checkout -B'
+
 #DOC> gcom :: Git checkout and reset main to origin/main :: GIT
 alias gcom='git checkout -B main origin/main'
 #}}}
