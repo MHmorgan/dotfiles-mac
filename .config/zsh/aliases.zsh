@@ -109,6 +109,13 @@ alias jdump='javap -c -p -s -v'
 #}}}
 
 
+# TEMP FILE {{{
+#DOC> tmp-?? :: Tempfile helper aliases :: TEMP
+alias tmp-vi='nvim /tmp/awesometmpfile'
+alias tmp-n='nvim  /tmp/awesometmpfile'
+alias tmp-cat='cat /tmp/awesometmpfile'
+#}}}
+
 # MISC
 
 alias drogu='python3 ~/bin/rogu'
