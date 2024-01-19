@@ -57,6 +57,12 @@ alias gclone='gh repo clone'
 #DOC> gc :: Git commit alias :: GIT
 alias gc='git commit --verbose'
 
+#DOC> gp :: Git push alias :: GIT
+alias gp='git push'
+
+#DOC> gl :: Git pull alias :: GIT
+alias gl='git pull'
+
 #DOC> gca :: Git commit all alias :: GIT
 alias gca='git commit --verbose --all'
 
