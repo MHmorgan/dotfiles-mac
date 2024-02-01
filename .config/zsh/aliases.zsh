@@ -124,6 +124,9 @@ alias tmp-cat='cat /tmp/awesometmpfile'
 
 # MISC
 
+#DOC> ldo :: Start lazydocker
+alias ldo='lazydocker'
+
 alias drogu='python3 ~/bin/rogu'
 
 #DOC> print-?? :: Print some specific information. :: INFO
