@@ -1,6 +1,7 @@
 
 #DOC> reminders [-a] [NAME] :: Look for reminders in comments of source files :: INFO
 function reminders {
+    # Search for reminders in all goto-directories
     if [[ "$1" == '-a' ]]; then
         for DIR in $GOTO_DIRS; do
             header ${DIR//$HOME/\~}
