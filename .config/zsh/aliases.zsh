@@ -90,6 +90,9 @@ alias dlg='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 #DOC> n :: Start Neovim :: NEOVIM
 alias n="nvim"
 
+#DOC> vi :: Start Neovim :: NEOVIM
+alias vi="nvim"
+
 #DOC> ns :: Start Neovim from a saved session :: NEOVIM
 alias ns="nvim -S"
 
@@ -98,6 +101,7 @@ alias no="nvim -O"
 
 #DOC> nd :: Start Neovim in diff mode :: NEOVIM
 alias nd="nvim -d"
+
 #}}}
 
 # PYTHON {{{
