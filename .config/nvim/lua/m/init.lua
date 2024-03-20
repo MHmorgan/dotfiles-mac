@@ -5,9 +5,5 @@ require('m.project') -- Project functionality
 -- Plugin configs
 require('m.packer')
 require('m.telescope')
---require('m.treesitter')
-require('m.harpoon')
-require('m.undotree')
 require('m.fugitive')
---require('m.lsp')
 
