@@ -9,6 +9,9 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
+-- Editor Colours
+vim.cmd('colorscheme vim')
+
 -- Folding
 vim.opt.foldmethod = 'marker'
 
