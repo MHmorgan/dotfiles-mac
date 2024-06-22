@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import re
 import sys
 
@@ -34,7 +35,11 @@ def print_entries(entries):
         return
     w = max(len(name) for name, _ in entries)
     for name, desc in entries:
-        print(f'{name:{w}} - {desc}')
+        long_help = f'__{name.upper()}_HELP'
+        if long_help in os.environ:
+            print(f'{name:{w}} - {desc} (+)')
+        else:
+            print(f'{name:{w}} - {desc}')
 
 main()
 
