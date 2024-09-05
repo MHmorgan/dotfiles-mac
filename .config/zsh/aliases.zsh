@@ -60,8 +60,14 @@ alias gc='git commit --verbose'
 #DOC> gp :: Git push alias :: GIT
 alias gp='git push'
 
-#DOC> gl :: Git pull alias :: GIT
-alias gl='git pull'
+#DOC> glr :: Git pull w/rebase :: GIT
+alias glr='git pull --rebase=true'
+
+#DOC> glm :: Git pull w/merge :: GIT
+alias glm='git pull --rebase=false'
+
+#DOC> gli :: Git pull w/interactive rebase :: GIT
+alias gli='git pull --rebase=false'
 
 #DOC> gca :: Git commit all alias :: GIT
 alias gca='git commit --verbose --all'
