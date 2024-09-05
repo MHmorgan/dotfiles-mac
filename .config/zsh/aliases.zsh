@@ -75,6 +75,9 @@ alias gca='git commit --verbose --all'
 #DOC> gst :: Git status alias :: GIT
 alias gst='git status'
 
+#DOC> gco :: Git checkout :: GIT
+alias gco='git checkout'
+
 #DOC> gcob :: Git checkout -B alias :: GIT
 alias gcob='git checkout -B'
 
